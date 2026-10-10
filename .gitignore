@@ -2,3 +2,6 @@
 deep_research_prompt.md
 reports/
 research_notes/
+
+# Archive duplicates of extracted datasets (over GitHub's 100 MB file limit)
+Data/*.zip
