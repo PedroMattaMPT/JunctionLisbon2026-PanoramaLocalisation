@@ -1,0 +1,18 @@
+<!-- @dsCard group="Base" height=180 subtitle="Direction, not mood" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EmptyState — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, null, h(A.EmptyState, { icon: 'text', title: 'No text found', body: 'No signs, plates or painted words in any of the 10 views. Location comes from scene and pixels only.' })),
+  h(D.Cell, null, h(A.EmptyState, { icon: 'drop', title: 'No panoramas yet', body: 'Drop the six JPGs to fill the queue, then mark the Special One.', action: h(A.Button, { icon: 'file' }, 'Choose files') }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

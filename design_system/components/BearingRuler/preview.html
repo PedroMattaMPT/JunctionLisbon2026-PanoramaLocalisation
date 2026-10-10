@@ -1,0 +1,18 @@
+<!-- @dsCard group="Panorama" height=174 width=1000 subtitle="Camera yaw first; true bearing once the sun fixes north" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BearingRuler — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 1 },
+  h(D.Cell, { label: 'Yaw (north unknown), with a selected-evidence mark', pad: false }, h('div', { style: { width: '100%' } }, h(A.BearingRuler, { width: 960, mode: 'yaw', marks: [{ yaw: 212.5, tone: 'select' }] }))),
+  h(D.Cell, { label: 'True bearing · yaw 0 at 64° ± 12° · 360° view window', pad: false }, h('div', { style: { width: '100%' } }, h(A.BearingRuler, { width: 960, mode: 'bearing', offset: 64, err: 12, fov: { yaw: 212, fov: 90 } })))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

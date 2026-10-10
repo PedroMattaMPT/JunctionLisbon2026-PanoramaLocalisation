@@ -1,0 +1,19 @@
+<!-- @dsCard group="Shell" height=224 subtitle="aqui: the tittle is a point inside a broken uncertainty ring" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wordmark — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: '2fr 1fr 1fr' },
+  h(D.Cell, { label: 'Wordmark' }, h(A.Wordmark, { size: 96 })),
+  h(D.Cell, { label: 'Run bar size' }, h(A.Wordmark, { size: 22 })),
+  h(D.Cell, { label: 'Mark (favicon)' }, h('div', { style: { background: 'var(--surface-0)', padding: 8, borderRadius: 8, display: 'inline-flex' } }, h(A.Wordmark, { size: 48, mark: true })), h(A.Wordmark, { size: 16, mark: true }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

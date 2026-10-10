@@ -1,0 +1,16 @@
+<!-- @dsCard group="Charts" height=244 subtitle="Visible share, not land cover" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SceneShares — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 1 }, h(D.Cell, { label: 'Case A', pad: false }, h('div', { style: { width: '100%', maxWidth: 620 } }, h(A.SceneShares, { shares: S.CASE_A.shares }))), h(D.Cell, { label: 'Case B, with the masked share', pad: false }, h('div', { style: { width: '100%', maxWidth: 620 } }, h(A.SceneShares, { shares: S.CASE_B.shares, masked: 0.18 })))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

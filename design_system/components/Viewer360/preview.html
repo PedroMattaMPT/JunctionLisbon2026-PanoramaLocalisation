@@ -1,0 +1,19 @@
+<!-- @dsCard group="Panorama" height=1385 width=1100 subtitle="360° viewer frame, synced with the strip on yaw" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Viewer360 — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 1 },
+  h(D.Cell, { label: 'Strip shows the viewer window; ruler shows its yaw', pad: false }, h(A.PanoramaStrip, { c: S.CASE_A, width: 1060, fov: { yaw: 212, fov: 90 }, layers: { boxes: false, text: true }, selected: 't2' })),
+  h(D.Cell, { label: 'Viewer · synced', pad: false }, h(A.Viewer360, { c: S.CASE_A, yaw: 212, width: 520, height: 280, selected: 't2' })),
+  h(D.Cell, { label: 'Viewer · drifted (needs re-sync)', pad: false }, h(A.Viewer360, { c: S.CASE_B, yaw: 70, width: 520, height: 280, synced: false }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

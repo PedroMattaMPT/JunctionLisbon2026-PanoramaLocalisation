@@ -1,0 +1,19 @@
+<!-- @dsCard group="Base" height=100 subtitle="Every shortcut is visible next to its action" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>KeyCap — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var K = A.KeyCap;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Console' }, h(K, null, '1'), h(K, null, '2'), h(K, null, '3'), h(K, null, '4'), h(K, null, 'S'), h(K, null, 'Space'), h(K, null, '⇧⏎')),
+  h(D.Cell, { label: 'Stage' }, h(A.Density, { value: 'stage' }, h('div', { className: 'aq-row' }, h(K, null, '1'), h(K, null, 'S'))))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

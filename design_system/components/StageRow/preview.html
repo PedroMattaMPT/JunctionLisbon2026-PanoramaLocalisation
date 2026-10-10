@@ -1,0 +1,23 @@
+<!-- @dsCard group="Reasoning" height=354 subtitle="Every outcome: queued, running, done, skipped, failed, timed out" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>StageRow — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var st = [
+  { id: 'q', name: 'Answer', models: ['Solver (code)'], status: 'queued' },
+  { id: 'r', name: 'Exact spot', optional: true, models: ['MegaLoc', 'ALIKED + LightGlue'], status: 'running', dur: 31, deadline: 60, gb: 2.6 },
+  { id: 'd', name: 'Read', models: ['PP-OCRv6-medium', 'Language-ID ×3'], status: 'done', dur: 4.9, cpu: true },
+  { id: 's', name: 'Detect', optional: true, models: ['YOLOE-26-L', 'SAM 3'], status: 'skipped', note: 'Dropped for non-urban scenes' },
+  { id: 'f', name: 'Describe', models: ['Qwen3.5-9B'], status: 'failed', dur: 8.2, gb: 7.4, note: 'Returned invalid JSON twice.', fallback: 'Gemma 4 12B' },
+  { id: 't', name: 'Measure', optional: true, models: ['EoMT-L', 'pvlib'], status: 'timed_out', dur: 20, gb: 1.1, note: 'No result in 20 s.', fallback: 'scene shares skipped; north stays unknown' }];
+var view = h(D.Page, null, h('ol', { className: 'aq-timeline-l' }, st.map(function (s) { return h(A.StageRow, { key: s.id, stage: s }); })));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

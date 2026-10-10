@@ -1,0 +1,24 @@
+<!-- @dsCard group="Map" height=1038 width=1100 subtitle="Heat, points, zones, rings and pins at once — still readable" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MapView — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var a = S.CASE_A, b = S.CASE_B;
+var cands = a.candidatesBefore.filter(function (c) { return !c.other; }).map(function (c) { return { id: c.id, rank: c.rank, lat: c.lat, lng: c.lng, name: c.name.split(' · ')[1] || c.name }; });
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Country view · heat + sampled points + candidates + ruled out (Galicia)', pad: false }, h(A.MapView, { view: a.viewCountry, width: 520, height: 420, heat: a.heatCountry, samples: 60,
+    candidates: [{ id: 'porto', rank: 1, lat: 41.15, lng: -8.61, name: 'Porto' }, { id: 'lis', rank: 4, lat: 38.71, lng: -9.13, name: 'Lisboa' }, { id: 'gal', lat: 42.6, lng: -8.1, name: 'Galicia · ruled out', ruledOut: true }] })),
+  h(D.Cell, { label: 'Town view · zones A–C for question 1, D off-map (inset)', pad: false }, h(A.MapView, { view: a.viewTown, width: 520, height: 420, heat: a.heatTown, zones: a.zones, candidates: cands.slice(0, 3), inset: { view: { lat: 40, lng: -6, span: 14 }, box: { lat: 41.2, lng: -8.4, span: 0.9 }, label: 'D: outside the box' } })),
+  h(D.Cell, { label: 'Spot view · references, view cone, known ring (± 22 m), final mark', pad: false }, h(A.MapView, { view: a.viewSpot, width: 520, height: 420, refs: a.spot.refs.map(function (r) { return { id: r.id, lat: r.lat, lng: r.lng, accepted: r.accepted, label: r.id + ' · ' + r.inliers + ' inliers' }; }), hoverRef: 'r2',
+    cone: { lat: a.answer.lat, lng: a.answer.lng, bearing: 256, err: 12, len: 170, label: 'to sign · 256° ± 12°' }, final: { lat: a.answer.lat, lng: a.answer.lng, r: 22 } })),
+  h(D.Cell, { label: 'Region view · offline outlines · zones A–D · unknown radius', pad: false }, h(A.MapView, { view: b.view, width: 520, height: 420, offline: true, heat: b.heat, zones: b.zones, rings: [{ lat: 38.9, lng: -6.4, r: null, label: 'Extremadura · radius unknown' }] }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

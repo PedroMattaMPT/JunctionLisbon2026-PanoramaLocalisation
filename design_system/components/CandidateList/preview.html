@@ -1,0 +1,16 @@
+<!-- @dsCard group="Beliefs" height=416 subtitle="Ranked list with “other” and the ruled-out rows" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CandidateList — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(A.CandidateList, { candidates: S.CASE_A.candidatesBefore, selected: 'ribeira', ruledOut: S.CASE_A.ruledOut }));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

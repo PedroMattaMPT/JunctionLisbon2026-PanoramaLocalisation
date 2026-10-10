@@ -1,0 +1,19 @@
+<!-- @dsCard group="Reasoning" height=244 subtitle="One evidence item linked to its pixels and its map area" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LeaderLines — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(A.LeaderLines, { links: [['e2', 't2'], ['e2', 'area']] }, h('div', { style: { display: 'grid', gridTemplateColumns: '300px 1fr 260px', gap: 60, alignItems: 'center' } },
+  h(A.ZoomCrop, { c: S.CASE_A, target: 't2', width: 300, height: 120 }),
+  h('div', { style: { maxWidth: 300 } }, h(A.EvidenceCard, { e: S.CASE_A.evidence[0], names: S.CASE_A.matrix.names, compact: true, selected: true })),
+  h('div', { 'data-leader': 'area', className: 'aq-badge', style: { justifySelf: 'start' } }, 'postcode area 4050 on the map'))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

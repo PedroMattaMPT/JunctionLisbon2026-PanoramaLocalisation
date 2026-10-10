@@ -1,0 +1,16 @@
+<!-- @dsCard group="Shell" height=304 subtitle="Sealed: only status crosses between cases" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CaseCard — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 3 }, S.QUEUE.map(function (q, i) { return h(A.CaseCard, Object.assign({ key: i }, q)); })));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

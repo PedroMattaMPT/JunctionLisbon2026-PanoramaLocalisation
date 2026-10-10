@@ -1,0 +1,42 @@
+/* ---------- intake ---------- */
+.aq-drop { display: flex; flex-direction: column; gap: var(--space-2); }
+.aq-drop-target { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); min-height: 180px; padding: var(--space-6); border: var(--aq-line-em) dashed var(--line-2); border-radius: var(--radius-3); text-align: center; color: var(--ink-1); }
+.aq-drop-target > .aq-icon { width: calc(var(--aq-icon) * 2); height: calc(var(--aq-icon) * 2); color: var(--ink-3); }
+.aq-drop.is-dragging .aq-drop-target { border-style: solid; border-color: var(--ink-1); background: var(--surface-3); }
+.aq-drop.is-dragging .aq-drop-target > .aq-icon { color: var(--ink-1); }
+.aq-drop-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.aq-fn { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-2) var(--aq-pad); border: var(--aq-line) solid var(--line-1); border-radius: var(--radius-2); background: var(--surface-2); }
+.aq-fn-top { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.aq-fn-top > :last-child { margin-left: auto; }
+.aq-fn-name mark { background: var(--surface-3); color: var(--ink-1); padding: 0 2px; border-radius: var(--radius-1); }
+.aq-fn-parts { display: flex; gap: var(--space-5); margin: 0; flex-wrap: wrap; }
+.aq-fn-parts div { display: flex; flex-direction: column; }
+.aq-fn-parts dt { color: var(--ink-3); } .aq-fn-parts dd { margin: 0; color: var(--ink-1); }
+.aq-fn-msg { color: var(--ink-2); }
+.aq-fn-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.aq-fn-ctl { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.aq-fn.is-warning { border-color: var(--cost); }
+.aq-fn.is-warning .aq-fn-top > .aq-icon { color: var(--cost); }
+.aq-fn.is-error { border-color: var(--contra); }
+.aq-fn.is-error .aq-fn-top > .aq-icon, .aq-fn.is-error .aq-fn-msg { color: var(--contra); }
+
+/* ---------- exact-spot match view ---------- */
+.aq-match { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); max-width: 100%; }
+.aq-match > svg { display: block; max-width: 100%; height: auto; background: var(--surface-0); }
+.aq-match-h { display: grid; grid-template-columns: auto 1fr auto 1fr; gap: var(--space-2); align-items: baseline; }
+.aq-match-gap { fill: var(--surface-1); }
+.aq-match-in { stroke: var(--support); opacity: 0.85; }
+.aq-match-out { stroke: var(--contra); stroke-dasharray: 3 3; opacity: 0.85; }
+.aq-match-kp { fill: var(--surface-0); stroke: var(--support); stroke-width: 1.25; }
+.aq-match-cap { display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
+.aq-match-k { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--ink-2); }
+.aq-match-k i { width: 16px; height: 0; border-top: 2px solid var(--support); }
+.aq-match-k i.is-out { border-top: 2px dashed var(--contra); }
+
+/* ---------- leader lines ---------- */
+.aq-leaders { position: relative; }
+.aq-leaders-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: var(--z-leader); }
+.aq-leader { fill: none; stroke: var(--select); stroke-width: 1.5; }
+[data-density="stage"] .aq-leader { stroke-width: 3; }
+.aq-leader-halo { fill: none; stroke: var(--surface-0); stroke-width: 4; opacity: 0.8; }
+.aq-leader-end { fill: var(--select); stroke: var(--surface-0); stroke-width: 1.5; }

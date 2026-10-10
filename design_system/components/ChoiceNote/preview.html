@@ -1,0 +1,16 @@
+<!-- @dsCard group="Output" height=174 subtitle="Why the chosen coordinate differs from the most likely spot" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ChoiceNote — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 }, h(D.Cell, { pad: false }, h(A.ChoiceNote, { a: S.CASE_A.answer, mostLikelyName: 'Porto · Ribeira 0.69' })), h(D.Cell, { pad: false }, h(A.ChoiceNote, { a: S.CASE_B.answer, mostLikelyName: 'Évora centre', mostLikelyExpected: 10400 }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

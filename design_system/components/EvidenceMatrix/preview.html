@@ -1,0 +1,16 @@
+<!-- @dsCard group="Beliefs" height=484 subtitle="Evidence × candidate, correlated rows bracketed" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EvidenceMatrix — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(A.EvidenceMatrix, { evidence: S.CASE_A.evidence, candidates: S.CASE_A.matrix.candidates, names: S.CASE_A.matrix.names, groups: S.CASE_A.groups, selected: 'e2' }));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

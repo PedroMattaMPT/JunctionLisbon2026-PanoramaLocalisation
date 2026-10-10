@@ -1,0 +1,19 @@
+<!-- @dsCard group="Human loop" height=424 subtitle="Answered: beliefs move, multiplier ticks. Skipped: nothing moves." -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AnswerReceipt — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var a = S.CASE_A, b = S.CASE_B;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Case A · answered A', pad: false }, h(A.AnswerReceipt, { kind: 'answered', q: a.question, before: a.candidatesBefore, after: a.candidatesAfter, multiplierBefore: 1, multiplierAfter: 0.95, t: 212 })),
+  h(D.Cell, { label: 'Case B · skipped', pad: false }, h(A.AnswerReceipt, { kind: 'skipped', q: b.question, before: b.candidates, multiplierBefore: 1, t: 188 }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

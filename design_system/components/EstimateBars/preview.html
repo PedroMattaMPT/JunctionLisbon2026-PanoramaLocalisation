@@ -1,0 +1,19 @@
+<!-- @dsCard group="Charts" height=304 subtitle="Top 5 plus other, ranges where known; before/after for answers" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EstimateBars — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var a = S.CASE_A;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Region estimates (model)', pad: false }, h(A.EstimateBars, { rows: a.regions, tone: 'model', title: 'mini-PIGEON regions', caption: 'Estimates, not calibrated probabilities' })),
+  h(D.Cell, { label: 'Before / after an answer (solver)', pad: false }, h(A.EstimateBars, { rows: a.candidatesAfter.map(function (c) { return { name: c.name, v: c.v, before: (a.candidatesBefore.find(function (b) { return b.id === c.id; }) || {}).v, other: c.other }; }), mode: 'beforeAfter', title: 'Candidates' }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>
