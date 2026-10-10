@@ -1,0 +1,2605 @@
+{
+  "model": "geolocal/StreetCLIP",
+  "results": [
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20241213_120841_00_059.jpg",
+      "captured_at": "2024-12-13T12:08:41",
+      "latitude": 40.68137,
+      "longitude": -7.92102,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 40.68137,
+          "longitude": -7.92102,
+          "place": "Abraveses",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.035727
+        },
+        {
+          "rank": 2,
+          "latitude": 40.53754,
+          "longitude": -7.26631,
+          "place": "Guarda",
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.033161
+        },
+        {
+          "rank": 3,
+          "latitude": 40.66165,
+          "longitude": -7.90905,
+          "place": "Viseu",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.031484
+        },
+        {
+          "rank": 4,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.030338
+        },
+        {
+          "rank": 5,
+          "latitude": 40.43333,
+          "longitude": -8.0,
+          "place": "Carregal do Sal",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.024677
+        },
+        {
+          "rank": 6,
+          "latitude": 40.85291,
+          "longitude": -7.72791,
+          "place": "Vila Nova de Paiva",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.02451
+        },
+        {
+          "rank": 7,
+          "latitude": 41.09741,
+          "longitude": -7.80991,
+          "place": "Lamego",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.023963
+        },
+        {
+          "rank": 8,
+          "latitude": 40.55364,
+          "longitude": -7.22594,
+          "place": "Sequeira",
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.023085
+        },
+        {
+          "rank": 9,
+          "latitude": 40.4151,
+          "longitude": -7.70859,
+          "place": "Seia",
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.021924
+        },
+        {
+          "rank": 10,
+          "latitude": 40.98383,
+          "longitude": -7.61765,
+          "place": "Moimenta da Beira",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.021922
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9472,
+        "Spain": 0.0523,
+        "France": 0.0004
+      },
+      "top_regions": [
+        {
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.2815
+        },
+        {
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.1436
+        },
+        {
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.0972
+        },
+        {
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.0732
+        },
+        {
+          "region": "Vila Real",
+          "country": "Portugal",
+          "probability": 0.0689
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20250104_082423_00_095.jpg",
+      "captured_at": "2025-01-04T08:24:23",
+      "latitude": 45.12764,
+      "longitude": -0.66225,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 45.12764,
+          "longitude": -0.66225,
+          "place": "Blaye",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.02312
+        },
+        {
+          "rank": 2,
+          "latitude": 44.60894,
+          "longitude": 2.03155,
+          "place": "Figeac",
+          "region": "Occitanie",
+          "country": "France",
+          "probability": 0.006066
+        },
+        {
+          "rank": 3,
+          "latitude": 46.56979,
+          "longitude": 0.64346,
+          "place": "Chauvigny",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.005134
+        },
+        {
+          "rank": 4,
+          "latitude": 45.67521,
+          "longitude": 0.12706,
+          "place": "Saint-Yrieix-sur-Charente",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.005058
+        },
+        {
+          "rank": 5,
+          "latitude": 45.74742,
+          "longitude": -0.63489,
+          "place": "Saintes",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.004403
+        },
+        {
+          "rank": 6,
+          "latitude": 45.5145,
+          "longitude": 1.20329,
+          "place": "Saint-Yrieix-la-Perche",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.004282
+        },
+        {
+          "rank": 7,
+          "latitude": 44.80565,
+          "longitude": -0.6324,
+          "place": "Pessac",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.004156
+        },
+        {
+          "rank": 8,
+          "latitude": 45.67976,
+          "longitude": 0.22925,
+          "place": "Ruelle-sur-Touvre",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.004136
+        },
+        {
+          "rank": 9,
+          "latitude": 43.31814,
+          "longitude": 1.95339,
+          "place": "Castelnaudary",
+          "region": "Occitanie",
+          "country": "France",
+          "probability": 0.004087
+        },
+        {
+          "rank": 10,
+          "latitude": 45.18691,
+          "longitude": 0.71439,
+          "place": "Périgueux",
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.003982
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.0073,
+        "Spain": 0.0077,
+        "France": 0.9851
+      },
+      "top_regions": [
+        {
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.3307
+        },
+        {
+          "region": "Occitanie",
+          "country": "France",
+          "probability": 0.1518
+        },
+        {
+          "region": "Bourgogne-Franche-Comté",
+          "country": "France",
+          "probability": 0.084
+        },
+        {
+          "region": "Hauts-de-France",
+          "country": "France",
+          "probability": 0.0831
+        },
+        {
+          "region": "Grand Est",
+          "country": "France",
+          "probability": 0.0801
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20250125_142313_00_141.jpg",
+      "captured_at": "2025-01-25T14:23:13",
+      "latitude": 38.7119,
+      "longitude": -9.14411,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 38.7119,
+          "longitude": -9.14411,
+          "place": "Bairro Alto",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.029937
+        },
+        {
+          "rank": 2,
+          "latitude": 38.93793,
+          "longitude": -9.32756,
+          "place": "Mafra",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.018263
+        },
+        {
+          "rank": 3,
+          "latitude": 38.79174,
+          "longitude": -9.12119,
+          "place": "Prior Velho",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.015976
+        },
+        {
+          "rank": 4,
+          "latitude": 38.71139,
+          "longitude": -9.13722,
+          "place": "Baixa",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.014796
+        },
+        {
+          "rank": 5,
+          "latitude": 38.76667,
+          "longitude": -9.18333,
+          "place": "Carnide",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.014704
+        },
+        {
+          "rank": 6,
+          "latitude": 38.80368,
+          "longitude": -9.1877,
+          "place": "Ramada",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.014427
+        },
+        {
+          "rank": 7,
+          "latitude": 38.77478,
+          "longitude": -9.15601,
+          "place": "Lumiar",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.013732
+        },
+        {
+          "rank": 8,
+          "latitude": 40.16313,
+          "longitude": -8.40658,
+          "place": "Castelo Viegas",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.013673
+        },
+        {
+          "rank": 9,
+          "latitude": 38.81958,
+          "longitude": -9.12007,
+          "place": "Unhos",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.01342
+        },
+        {
+          "rank": 10,
+          "latitude": 38.74299,
+          "longitude": -9.14421,
+          "place": "Campo Pequeno",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.012311
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9984,
+        "Spain": 0.0015,
+        "France": 0.0001
+      },
+      "top_regions": [
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.6971
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.0865
+        },
+        {
+          "region": "Porto",
+          "country": "Portugal",
+          "probability": 0.0606
+        },
+        {
+          "region": "Braga",
+          "country": "Portugal",
+          "probability": 0.0531
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.033
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20250125_142634_00_170.jpg",
+      "captured_at": "2025-01-25T14:26:34",
+      "latitude": 38.7777,
+      "longitude": -7.41793,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 38.7777,
+          "longitude": -7.41793,
+          "place": "Vila Viçosa",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.044341
+        },
+        {
+          "rank": 2,
+          "latitude": 38.56587,
+          "longitude": -7.90405,
+          "place": "Évora",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.044229
+        },
+        {
+          "rank": 3,
+          "latitude": 38.84432,
+          "longitude": -7.58585,
+          "place": "Estremoz",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.038029
+        },
+        {
+          "rank": 4,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.029513
+        },
+        {
+          "rank": 5,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.024625
+        },
+        {
+          "rank": 6,
+          "latitude": 40.16313,
+          "longitude": -8.40658,
+          "place": "Castelo Viegas",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.024283
+        },
+        {
+          "rank": 7,
+          "latitude": 38.42529,
+          "longitude": -7.53494,
+          "place": "Reguengos de Monsaraz",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.023843
+        },
+        {
+          "rank": 8,
+          "latitude": 40.23333,
+          "longitude": -8.45,
+          "place": "Bairro do Loreto",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.020569
+        },
+        {
+          "rank": 9,
+          "latitude": 40.20503,
+          "longitude": -8.47929,
+          "place": "Ribeira de Frades",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.018494
+        },
+        {
+          "rank": 10,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.013506
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9974,
+        "Spain": 0.0022,
+        "France": 0.0004
+      },
+      "top_regions": [
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.2522
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.209
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.1755
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.0838
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.045
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20250125_142634_00_209.jpg",
+      "captured_at": "2025-01-25T14:26:34",
+      "latitude": 40.16313,
+      "longitude": -8.40658,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 40.16313,
+          "longitude": -8.40658,
+          "place": "Castelo Viegas",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.019657
+        },
+        {
+          "rank": 2,
+          "latitude": 38.93793,
+          "longitude": -9.32756,
+          "place": "Mafra",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.017718
+        },
+        {
+          "rank": 3,
+          "latitude": 38.7777,
+          "longitude": -7.41793,
+          "place": "Vila Viçosa",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.016609
+        },
+        {
+          "rank": 4,
+          "latitude": 40.23333,
+          "longitude": -8.45,
+          "place": "Bairro do Loreto",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.015591
+        },
+        {
+          "rank": 5,
+          "latitude": 40.20503,
+          "longitude": -8.47929,
+          "place": "Ribeira de Frades",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.015469
+        },
+        {
+          "rank": 6,
+          "latitude": 38.7119,
+          "longitude": -9.14411,
+          "place": "Bairro Alto",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.014257
+        },
+        {
+          "rank": 7,
+          "latitude": 40.21805,
+          "longitude": -8.40523,
+          "place": "Santo António dos Olivais",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.013579
+        },
+        {
+          "rank": 8,
+          "latitude": 39.15237,
+          "longitude": -9.2972,
+          "place": "A dos Cunhados",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.013405
+        },
+        {
+          "rank": 9,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.012703
+        },
+        {
+          "rank": 10,
+          "latitude": 38.77478,
+          "longitude": -9.15601,
+          "place": "Lumiar",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.011513
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9917,
+        "Spain": 0.0073,
+        "France": 0.0009
+      },
+      "top_regions": [
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.5658
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.1293
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.0652
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.0399
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.0354
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20250125_144630_00_319.jpg",
+      "captured_at": "2025-01-25T14:46:30",
+      "latitude": 38.93793,
+      "longitude": -9.32756,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 38.93793,
+          "longitude": -9.32756,
+          "place": "Mafra",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.023025
+        },
+        {
+          "rank": 2,
+          "latitude": 38.81958,
+          "longitude": -9.12007,
+          "place": "Unhos",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.019652
+        },
+        {
+          "rank": 3,
+          "latitude": 38.75657,
+          "longitude": -9.25451,
+          "place": "Queluz",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.019641
+        },
+        {
+          "rank": 4,
+          "latitude": 39.15237,
+          "longitude": -9.2972,
+          "place": "A dos Cunhados",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.019444
+        },
+        {
+          "rank": 5,
+          "latitude": 38.69875,
+          "longitude": -9.19289,
+          "place": "Belém",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.017308
+        },
+        {
+          "rank": 6,
+          "latitude": 38.74299,
+          "longitude": -9.14421,
+          "place": "Campo Pequeno",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.017254
+        },
+        {
+          "rank": 7,
+          "latitude": 38.77478,
+          "longitude": -9.15601,
+          "place": "Lumiar",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.016572
+        },
+        {
+          "rank": 8,
+          "latitude": 38.7,
+          "longitude": -9.2,
+          "place": "Santa Maria de Belém",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.01622
+        },
+        {
+          "rank": 9,
+          "latitude": 38.76667,
+          "longitude": -9.18333,
+          "place": "Carnide",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.01589
+        },
+        {
+          "rank": 10,
+          "latitude": 38.72212,
+          "longitude": -9.13539,
+          "place": "Intendente",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.015756
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9836,
+        "Spain": 0.0143,
+        "France": 0.0021
+      },
+      "top_regions": [
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.7008
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.1176
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.0742
+        },
+        {
+          "region": "Braga",
+          "country": "Portugal",
+          "probability": 0.0177
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.0146
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20250125_151032_00_611.jpg",
+      "captured_at": "2025-01-25T15:10:32",
+      "latitude": 38.69875,
+      "longitude": -9.19289,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 38.69875,
+          "longitude": -9.19289,
+          "place": "Belém",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.045778
+        },
+        {
+          "rank": 2,
+          "latitude": 38.7,
+          "longitude": -9.2,
+          "place": "Santa Maria de Belém",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.032583
+        },
+        {
+          "rank": 3,
+          "latitude": 38.93793,
+          "longitude": -9.32756,
+          "place": "Mafra",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.021015
+        },
+        {
+          "rank": 4,
+          "latitude": 38.81958,
+          "longitude": -9.12007,
+          "place": "Unhos",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.020365
+        },
+        {
+          "rank": 5,
+          "latitude": 38.77478,
+          "longitude": -9.15601,
+          "place": "Lumiar",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.019444
+        },
+        {
+          "rank": 6,
+          "latitude": 39.15237,
+          "longitude": -9.2972,
+          "place": "A dos Cunhados",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.019333
+        },
+        {
+          "rank": 7,
+          "latitude": 38.87206,
+          "longitude": -9.07805,
+          "place": "Vialonga",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.017102
+        },
+        {
+          "rank": 8,
+          "latitude": 38.75141,
+          "longitude": -9.21227,
+          "place": "Damaia",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.016702
+        },
+        {
+          "rank": 9,
+          "latitude": 38.75657,
+          "longitude": -9.25451,
+          "place": "Queluz",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.016553
+        },
+        {
+          "rank": 10,
+          "latitude": 38.74134,
+          "longitude": -9.16133,
+          "place": "Sete Rios",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.016111
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9821,
+        "Spain": 0.0156,
+        "France": 0.0023
+      },
+      "top_regions": [
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.8689
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.032
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.0317
+        },
+        {
+          "region": "Setúbal",
+          "country": "Portugal",
+          "probability": 0.0105
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.0096
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260510_121401_00_179.jpg",
+      "captured_at": "2026-05-10T12:14:01",
+      "latitude": 40.14025,
+      "longitude": -7.50135,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 40.14025,
+          "longitude": -7.50135,
+          "place": "Fundão",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.022215
+        },
+        {
+          "rank": 2,
+          "latitude": 39.60289,
+          "longitude": -9.06836,
+          "place": "Nazaré",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.020911
+        },
+        {
+          "rank": 3,
+          "latitude": 39.05532,
+          "longitude": -8.24414,
+          "place": "Santo André",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.017745
+        },
+        {
+          "rank": 4,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.016984
+        },
+        {
+          "rank": 5,
+          "latitude": 39.24964,
+          "longitude": -8.01009,
+          "place": "Ponte de Sôr",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.016418
+        },
+        {
+          "rank": 6,
+          "latitude": 39.01774,
+          "longitude": -7.06497,
+          "place": "Campo Maior",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.013899
+        },
+        {
+          "rank": 7,
+          "latitude": 39.33732,
+          "longitude": -8.93906,
+          "place": "Rio Maior",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.012363
+        },
+        {
+          "rank": 8,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.012301
+        },
+        {
+          "rank": 9,
+          "latitude": 39.02788,
+          "longitude": -8.7935,
+          "place": "Salvaterra de Magos",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.011853
+        },
+        {
+          "rank": 10,
+          "latitude": 39.3558,
+          "longitude": -9.38112,
+          "place": "Peniche",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.011783
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9849,
+        "Spain": 0.0141,
+        "France": 0.001
+      },
+      "top_regions": [
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.1232
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.1222
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.1127
+        },
+        {
+          "region": "Faro",
+          "country": "Portugal",
+          "probability": 0.0858
+        },
+        {
+          "region": "Setúbal",
+          "country": "Portugal",
+          "probability": 0.081
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260510_122142_00_194.jpg",
+      "captured_at": "2026-05-10T12:21:42",
+      "latitude": 40.14025,
+      "longitude": -7.50135,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 40.14025,
+          "longitude": -7.50135,
+          "place": "Fundão",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.017927
+        },
+        {
+          "rank": 2,
+          "latitude": 39.60289,
+          "longitude": -9.06836,
+          "place": "Nazaré",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.017218
+        },
+        {
+          "rank": 3,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.016009
+        },
+        {
+          "rank": 4,
+          "latitude": 39.24964,
+          "longitude": -8.01009,
+          "place": "Ponte de Sôr",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.014725
+        },
+        {
+          "rank": 5,
+          "latitude": 39.05532,
+          "longitude": -8.24414,
+          "place": "Santo André",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.013405
+        },
+        {
+          "rank": 6,
+          "latitude": 41.76719,
+          "longitude": -8.58393,
+          "place": "Ponte de Lima",
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.013331
+        },
+        {
+          "rank": 7,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.013304
+        },
+        {
+          "rank": 8,
+          "latitude": 39.3558,
+          "longitude": -9.38112,
+          "place": "Peniche",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.013223
+        },
+        {
+          "rank": 9,
+          "latitude": 39.01774,
+          "longitude": -7.06497,
+          "place": "Campo Maior",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.01182
+        },
+        {
+          "rank": 10,
+          "latitude": 41.68192,
+          "longitude": -8.80316,
+          "place": "Darque",
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.011695
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9581,
+        "Spain": 0.04,
+        "France": 0.0019
+      },
+      "top_regions": [
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.123
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.1131
+        },
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.1
+        },
+        {
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.0778
+        },
+        {
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.0681
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260510_124804_00_218.jpg",
+      "captured_at": "2026-05-10T12:48:04",
+      "latitude": 38.7777,
+      "longitude": -7.41793,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 38.7777,
+          "longitude": -7.41793,
+          "place": "Vila Viçosa",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.019973
+        },
+        {
+          "rank": 2,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.016211
+        },
+        {
+          "rank": 3,
+          "latitude": 40.64575,
+          "longitude": -8.64643,
+          "place": "Aveiro",
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.015535
+        },
+        {
+          "rank": 4,
+          "latitude": 38.56587,
+          "longitude": -7.90405,
+          "place": "Évora",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.014293
+        },
+        {
+          "rank": 5,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.014025
+        },
+        {
+          "rank": 6,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.01374
+        },
+        {
+          "rank": 7,
+          "latitude": 40.15085,
+          "longitude": -8.86179,
+          "place": "Figueira da Foz",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.011484
+        },
+        {
+          "rank": 8,
+          "latitude": 40.9007,
+          "longitude": -8.4902,
+          "place": "São João da Madeira",
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.011291
+        },
+        {
+          "rank": 9,
+          "latitude": 40.5146,
+          "longitude": -8.49386,
+          "place": "Oliveira do Bairro",
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.01094
+        },
+        {
+          "rank": 10,
+          "latitude": 38.72134,
+          "longitude": -9.16738,
+          "place": "Campo De Ourique",
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.01064
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9975,
+        "Spain": 0.0018,
+        "France": 0.0007
+      },
+      "top_regions": [
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.2687
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.1934
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.0856
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.082
+        },
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.0508
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260510_124840_00_220.jpg",
+      "captured_at": "2026-05-10T12:48:40",
+      "latitude": 38.7777,
+      "longitude": -7.41793,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 38.7777,
+          "longitude": -7.41793,
+          "place": "Vila Viçosa",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.023751
+        },
+        {
+          "rank": 2,
+          "latitude": 40.64575,
+          "longitude": -8.64643,
+          "place": "Aveiro",
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.019177
+        },
+        {
+          "rank": 3,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.018029
+        },
+        {
+          "rank": 4,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.016978
+        },
+        {
+          "rank": 5,
+          "latitude": 38.56587,
+          "longitude": -7.90405,
+          "place": "Évora",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.016741
+        },
+        {
+          "rank": 6,
+          "latitude": 40.9007,
+          "longitude": -8.4902,
+          "place": "São João da Madeira",
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.016245
+        },
+        {
+          "rank": 7,
+          "latitude": 38.84432,
+          "longitude": -7.58585,
+          "place": "Estremoz",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.014755
+        },
+        {
+          "rank": 8,
+          "latitude": 40.15085,
+          "longitude": -8.86179,
+          "place": "Figueira da Foz",
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.014078
+        },
+        {
+          "rank": 9,
+          "latitude": 40.95527,
+          "longitude": -8.55117,
+          "place": "São João de Ver",
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.013514
+        },
+        {
+          "rank": 10,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.012902
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9985,
+        "Spain": 0.0013,
+        "France": 0.0002
+      },
+      "top_regions": [
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.2606
+        },
+        {
+          "region": "Lisbon",
+          "country": "Portugal",
+          "probability": 0.1436
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.1027
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.092
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.0822
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260605_092457_00_064.jpg",
+      "captured_at": "2026-06-05T09:24:57",
+      "latitude": 39.82364,
+      "longitude": -7.49101,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.030206
+        },
+        {
+          "rank": 2,
+          "latitude": 38.84432,
+          "longitude": -7.58585,
+          "place": "Estremoz",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.022898
+        },
+        {
+          "rank": 3,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.019262
+        },
+        {
+          "rank": 4,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.017664
+        },
+        {
+          "rank": 5,
+          "latitude": 39.24964,
+          "longitude": -8.01009,
+          "place": "Ponte de Sôr",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.017135
+        },
+        {
+          "rank": 6,
+          "latitude": 39.29379,
+          "longitude": -7.43122,
+          "place": "Portalegre",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.01593
+        },
+        {
+          "rank": 7,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.015923
+        },
+        {
+          "rank": 8,
+          "latitude": 39.01774,
+          "longitude": -7.06497,
+          "place": "Campo Maior",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.015719
+        },
+        {
+          "rank": 9,
+          "latitude": 39.05532,
+          "longitude": -8.24414,
+          "place": "Santo André",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.015692
+        },
+        {
+          "rank": 10,
+          "latitude": 40.28106,
+          "longitude": -7.50504,
+          "place": "Covilhã",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.014493
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9825,
+        "Spain": 0.0173,
+        "France": 0.0002
+      },
+      "top_regions": [
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.1305
+        },
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.1037
+        },
+        {
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.0972
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.0969
+        },
+        {
+          "region": "Coimbra",
+          "country": "Portugal",
+          "probability": 0.0859
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260605_092536_00_066.jpg",
+      "captured_at": "2026-06-05T09:25:36",
+      "latitude": 39.82364,
+      "longitude": -7.49101,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.031456
+        },
+        {
+          "rank": 2,
+          "latitude": 38.84432,
+          "longitude": -7.58585,
+          "place": "Estremoz",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.028184
+        },
+        {
+          "rank": 3,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.021294
+        },
+        {
+          "rank": 4,
+          "latitude": 39.24964,
+          "longitude": -8.01009,
+          "place": "Ponte de Sôr",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.020842
+        },
+        {
+          "rank": 5,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.018846
+        },
+        {
+          "rank": 6,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.018328
+        },
+        {
+          "rank": 7,
+          "latitude": 39.29379,
+          "longitude": -7.43122,
+          "place": "Portalegre",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.017467
+        },
+        {
+          "rank": 8,
+          "latitude": 40.28106,
+          "longitude": -7.50504,
+          "place": "Covilhã",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.016927
+        },
+        {
+          "rank": 9,
+          "latitude": 39.05532,
+          "longitude": -8.24414,
+          "place": "Santo André",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.016554
+        },
+        {
+          "rank": 10,
+          "latitude": 39.01774,
+          "longitude": -7.06497,
+          "place": "Campo Maior",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.015847
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9607,
+        "Spain": 0.0389,
+        "France": 0.0004
+      },
+      "top_regions": [
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.1132
+        },
+        {
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.1069
+        },
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.1036
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.0965
+        },
+        {
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.0876
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260813_112252_00_681.jpg",
+      "captured_at": "2026-08-13T11:22:52",
+      "latitude": 41.76719,
+      "longitude": -8.58393,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 41.76719,
+          "longitude": -8.58393,
+          "place": "Ponte de Lima",
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.022437
+        },
+        {
+          "rank": 2,
+          "latitude": 41.09741,
+          "longitude": -7.80991,
+          "place": "Lamego",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.020879
+        },
+        {
+          "rank": 3,
+          "latitude": 41.84668,
+          "longitude": -8.41905,
+          "place": "Arcos de Valdevez",
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.01494
+        },
+        {
+          "rank": 4,
+          "latitude": 41.17454,
+          "longitude": -7.05364,
+          "place": "Torre de Moncorvo",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.013984
+        },
+        {
+          "rank": 5,
+          "latitude": 40.28106,
+          "longitude": -7.50504,
+          "place": "Covilhã",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.012753
+        },
+        {
+          "rank": 6,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.012021
+        },
+        {
+          "rank": 7,
+          "latitude": 41.80716,
+          "longitude": -6.75898,
+          "place": "Bragança",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.011075
+        },
+        {
+          "rank": 8,
+          "latitude": 40.14025,
+          "longitude": -7.50135,
+          "place": "Fundão",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.010205
+        },
+        {
+          "rank": 9,
+          "latitude": 41.3001,
+          "longitude": -7.7432,
+          "place": "Vila Real",
+          "region": "Vila Real",
+          "country": "Portugal",
+          "probability": 0.010104
+        },
+        {
+          "rank": 10,
+          "latitude": 41.49692,
+          "longitude": -6.27308,
+          "place": "Miranda do Douro",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.010103
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.8249,
+        "Spain": 0.1502,
+        "France": 0.0249
+      },
+      "top_regions": [
+        {
+          "region": "Porto",
+          "country": "Portugal",
+          "probability": 0.1882
+        },
+        {
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.082
+        },
+        {
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.0763
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.065
+        },
+        {
+          "region": "Braga",
+          "country": "Portugal",
+          "probability": 0.06
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260813_112936_00_683.jpg",
+      "captured_at": "2026-08-13T11:29:36",
+      "latitude": 41.17454,
+      "longitude": -7.05364,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 41.17454,
+          "longitude": -7.05364,
+          "place": "Torre de Moncorvo",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.036311
+        },
+        {
+          "rank": 2,
+          "latitude": 41.80716,
+          "longitude": -6.75898,
+          "place": "Bragança",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.028534
+        },
+        {
+          "rank": 3,
+          "latitude": 41.53816,
+          "longitude": -6.9611,
+          "place": "Macedo de Cavaleiros",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.02071
+        },
+        {
+          "rank": 4,
+          "latitude": 41.49692,
+          "longitude": -6.27308,
+          "place": "Miranda do Douro",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.019078
+        },
+        {
+          "rank": 5,
+          "latitude": 40.28106,
+          "longitude": -7.50504,
+          "place": "Covilhã",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.015033
+        },
+        {
+          "rank": 6,
+          "latitude": 40.68137,
+          "longitude": -7.92102,
+          "place": "Abraveses",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.012577
+        },
+        {
+          "rank": 7,
+          "latitude": 40.98383,
+          "longitude": -7.61765,
+          "place": "Moimenta da Beira",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.012121
+        },
+        {
+          "rank": 8,
+          "latitude": 40.53754,
+          "longitude": -7.26631,
+          "place": "Guarda",
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.011837
+        },
+        {
+          "rank": 9,
+          "latitude": 40.66165,
+          "longitude": -7.90905,
+          "place": "Viseu",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.011686
+        },
+        {
+          "rank": 10,
+          "latitude": 41.09741,
+          "longitude": -7.80991,
+          "place": "Lamego",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.011416
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.5452,
+        "Spain": 0.3099,
+        "France": 0.1449
+      },
+      "top_regions": [
+        {
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.1262
+        },
+        {
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.1143
+        },
+        {
+          "region": "Navarre",
+          "country": "Spain",
+          "probability": 0.0685
+        },
+        {
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.0471
+        },
+        {
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.045
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260813_113355_00_685.jpg",
+      "captured_at": "2026-08-13T11:33:55",
+      "latitude": 41.17454,
+      "longitude": -7.05364,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 41.17454,
+          "longitude": -7.05364,
+          "place": "Torre de Moncorvo",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.034368
+        },
+        {
+          "rank": 2,
+          "latitude": 40.28106,
+          "longitude": -7.50504,
+          "place": "Covilhã",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.029163
+        },
+        {
+          "rank": 3,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.023332
+        },
+        {
+          "rank": 4,
+          "latitude": 41.09741,
+          "longitude": -7.80991,
+          "place": "Lamego",
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.023142
+        },
+        {
+          "rank": 5,
+          "latitude": 39.66025,
+          "longitude": -8.82475,
+          "place": "Batalha",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.022796
+        },
+        {
+          "rank": 6,
+          "latitude": 41.80716,
+          "longitude": -6.75898,
+          "place": "Bragança",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.021484
+        },
+        {
+          "rank": 7,
+          "latitude": 41.53816,
+          "longitude": -6.9611,
+          "place": "Macedo de Cavaleiros",
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.021066
+        },
+        {
+          "rank": 8,
+          "latitude": 41.76719,
+          "longitude": -8.58393,
+          "place": "Ponte de Lima",
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.020861
+        },
+        {
+          "rank": 9,
+          "latitude": 40.14025,
+          "longitude": -7.50135,
+          "place": "Fundão",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.020735
+        },
+        {
+          "rank": 10,
+          "latitude": 39.8521,
+          "longitude": -8.86349,
+          "place": "Monte Real",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.020649
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9835,
+        "Spain": 0.0159,
+        "France": 0.0006
+      },
+      "top_regions": [
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.1534
+        },
+        {
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.1179
+        },
+        {
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.1007
+        },
+        {
+          "region": "Viseu",
+          "country": "Portugal",
+          "probability": 0.0942
+        },
+        {
+          "region": "Guarda",
+          "country": "Portugal",
+          "probability": 0.0788
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260813_115036_00_695.jpg",
+      "captured_at": "2026-08-13T11:50:36",
+      "latitude": 39.82364,
+      "longitude": -7.49101,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.074082
+        },
+        {
+          "rank": 2,
+          "latitude": 38.42529,
+          "longitude": -7.53494,
+          "place": "Reguengos de Monsaraz",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.063813
+        },
+        {
+          "rank": 3,
+          "latitude": 40.28106,
+          "longitude": -7.50504,
+          "place": "Covilhã",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.053349
+        },
+        {
+          "rank": 4,
+          "latitude": 39.91893,
+          "longitude": -7.9137,
+          "place": "Oleiros",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.036139
+        },
+        {
+          "rank": 5,
+          "latitude": 38.7777,
+          "longitude": -7.41793,
+          "place": "Vila Viçosa",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.030561
+        },
+        {
+          "rank": 6,
+          "latitude": 39.66025,
+          "longitude": -8.82475,
+          "place": "Batalha",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.029689
+        },
+        {
+          "rank": 7,
+          "latitude": 40.14025,
+          "longitude": -7.50135,
+          "place": "Fundão",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.027718
+        },
+        {
+          "rank": 8,
+          "latitude": 39.74362,
+          "longitude": -8.80705,
+          "place": "Leiria",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.023957
+        },
+        {
+          "rank": 9,
+          "latitude": 38.67706,
+          "longitude": -8.45792,
+          "place": "Vendas Novas",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.023113
+        },
+        {
+          "rank": 10,
+          "latitude": 39.8521,
+          "longitude": -8.86349,
+          "place": "Monte Real",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.022792
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.9764,
+        "Spain": 0.0229,
+        "France": 0.0007
+      },
+      "top_regions": [
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.2072
+        },
+        {
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.2038
+        },
+        {
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.1928
+        },
+        {
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.054
+        },
+        {
+          "region": "Bragança",
+          "country": "Portugal",
+          "probability": 0.0486
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260911_125512_00_749.jpg",
+      "captured_at": "2026-09-11T12:55:12",
+      "latitude": 39.24964,
+      "longitude": -8.01009,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 39.24964,
+          "longitude": -8.01009,
+          "place": "Ponte de Sôr",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.055054
+        },
+        {
+          "rank": 2,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.024877
+        },
+        {
+          "rank": 3,
+          "latitude": 39.01774,
+          "longitude": -7.06497,
+          "place": "Campo Maior",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.020244
+        },
+        {
+          "rank": 4,
+          "latitude": 37.59798,
+          "longitude": -8.63972,
+          "place": "Odemira",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.018604
+        },
+        {
+          "rank": 5,
+          "latitude": 39.29379,
+          "longitude": -7.43122,
+          "place": "Portalegre",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.018195
+        },
+        {
+          "rank": 6,
+          "latitude": 38.20995,
+          "longitude": -7.8005,
+          "place": "Vidigueira",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.017215
+        },
+        {
+          "rank": 7,
+          "latitude": 40.14025,
+          "longitude": -7.50135,
+          "place": "Fundão",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.015967
+        },
+        {
+          "rank": 8,
+          "latitude": 39.82364,
+          "longitude": -7.49101,
+          "place": "Castelo Branco",
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.015933
+        },
+        {
+          "rank": 9,
+          "latitude": 39.51499,
+          "longitude": -7.64908,
+          "place": "Nisa",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.015251
+        },
+        {
+          "rank": 10,
+          "latitude": 37.87759,
+          "longitude": -8.16516,
+          "place": "Aljustrel",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.014961
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.7615,
+        "Spain": 0.2251,
+        "France": 0.0134
+      },
+      "top_regions": [
+        {
+          "region": "Extremadura",
+          "country": "Spain",
+          "probability": 0.1791
+        },
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.178
+        },
+        {
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.1471
+        },
+        {
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.1162
+        },
+        {
+          "region": "Castelo Branco",
+          "country": "Portugal",
+          "probability": 0.0576
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260911_132916_00_754.jpg",
+      "captured_at": "2026-09-11T13:29:16",
+      "latitude": 39.33732,
+      "longitude": -8.93906,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 39.33732,
+          "longitude": -8.93906,
+          "place": "Rio Maior",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.020085
+        },
+        {
+          "rank": 2,
+          "latitude": 39.24964,
+          "longitude": -8.01009,
+          "place": "Ponte de Sôr",
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.019545
+        },
+        {
+          "rank": 3,
+          "latitude": 39.16022,
+          "longitude": -8.78741,
+          "place": "Cartaxo",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.012281
+        },
+        {
+          "rank": 4,
+          "latitude": 39.47581,
+          "longitude": -8.54348,
+          "place": "Torres Novas",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.010835
+        },
+        {
+          "rank": 5,
+          "latitude": 39.46203,
+          "longitude": -8.7118,
+          "place": "Monsanto",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.009906
+        },
+        {
+          "rank": 6,
+          "latitude": 43.52974,
+          "longitude": 3.93043,
+          "place": "Palavas-les-Flots",
+          "region": "Occitanie",
+          "country": "France",
+          "probability": 0.009583
+        },
+        {
+          "rank": 7,
+          "latitude": 43.01833,
+          "longitude": 3.04995,
+          "place": "Port-La Nouvelle",
+          "region": "Occitanie",
+          "country": "France",
+          "probability": 0.009504
+        },
+        {
+          "rank": 8,
+          "latitude": 38.97919,
+          "longitude": -8.80759,
+          "place": "Benavente",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.009197
+        },
+        {
+          "rank": 9,
+          "latitude": 41.76719,
+          "longitude": -8.58393,
+          "place": "Ponte de Lima",
+          "region": "Viana do Castelo",
+          "country": "Portugal",
+          "probability": 0.009138
+        },
+        {
+          "rank": 10,
+          "latitude": 39.44472,
+          "longitude": -8.5142,
+          "place": "Riachos",
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.008181
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.4082,
+        "Spain": 0.2246,
+        "France": 0.3672
+      },
+      "top_regions": [
+        {
+          "region": "Occitanie",
+          "country": "France",
+          "probability": 0.2572
+        },
+        {
+          "region": "Santarém",
+          "country": "Portugal",
+          "probability": 0.1354
+        },
+        {
+          "region": "New Aquitaine",
+          "country": "France",
+          "probability": 0.0915
+        },
+        {
+          "region": "Portalegre",
+          "country": "Portugal",
+          "probability": 0.0434
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.0325
+        }
+      ]
+    },
+    {
+      "image": "Data/Panorama Warm-Up/IMG_20260922_172452_00_779.jpg",
+      "captured_at": "2026-09-22T17:24:52",
+      "latitude": 35.88919,
+      "longitude": -5.32042,
+      "predictions": [
+        {
+          "rank": 1,
+          "latitude": 35.88919,
+          "longitude": -5.32042,
+          "place": "Ceuta",
+          "region": "Ceuta",
+          "country": "Spain",
+          "probability": 0.044996
+        },
+        {
+          "rank": 2,
+          "latitude": 35.29369,
+          "longitude": -2.93833,
+          "place": "Melilla",
+          "region": "Melilla",
+          "country": "Spain",
+          "probability": 0.03519
+        },
+        {
+          "rank": 3,
+          "latitude": 35.87924,
+          "longitude": -5.34695,
+          "place": "Principe",
+          "region": "Ceuta",
+          "country": "Spain",
+          "probability": 0.02702
+        },
+        {
+          "rank": 4,
+          "latitude": 37.22068,
+          "longitude": -7.4435,
+          "place": "Castro Marim",
+          "region": "Faro",
+          "country": "Portugal",
+          "probability": 0.012389
+        },
+        {
+          "rank": 5,
+          "latitude": 37.13535,
+          "longitude": -8.45319,
+          "place": "Lagoa",
+          "region": "Faro",
+          "country": "Portugal",
+          "probability": 0.011194
+        },
+        {
+          "rank": 6,
+          "latitude": 39.60191,
+          "longitude": -8.81839,
+          "place": "Porto de Mós",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.010868
+        },
+        {
+          "rank": 7,
+          "latitude": 39.3558,
+          "longitude": -9.38112,
+          "place": "Peniche",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.009791
+        },
+        {
+          "rank": 8,
+          "latitude": 38.64872,
+          "longitude": -7.54708,
+          "place": "Redondo",
+          "region": "Évora",
+          "country": "Portugal",
+          "probability": 0.009753
+        },
+        {
+          "rank": 9,
+          "latitude": 38.01469,
+          "longitude": -7.86284,
+          "place": "Beja",
+          "region": "Beja",
+          "country": "Portugal",
+          "probability": 0.009498
+        },
+        {
+          "rank": 10,
+          "latitude": 39.60289,
+          "longitude": -9.06836,
+          "place": "Nazaré",
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.009179
+        }
+      ],
+      "country_probabilities": {
+        "Portugal": 0.6264,
+        "Spain": 0.336,
+        "France": 0.0376
+      },
+      "top_regions": [
+        {
+          "region": "Faro",
+          "country": "Portugal",
+          "probability": 0.1597
+        },
+        {
+          "region": "Leiria",
+          "country": "Portugal",
+          "probability": 0.0873
+        },
+        {
+          "region": "Setúbal",
+          "country": "Portugal",
+          "probability": 0.0867
+        },
+        {
+          "region": "Ceuta",
+          "country": "Spain",
+          "probability": 0.0686
+        },
+        {
+          "region": "Aveiro",
+          "country": "Portugal",
+          "probability": 0.0534
+        }
+      ]
+    }
+  ]
+}
