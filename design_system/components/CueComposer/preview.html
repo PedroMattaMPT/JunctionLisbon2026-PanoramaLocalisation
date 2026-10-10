@@ -1,0 +1,20 @@
+<!-- @dsCard group="Human loop" height=644 subtitle="Counter, ×0.8 before sending, place-name check, confirm" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CueComposer — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Empty', pad: false }, h(A.CueComposer, {})),
+  h(D.Cell, { label: 'Flagged: names a place, hints at one', pad: false }, h(A.CueComposer, { text: 'The most famous sport here is big-wave surfing, like near Porto.' })),
+  h(D.Cell, { label: 'Ready', pad: false }, h(A.CueComposer, { text: 'The wall tiles are glazed, mostly blue on white, with a repeating floral pattern.' })),
+  h(D.Cell, { label: 'Confirm step', pad: false }, h(A.CueComposer, { text: 'The wall tiles are glazed, mostly blue on white, with a repeating floral pattern.', confirm: true }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

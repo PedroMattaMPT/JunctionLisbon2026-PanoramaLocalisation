@@ -1,0 +1,18 @@
+<!-- @dsCard group="Base" height=244 subtitle="One component set, two densities" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Density — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: '1fr 1.6fr' },
+  h(D.Cell, { label: 'console', pad: false }, h(A.Density, { value: 'console' }, h(A.CandidateRow, { c: S.CASE_A.candidatesAfter[0], max: 0.8 }))),
+  h(D.Cell, { label: 'stage', pad: false }, h(A.Density, { value: 'stage' }, h(A.CandidateRow, { c: S.CASE_A.candidatesAfter[0], max: 0.8 })))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

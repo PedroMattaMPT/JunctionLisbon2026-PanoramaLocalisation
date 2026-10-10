@@ -1,0 +1,26 @@
+<!-- @dsCard group="Reasoning" height=904 width=1100 subtitle="Observed → inferred → estimate, kept apart" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EvidenceCard — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var n = S.CASE_A.matrix.names, E = S.CASE_A.evidence, f = function (id) { return E.find(function (e) { return e.id === id; }); };
+var view = h(D.Page, null, h(D.Grid, { cols: 3 },
+  h(D.Cell, { label: 'Text read · selected · with crop', pad: false }, h(A.EvidenceCard, { e: f('e2'), names: n, selected: true, crop: h(A.ZoomCrop, { c: S.CASE_A, target: 't2', width: 92, height: 60 }) })),
+  h(D.Cell, { label: 'Checklist answer', pad: false }, h(A.EvidenceCard, { e: f('e6'), names: n })),
+  h(D.Cell, { label: 'not_visible reads as “can’t tell”, not as failure', pad: false }, h(A.EvidenceCard, { e: f('e7'), names: n })),
+  h(D.Cell, { label: 'Sun and compass', pad: false }, h(A.EvidenceCard, { e: f('e11'), names: n })),
+  h(D.Cell, { label: 'Region estimate (model) with estimate line', pad: false }, h(A.EvidenceCard, { e: f('e13'), names: n })),
+  h(D.Cell, { label: 'Contradiction (solver)', pad: false }, h(A.EvidenceCard, { e: f('e15'), names: n })),
+  h(D.Cell, { label: 'Language vote · new', pad: false }, h(A.EvidenceCard, { e: f('e4'), names: n, isNew: true })),
+  h(D.Cell, { label: 'Name match', pad: false }, h(A.EvidenceCard, { e: f('e14'), names: n })),
+  h(D.Cell, { label: 'Compact (feed density)', pad: false }, h(A.EvidenceCard, { e: f('e10'), names: n, compact: true }), h(A.EvidenceCard, { e: S.CASE_B.evidence[0], compact: true }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+/* ---------- map ---------- */
+.aq-map { margin: 0; position: relative; display: flex; flex-direction: column; background: var(--map-water); max-width: 100%; }
+.aq-map > svg { display: block; max-width: 100%; height: auto; }
+.aq-map-water { fill: var(--map-water); }
+.aq-map-land { fill: var(--map-land); }
+.aq-map-land-out { fill: var(--map-land-out); }
+.aq-map-region { fill: none; stroke: var(--map-border); stroke-width: 0.75; }
+[data-density="stage"] .aq-map-region { stroke-width: 1.5; }
+.aq-map-country { fill: none; stroke: var(--map-border-country); stroke-width: 1.25; }
+[data-density="stage"] .aq-map-country { stroke-width: 2.5; }
+.aq-map-grat { stroke: var(--map-graticule); stroke-width: 0.75; }
+.aq-map-river { fill: var(--map-water); stroke: var(--map-border-country); stroke-width: 0.75; }
+.aq-map-block { fill: var(--map-border); opacity: 0.55; }
+.aq-map-street { fill: none; stroke: var(--map-border); stroke-linecap: round; stroke-linejoin: round; }
+.aq-map-place { fill: var(--map-label); font-family: var(--font-sans); font-weight: 600; paint-order: stroke; stroke: var(--map-land); stroke-width: 3px; }
+.aq-map-place.is-country { fill: var(--ink-2); font-weight: 700; letter-spacing: 0.02em; }
+.aq-map-waterlabel { fill: var(--map-label); font-family: var(--font-serif); font-style: italic; }
+.aq-map-label { fill: var(--ink-1); font-family: var(--font-sans); font-size: 11px; font-weight: 600; paint-order: stroke; stroke: var(--map-water); stroke-width: 3.5px; stroke-linejoin: round; }
+[data-density="stage"] .aq-map-label { font-size: 20px; stroke-width: 6px; }
+.aq-map-heat.is-dim, .aq-map-samples.is-dim, .aq-map-ref.is-dim { opacity: var(--opacity-dim); }
+.aq-map-samples circle { fill: var(--model); opacity: 0.85; }
+.aq-map-ref rect { fill: var(--surface-0); stroke: var(--model); }
+.aq-map-ref.is-rejected rect { stroke-dasharray: 2 2; opacity: var(--opacity-ghost); }
+.aq-map-ref.is-hover rect { fill: var(--model); }
+.aq-map-thumb > rect { fill: var(--surface-0); stroke: var(--model); stroke-width: 1.5; }
+.aq-map-thumb-ln { stroke: var(--model); stroke-width: 1.25; }
+.aq-map-area circle { fill: none; stroke: var(--select); stroke-dasharray: 6 4; }
+.aq-map-cone path { fill: var(--model); opacity: 0.22; }
+.aq-map-cone line { stroke: var(--model); stroke-width: 1.5; stroke-dasharray: 4 3; }
+
+/* rings */
+.aq-ring circle { fill: none; stroke: var(--solver); }
+.aq-ring.is-solver circle:first-child { fill: var(--solver); fill-opacity: 0.12; }
+.aq-ring.is-model circle { stroke: var(--model); }
+.aq-ring.is-unknown circle { stroke: var(--ink-1); stroke-dasharray: 3 5; fill: none; }
+.aq-ring.is-unknown .aq-ring-inner { stroke-dasharray: 2 6; opacity: 0.6; }
+.aq-ring-q { fill: var(--ink-1); font-family: var(--font-mono); font-weight: 700; paint-order: stroke; stroke: var(--map-water); stroke-width: 3px; }
+.aq-ring.is-tiny circle { stroke-width: 1.5; }
+
+/* candidate pins */
+.aq-pin-halo { fill: var(--surface-0); }
+.aq-pin-dot { fill: var(--solver); }
+.aq-pin-n { fill: var(--on-solver); font-family: var(--font-mono); font-weight: 700; }
+.aq-pin-sel { fill: none; stroke: var(--select); }
+.aq-pin.is-out .aq-pin-dot { fill: var(--surface-0); stroke: var(--contra); stroke-width: 1.5; }
+.aq-pin.is-out .aq-pin-strike { stroke: var(--contra); stroke-width: 1.75; }
+.aq-pin.is-out { opacity: 0.85; }
+
+/* surveyor's mark */
+.aq-mark-halo { fill: var(--surface-0); opacity: 0.7; }
+.aq-mark-c { fill: none; stroke: var(--solver); stroke-width: 2; }
+.aq-mark-t { fill: var(--solver); fill-opacity: 0.2; stroke: var(--solver); stroke-width: 2; stroke-linejoin: miter; }
+.aq-mark-d { fill: var(--solver); }
+.aq-mark-ticks { stroke: var(--solver); stroke-width: 2; }
+[data-density="stage"] .aq-mark-c, [data-density="stage"] .aq-mark-t, [data-density="stage"] .aq-mark-ticks { stroke-width: 3.5; }
+
+/* zones A–D: hatch + outline + letter key; identical on the question card */
+.aq-zone-fill { opacity: 0.9; }
+.aq-zone-line { fill: none; }
+.aq-zone.is-a .aq-zone-line, .aq-zone-hatch.is-a { stroke: var(--opt-a); }
+.aq-zone.is-b .aq-zone-line, .aq-zone-hatch.is-b { stroke: var(--opt-b); }
+.aq-zone.is-c .aq-zone-line, .aq-zone-hatch.is-c { stroke: var(--opt-c); }
+.aq-zone.is-d .aq-zone-line, .aq-zone-hatch.is-d { stroke: var(--opt-d); }
+.aq-zone-hatch { opacity: 0.6; }
+.aq-zone.is-dim { opacity: 0.35; }
+.aq-zone.is-rest .aq-zone-fill { opacity: 0.45; }
+.aq-zone.is-chosen .aq-zone-fill { opacity: 1; }
+.aq-zone-pt.is-a .aq-zone-key { fill: var(--opt-a); } .aq-zone-pt.is-b .aq-zone-key { fill: var(--opt-b); }
+.aq-zone-pt.is-c .aq-zone-key { fill: var(--opt-c); } .aq-zone-pt.is-d .aq-zone-key { fill: var(--opt-d); }
+.aq-zone-key { stroke: var(--surface-0); stroke-width: 2; }
+.aq-zone-letter { fill: var(--on-opt-a); font-family: var(--font-mono); font-weight: 700; }
+
+/* scale, offline, legend, inset */
+.aq-map-scale path { stroke: var(--ink-1); }
+.aq-map-scale text { fill: var(--ink-1); font-family: var(--font-mono); }
+.aq-map-scale-bg { fill: var(--map-water); opacity: 0.85; }
+.aq-map-offline { position: absolute; top: var(--space-2); left: var(--space-2); display: inline-flex; align-items: center; gap: var(--space-1); padding: 2px var(--space-2); border-radius: var(--radius-1); background: var(--surface-0); color: var(--ink-1); border: var(--aq-line) solid var(--cost); }
+.aq-map-offline .aq-icon { color: var(--cost); width: calc(var(--aq-icon) * 0.85); height: calc(var(--aq-icon) * 0.85); }
+.aq-legend { list-style: none; margin: 0; padding: var(--space-2) var(--space-3); display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); background: var(--surface-1); color: var(--ink-2); border-top: var(--aq-line) solid var(--line-1); }
+.aq-legend li { display: inline-flex; align-items: center; gap: var(--space-1); }
+.aq-lg-sample { fill: var(--model); } .aq-lg-ref { fill: var(--surface-0); stroke: var(--model); stroke-width: 1.5; }
+.aq-lg-cand { fill: var(--solver); } .aq-lg-candn { fill: var(--on-solver); font: 700 8px var(--font-mono); }
+.aq-lg-out { fill: none; stroke: var(--contra); stroke-width: 1.5; } .aq-lg-outl { stroke: var(--contra); stroke-width: 1.5; }
+.aq-lg-ring { fill: none; stroke: var(--solver); stroke-width: 1.5; } .aq-lg-ringu { fill: none; stroke: var(--ink-1); stroke-width: 1.5; stroke-dasharray: 2 3; }
+.aq-lg-final { fill: none; stroke: var(--solver); stroke-width: 1.75; } .aq-lg-cone { fill: var(--model); opacity: 0.5; }
+.aq-lg-za { fill: none; stroke: var(--opt-a); stroke-width: 1.5; } .aq-lg-zb { fill: none; stroke: var(--opt-b); stroke-width: 1.5; }
+.aq-inset { position: absolute; top: var(--space-2); right: var(--space-2); border: var(--aq-line) solid var(--line-2); background: var(--map-water); }
+.aq-inset > svg { display: block; }
+.aq-inset-box { fill: none; stroke: var(--select); stroke-width: 1.5; }
+.aq-inset-l { position: absolute; left: 4px; bottom: 2px; color: var(--ink-2); }
+
+/* uncertainty ring specimen */
+.aq-uring { margin: 0; display: inline-flex; align-items: center; gap: var(--space-3); }
+.aq-ring-shape { fill: var(--solver-soft); stroke: var(--solver); stroke-width: 2; }
+.aq-ring-shape.is-unknown { fill: none; stroke: var(--ink-1); stroke-dasharray: 4 6; }
+.aq-ring-shape.is-inner { fill: none; stroke: var(--ink-3); stroke-dasharray: 2 6; }
+.aq-ring-dot { fill: var(--solver); } .aq-ring-rad { stroke: var(--solver); stroke-width: 1; stroke-dasharray: 2 2; }
+.aq-ring-q2 { fill: var(--ink-1); font: 700 16px var(--font-mono); }

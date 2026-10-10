@@ -1,0 +1,19 @@
+<!-- @dsCard group="Shell" height=104 subtitle="GB used of 16, resident models as segments" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GpuMeter — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var m = S.ROSTER.filter(function (r) { return r.state === 'resident' || r.state === 'running'; });
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Normal (segments = resident models)' }, h(A.GpuMeter, { used: 12.6, models: m })),
+  h(D.Cell, { label: 'Above 14 GB' }, h(A.GpuMeter, { used: 14.6 }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

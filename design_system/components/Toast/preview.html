@@ -1,0 +1,20 @@
+<!-- @dsCard group="Base" height=204 subtitle="Reports something that happened and is in the log" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Toast — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, null, h(A.Toast, { tone: 'cost', title: 'Answered A · multiplier now ×0.95', body: 'Logged at 03:32. Applies to every guess from now on.' })),
+  h(D.Cell, null, h(A.Toast, { tone: 'contra', title: 'Describe timed out after 45 s', body: 'Fallback ran: Gemma 4 12B. The run continues.', action: 'Show stage' })),
+  h(D.Cell, null, h(A.Toast, { tone: 'neutral', icon: 'skip', title: 'Skipped · nothing changed', body: 'Beliefs and multiplier are exactly as before.' })),
+  h(D.Cell, null, h(A.Toast, { tone: 'team', icon: 'copy', title: 'Copied 41.14081, −8.61315', body: 'Order: latitude, longitude.' }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- @dsCard group="Base" height=104 subtitle="One choice of a few, e.g. the Urban label" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Segmented — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Urban label' }, h(A.Segmented, { value: 'urban', options: [{ id: 'urban', label: 'Urban' }, { id: 'non-urban', label: 'Non-urban' }, { id: 'unknown', label: 'Unknown' }] })),
+  h(D.Cell, { label: 'Ruler mode' }, h(A.Segmented, { value: 'bearing', options: [{ id: 'yaw', label: 'Camera yaw' }, { id: 'bearing', label: 'True bearing' }] }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

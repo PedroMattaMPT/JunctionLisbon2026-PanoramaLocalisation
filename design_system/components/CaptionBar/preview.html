@@ -1,0 +1,18 @@
+<!-- @dsCard group="Reasoning" height=334 width=1440 subtitle="Plain-language captions from templates, one per event type" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CaptionBar — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, { pad: false }, h(D.Grid, { cols: 1, gap: 12 },
+  h(D.Cell, { label: 'Stage', pad: false }, h(A.Density, { value: 'stage' }, h(A.CaptionBar, { headline: 'Reading signs', caption: 'A postcode in a format only Portugal uses', source: 'PP-OCRv6-medium', t: 41.2, speed: 2 }))),
+  h(D.Cell, { label: 'Console', pad: false }, h(A.CaptionBar, { headline: 'Weighing the evidence', caption: 'Three sources point to Porto; one landmark guess disagrees and is outweighed', actor: 'solver', source: 'Solver', t: 86.1 }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

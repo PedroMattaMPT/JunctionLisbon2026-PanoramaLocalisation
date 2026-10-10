@@ -1,0 +1,18 @@
+<!-- @dsCard group="Charts" height=194 subtitle="Expected gain against the 5.26% break-even (25% for a cue)" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GainMeter — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Worth asking', pad: false }, h('div', { style: { width: '100%' } }, h(A.GainMeter, { gain: 0.19, cueLine: true }))),
+  h(D.Cell, { label: 'Not worth asking', pad: false }, h('div', { style: { width: '100%' } }, h(A.GainMeter, { gain: 0.03 })))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

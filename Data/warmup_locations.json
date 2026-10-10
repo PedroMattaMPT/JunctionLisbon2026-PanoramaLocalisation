@@ -1,0 +1,555 @@
+[
+  {
+    "file": "IMG_20241213_120841_00_059.jpg",
+    "lat": 40.7,
+    "lon": -7.38,
+    "error_radius_m": 60000,
+    "confidence": "low",
+    "place": "UNIDENTIFIED granite village centre in interior north-central Portugal, most likely Beira Alta (Guarda district plateau: Trancoso / Celorico da Beira / Fornos de Algodres / Aguiar da Beira area). Camera stands on cobbled granite setts beside a detached square granite bell tower built on a mossy granite boulder, next to a granite churchyard/precinct wall with an iron gate topped by a stone cross and pyramidal ball pinnacles, and a long whitewashed building with granite cornice and small high square windows.",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 122,
+    "evidence": [
+      "Text: 'VENDE-SE [phone redacted]' (PT mobile) with a second number starting [French +33 number, redacted] (French prefix -> emigrant owner, typical of Beira Interior / Tras-os-Montes); manhole cover 'SANEAMENTO'; PT-style 'sem saida' (dead-end) sign; Peugeot 206 with an unreadable plate",
+      "Architecture: granite-sett streets with granite outcrops breaking through the paving; casa beira with a covered alpendre on a single granite column over a massive granite lintel and ground-floor lojas with green mesh doors; mixed rubble/ashlar granite houses",
+      "Church complex: detached square ashlar bell tower with corner pilasters, mid-height cornice, upper stage with one grilled rectangular opening, low hipped tiled roof with corner ball finials and an iron cross, standing on a large granite boulder; granite precinct wall with a gate under a stone cross flanked by pyramidal pinnacles with balls (17th-18th c. Beira style); behind it a granite church roof with pinnacles",
+      "Sun: overcast; brightest sky region at yaw ~+52 (pitch ~36, cloud glow; true sun elevation at 12:08 UTC/local on 13 Dec at 40.5N is ~26 deg, azimuth ~174) -> yaw 0 ~ bearing 122 +/- 20 deg (camera clock = local time in December, UTC+0)",
+      "Ruled out by comparing photos: Mata de Lobos, Sortelha (belfry is a bell gable on the wall), Sernancelhe, Belmonte, Castelo Mendo, Castelo Rodrigo, Penela da Beira, Penedono, Meda, Fonte Arcada, Pinhel, Almeida, Mogadouro, Retaxo, Pero Viseu, Caria, Poiares (Freixo; schist), Sarzedas (schist), Folgosinho, Celorico da Beira matriz; plus satellite thumbnails of 93 OSM bell towers that sit just outside a church outline with the church to their S"
+    ],
+    "method": "No exact fix. Region from architecture/materials/emigration clue; heading from the sun glow only. Identification attempts: web search (PT phrasings for detached bell tower on a boulder), Wikimedia Commons categories and a 19,570-file geosearch grid over Beira Alta (40.05-41.30N, 8.15-6.80W) filtered for tower/bell titles, OSM Overpass (762 bell towers + 11,209 church outlines N/Central PT; clock towers), Wikidata. The tower is apparently neither mapped as a separate OSM bell tower nor photographed under a findable Commons title. Next step for a human: search the SIPA inventory or Google Street View/Mapillary for 'torre sineira' + 'penedo' in Guarda/Viseu villages, or ask the team (MCQ) for the district.",
+    "alternatives": [
+      {
+        "lat": 40.8,
+        "lon": -7.65,
+        "place": "Viseu district east (Satao / Penalva do Castelo / Vila Nova de Paiva / Moimenta da Beira)",
+        "why": "same casa beira granite vernacular and baroque rural churches"
+      },
+      {
+        "lat": 40.45,
+        "lon": -7.6,
+        "place": "Serra da Estrela N/W slopes villages (Gouveia / Seia / Manteigas)",
+        "why": "granite villages built on outcrops"
+      },
+      {
+        "lat": 40.35,
+        "lon": -7.15,
+        "place": "Sabugal / Guarda south / Cova da Beira granite villages",
+        "why": "granite outcrop villages, high emigration to France"
+      },
+      {
+        "lat": 41.55,
+        "lon": -7.65,
+        "place": "Tras-os-Montes granite (Vila Pouca de Aguiar / Boticas / Montalegre / Chaves)",
+        "why": "granite villages, detached towers occur, high emigration to France"
+      },
+      {
+        "lat": 40.9,
+        "lon": -7.1,
+        "place": "Guarda district NE (Figueira de Castelo Rodrigo / Pinhel / Meda)",
+        "why": "granite plateau villages; checked towns there do not match but many villages unchecked"
+      }
+    ],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20250104_082423_00_095.jpg",
+    "lat": 44.359985,
+    "lon": -0.76093,
+    "error_radius_m": 5,
+    "confidence": "high",
+    "place": "Moustey (Landes, Nouvelle-Aquitaine, France) - lawn between the two churches, ~6 m north of the NE corner of the tall east block of the Ancienne église Notre-Dame (museum), facing Église Saint-Martin",
+    "urban": true,
+    "country": "FR",
+    "heading_yaw0_deg": 12.5,
+    "evidence": [
+      "Two Romanesque churches ~25 m apart on one lawn with plane trees, wooden bollards, picnic tables: matches Moustey's unique pair (Notre-Dame PA00083987 + Saint-Martin PA00083988).",
+      "Behind camera (yaw -190..-103): pock-marked garluche (ironstone) walls, buttresses, bell-gable cross far end = Notre-Dame, matches Commons 'Moustey (Landes) eglise Notre-Dame PA00083987 (01)'.",
+      "Ahead (yaw 5..62): round stair turret + pyramidal stone spire = Saint-Martin, matches Commons Saint-Martin photos (c1, c4, d4, d6).",
+      "Eave line of the tall ND wall fits a horizontal line with perpendicular foot at yaw 170.5 +/-0.3 (rms 0.003 in tan) -> orientation; corner/junction at yaw 174.0 / -145.7 -> camera 5.9 m from wall, ~0.4 m east of its NE corner.",
+      "Independent far landmarks fit the same point: barn (OSM 478954234) W end predicted 161.6-162.0 vs measured 162.0; stone house across the road (OSM 478953858) E edge -36.3 vs -36.3; yellow 'Restaurant Le Domaine' -110..-94 vs -105..-95; Saint-Martin 4.9..61.6 vs ~8..58.",
+      "No readable text; no metadata. Timing consistent: 08:24 UTC = 09:24 CET, sun 5.7 deg up behind overcast."
+    ],
+    "method": "Identified via Overpass (two MH churches in Moustey) + Wikimedia Commons photos; pinned by resection: 3 ND observations (corner, junction, eave-normal) solve E/N/heading exactly (chi2 0.08); joint least-squares with barn, stone house and restaurant edges (OSM cadastre footprints, IGN BD ORTHO for context) gives the same point to 0.2 m. Cadastre footprints sit ~1.7 m south of IGN roof edges (roof overhang + lean), hence 5 m radius.",
+    "alternatives": [
+      {
+        "lat": 44.359958,
+        "lon": -0.76092,
+        "place": "same lawn, 3 m SSE",
+        "why": "solution from far landmarks only (restaurant edges conflict at 3 sigma); within error radius"
+      }
+    ],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20250125_142313_00_141.jpg",
+    "lat": 38.709983,
+    "lon": -9.130928,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Rua do Barão (east part, near no. 14 / CAL office, opposite the building under renovation), Sé, Lisboa",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 82,
+    "evidence": [
+      "Green arched garage door 'CAL' + 'CENTRO DE ARQUEOLOGIA DE LISBOA' (CML archaeology centre; its historic-centre support office is on Rua do Barão)",
+      "Door number '14' on the same tiled building; Romanian Cultural Institute (Rua do Barão 8-10, OSM) is the next building east",
+      "Banners 'VEIGA DE MAGO gestão e investimento' and 'SALVARIA remodelação, reabilitação e construção de edifícios' on the azulejo building opposite; that building (OSM way 96630694) has a blue tarp roof in Esri imagery",
+      "Long straight uphill street to the west with cars parked on the south side, long ochre building at its end (matches Commons photo 'Callecita Lisboa' geotagged on Rua do Barão)",
+      "Street ends ~25 m east where Rua do Barão bends south to Rua de São João da Praça"
+    ],
+    "method": "Bearing resection against OSM building corners (CAL building east end, renovation building east/west ends, end-of-street building, far street direction): 5 bearings, RMS 1.0 deg, camera ~2.5 m from the north facade",
+    "alternatives": [
+      {
+        "lat": 38.709977,
+        "lon": -9.13073,
+        "place": "Rua do Barão ~17 m further east (in front of no. 8-10)",
+        "why": "fit if the CAL facade were the next OSM building east; rejected (RMS 3.5 deg, inconsistent with renovation-building ends)"
+      }
+    ],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20250125_142634_00_170.jpg",
+    "lat": 38.709625,
+    "lon": -9.130633,
+    "error_radius_m": 5,
+    "confidence": "high",
+    "place": "Rua de São João da Praça, in front of nos. 65-71 (Kalasin Thai Massage), opposite the Igreja de São João da Praça, Lisboa",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 268,
+    "evidence": [
+      "'KALASIN Thai Massage' at door numbers 65/67, doors 69 and 71 on the same yellow building",
+      "No-parking sign 'EXCEPTO IGREJA' and the white church with blind stone-framed panels and side door with steps = Igreja de São João da Praça (OSM no. 70)",
+      "'ALFAMA SOUVENIR' shop (OSM Rua de São João da Praça 57) and 'PINTURA com café e vinho tinto' at the church's SE corner where the street turns north",
+      "'Zitto e Magna' chalkboard and P sign next to a blue-tiled building to the west"
+    ],
+    "method": "Bearing resection on church SE corner, Alfama Souvenir building NW/SW corners and the yellow building's two ends (OSM way 96595195): RMS 0.35 deg",
+    "alternatives": [],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20250125_142634_00_209.jpg",
+    "lat": 38.709548,
+    "lon": -9.132237,
+    "error_radius_m": 8,
+    "confidence": "high",
+    "place": "Cruzes da Sé, south side of Lisbon Cathedral cloister, in front of no. 11, ~15 m west of the Travessa do Almargem / Rua de São João da Praça junction",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 268,
+    "evidence": [
+      "Crenellated, buttressed Gothic wall of the Sé de Lisboa chevet/cloister with construction hoarding and a tower crane (cloister works), orange trees",
+      "Door numbers 11 and 13 on Cruzes da Sé; the azulejo-panel facade is 'Edifício na Rua das Cruzes da Sé, n.º 13 a 15'",
+      "Flatiron building with café terrace (Pois Café block, Rua de São João da Praça 93-103) between Rua de São João da Praça and Travessa dos Machados",
+      "Dead-end sign at Travessa do Almargem; no tram rails (rules out Rua Augusto Rosa on the north side)"
+    ],
+    "method": "Bearing resection on OSM corners (cathedral wall end, flatiron front face, Caso Sério block corner, azulejo building ends): RMS 1.4-2 deg",
+    "alternatives": [
+      {
+        "lat": 38.709525,
+        "lon": -9.13218,
+        "place": "Cruzes da Sé ~6 m further east, near the junction",
+        "why": "OSM footprint of the Caso Sério block disagrees by ~3 m with the observed gap into Travessa do Almargem"
+      }
+    ],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20250125_144630_00_319.jpg",
+    "lat": 38.70831,
+    "lon": -9.13583,
+    "error_radius_m": 8,
+    "confidence": "high",
+    "place": "Praça do Comércio, NE corner: road edge where the north-side road meets the east wing, opposite Rua da Prata, Lisboa",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 350.5,
+    "evidence": [
+      "Arco da Rua Augusta at yaw -71.5, equestrian statue of D. José I at -138.9, west wing and Torreão Poente across the square",
+      "East wing arcade with 'MUSEU DA CERVEJA / BEER MUSEUM' sign at yaw +71 and café terraces",
+      "Rua da Prata with tram rails running north at yaw -3; Martinho da Arcada corner building under scaffolding",
+      "Sun at yaw -138.3, elevation 25 deg vs predicted azimuth 211.2 / elevation 26.2 at 14:46 UTC -> yaw0 = 349.5"
+    ],
+    "method": "Resection on statue, arch and Beer Museum bearings with sun-heading prior: RMS 0.5 deg (statue+arch only gives a point 4 m away)",
+    "alternatives": [],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20250125_151032_00_611.jpg",
+    "lat": 38.706764,
+    "lon": -9.136948,
+    "error_radius_m": 5,
+    "confidence": "high",
+    "place": "Praça do Comércio, south edge by Av. Infante D. Henrique, ~23 m east of the Torreão Poente (SW corner of the square), Lisboa",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 252.5,
+    "evidence": [
+      "Torreão Poente east facade filling yaw +3.5..+47, west wing arcades receding north",
+      "Arco da Rua Augusta at yaw +112.1, statue of D. José I at +134 with São Jorge castle hill behind, Torreão Nascente at ~+177",
+      "Tagus river, quay wall and riverside road on the opposite side (yaw -170..-20)",
+      "Sun at yaw -37, elevation 22 deg vs predicted azimuth 216.8 / elevation 23.6 at 15:10 UTC -> yaw0 = 253.8 (fit gives 252.5)"
+    ],
+    "method": "Resection on torreão SE/NE corners, arch and statue (OSM), sun prior: RMS 0.6 deg",
+    "alternatives": [],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20260510_121401_00_179.jpg",
+    "lat": 38.737902,
+    "lon": -9.106212,
+    "error_radius_m": 8,
+    "confidence": "high",
+    "place": "Stone arch road bridge (Pátio do Marialva) over the Linha do Norte railway cutting, next to the Mirante da Quinta do Marquês de Marialva, Marvila, Lisbon",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 31,
+    "evidence": [
+      "Ochre octagonal tower with balcony and green-tiled lantern dome at yaw -168 = OSM way 678232647 'Mirante da Quinta do Marquês de Marialva' (man_made=tower, 38.73765,-9.10664)",
+      "Camera stands on a road bridge with mesh-fence parapets directly above a straight double-track electrified line in a deep limestone cutting (Geomonumento da Rua Capitão Leitão); tracks recede at yaw -15 and +165",
+      "Tagus estuary, Lisbon port cranes, Vasco da Gama bridge silhouette and a brick chimney visible to the E/SE over Marvila/Poço do Bispo rooftops",
+      "Pátio do Marialva lane with parked cars and sheds recedes WNW from the bridge at yaw -100 (OSM bearing 293 deg)"
+    ],
+    "method": "Located via OSM API map call (Overpass timed out): only footway/road bridge over the Linha do Norte here is way 241315554 (Pátio do Marialva, 20 m long). Rails bearing 16.5 deg (OSM + Esri imagery) vs track vanishing yaw -15 gives yaw0 = 31 deg; tower bearing from the bridge midpoint predicted 221 deg vs observed 223.5 deg. Position along the bridge set above the track centreline (rails cross the bridge 7-10 m from its west end), 1.5 m north of the deck centreline (north parapet right below the camera).",
+    "alternatives": [
+      {
+        "lat": 38.737914,
+        "lon": -9.106283,
+        "place": "west end of the same bridge",
+        "why": "along-bridge position uncertainty"
+      }
+    ],
+    "used_other_panoramas": "none for the location. Sun check: in #179 (clear sun disc) and #194 (sun glow) the measured sun bearing/elevation match the filename time read as UTC (az 167.7/el 68.6 and 172.6/68.8) and NOT as WEST/UTC+1 (az 135/el 63); camera clock for this cluster looks like UTC."
+  },
+  {
+    "file": "IMG_20260510_122142_00_194.jpg",
+    "lat": 38.73789,
+    "lon": -9.106047,
+    "error_radius_m": 10,
+    "confidence": "high",
+    "place": "East rim of the Linha do Norte cutting just NE of the Pátio do Marialva arch bridge (edge of the Geomonumento da Rua Capitão Leitão), Marvila, Lisbon",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 212,
+    "evidence": [
+      "Side view of the masonry arch bridge over the double track in a rock cutting, with the same ochre lantern tower (Mirante da Quinta do Marquês de Marialva) behind it at yaw +23",
+      "Cars parked on the bridge deck and the Pátio do Marialva lane with sheds continuing beyond its far (west) end",
+      "Tracks recede NNE at yaw +165 with the white warehouses on the west rim and orange-roofed houses on the east side, as seen from the bridge in the sibling-independent geometry"
+    ],
+    "method": "Track vanishing point (yaw +165) vs OSM rail bearing 16.5 deg -> yaw0 = 212 deg. Intersected bearings to the tower centre (235.6 deg) and the bridge west end (275.4 deg) -> camera 23.5 m E / 2 m S of the bridge west node; check: bridge arch centre predicted at 267 deg, observed 267 deg.",
+    "alternatives": [
+      {
+        "lat": 38.737937,
+        "lon": -9.106088,
+        "place": "path at the bridge's east abutment",
+        "why": "bearing-intersection uncertainty (short baseline)"
+      }
+    ],
+    "used_other_panoramas": "none for the location. Sun check: in #179 (clear sun disc) and #194 (sun glow) the measured sun bearing/elevation match the filename time read as UTC (az 167.7/el 68.6 and 172.6/68.8) and NOT as WEST/UTC+1 (az 135/el 63); camera clock for this cluster looks like UTC."
+  },
+  {
+    "file": "IMG_20260510_124804_00_218.jpg",
+    "lat": 38.742717,
+    "lon": -9.102062,
+    "error_radius_m": 7,
+    "confidence": "high",
+    "place": "Poço do Bispo, Marvila, Lisbon: road at the rounded SE corner of the yellow Art Nouveau building, junction of Rua Fernando Palha / Rua Amorim / Praça David Leandro da Silva",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 356,
+    "evidence": [
+      "Lettering 'ABEL PEREIRA DA FONSECA' over the round barrel window of the wine warehouse (Armazéns Abel Pereira da Fonseca), 'Porto de Lisboa' sign beside it",
+      "Construction hoarding 'Timeless. Modern. Yours.' / 'A sua História começa aqui ... MARVILA' on the corner block NE of the junction",
+      "Dark-green cast-iron urinal kiosk (OSM 'Urinol Público Masculino do Poço do Bispo') and red-brick octagonal azulejo kiosk under jacarandas; disused tram rails in the road"
+    ],
+    "method": "OSM API data around Praça David Leandro da Silva (Nominatim 38.74228,-9.10220). Bearings: Rua Amorim vanishing yaw 114.9 vs street bearing 110.5; urinal yaw -146 and brick kiosk yaw -126 vs OSM centroids -> yaw0 = 356-357. Camera 4.5 m SE of the rounded corner of OSM building 241096932 (yellow building, corner seen at yaw -24, ~4 m away in the ground view).",
+    "alternatives": [
+      {
+        "lat": 38.742676,
+        "lon": -9.102027,
+        "place": "centre of the junction",
+        "why": "few-metre uncertainty"
+      }
+    ],
+    "used_other_panoramas": "none for the location; afterwards triangulated the 'Porto de Lisboa' sign from #218 and #220 as a consistency check (lands ~6 m from the warehouse NW corner), no change."
+  },
+  {
+    "file": "IMG_20260510_124840_00_220.jpg",
+    "lat": 38.742641,
+    "lon": -9.102084,
+    "error_radius_m": 7,
+    "confidence": "high",
+    "place": "Praça David Leandro da Silva, Poço do Bispo, Marvila, Lisbon: road on the old tram rails between the urinal kiosk and the Abel Pereira da Fonseca facade",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 258,
+    "evidence": [
+      "'ABEL PEREIRA DA FONSECA' round-window facade very close at yaw -120..-96, 'Porto de Lisboa' sign, Rua Amorim with the long warehouse receding at yaw -147",
+      "Green urinal kiosk (yaw -22, ~5 m) and red-brick azulejo kiosk (yaw +2, ~11 m) under jacarandas; yellow Art Nouveau building with green door at yaw 64-95",
+      "Camera stands on curving disused tram rails (OSM railway=disused 1175479561)"
+    ],
+    "method": "Rua Amorim vanishing point -> yaw0 = 257.5 deg; intersected bearings to the two OSM kiosk centroids -> camera (-5.9 E, -1.9 N) m from the junction node; check: yellow building south facade predicted at yaw 63-97, observed 64-95.",
+    "alternatives": [
+      {
+        "lat": 38.742613,
+        "lon": -9.10205,
+        "place": "Praça east carriageway in front of the warehouse",
+        "why": "few-metre uncertainty"
+      }
+    ],
+    "used_other_panoramas": "none for the location; sun hidden behind cloud (brightest glow at yaw -78, pitch +68, closer to the UTC-clock hypothesis than to UTC+1)."
+  },
+  {
+    "file": "IMG_20260605_092457_00_064.jpg",
+    "lat": 40.606181,
+    "lon": -6.828933,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Vilar Formoso railway station (Linha da Beira Alta, Almeida, Guarda), platform 1 café terrace under the canopy along the azulejo façade, ~11 m west of the main building's east end",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 91.8,
+    "evidence": [
+      "Station name board on the island-platform canopy reads 'Vilar Formoso' (zoom at yaw +75, pitch +9)",
+      "Blue-and-yellow framed azulejo panels on the façade: 'Viseu - Porta dos Cavaleiros' (yaw -151..-127) and 'Um pastor da serra' (yaw -57..-29); 'Cafetaria / Coffee Shop' sign",
+      "Wikimedia Commons photos of Vilar Formoso station (blue steel island canopy, granite columns, tiled pavilion 'PORTUGAL VILAR FORMOSO') match",
+      "OSM station building way 224285793 (51 m x 10 m) borders the camera's platform",
+      "Clock test not possible: sun hidden by the canopy; heading comes from geometry only"
+    ],
+    "method": "Free resection from 4 features south of the tracks whose positions were read on Esri z19 imagery: NE and NW corners of the long single-storey goods building, the old railway water tower in front of it, and the small hipped-roof house (yaws 88.0, 136.2, 121.4, 77.0). rms 0.08 deg, leave-one-out shifts <= 0.7 m. Cross-checks: green door in front of the camera then measures 1.6 m wide at 1.7 m from the wall; the façade line-of-sight end (yaw -1.8) falls on the flat-roofed annex east of the main building.",
+    "alternatives": [
+      {
+        "lat": 40.606208,
+        "lon": -6.829104,
+        "place": "Station building centroid (OSM)",
+        "why": "fallback if the resection features were misidentified; ~15 m west"
+      }
+    ],
+    "used_other_panoramas": "none (fixed from its own content); afterwards #066 was resected independently and lands 2.1 m west, at the seat by the Viseu panel where the man sits in #064"
+  },
+  {
+    "file": "IMG_20260605_092536_00_066.jpg",
+    "lat": 40.606186,
+    "lon": -6.828957,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Vilar Formoso railway station, platform 1 café terrace, at the table beside the 'Viseu - Porta dos Cavaleiros' azulejo panel and the café door (menu board)",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 236.9,
+    "evidence": [
+      "Same station: granite-column canopy, azulejo façade, island platform with a blue steel canopy and its white name board (yaw ~-77)",
+      "Camera ~0.8 m from the 'Viseu - Porta dos Cavaleiros' panel (fills yaw 85..185), café door with chalk menu board at yaw ~+75",
+      "Clock test not possible: sun hidden by the canopy; heading from geometry"
+    ],
+    "method": "Independent free resection with the same 4 south-side features (long goods building NE/NW corners at yaw -59.4/-10.2, water tower -26.1, small house -70.2). rms 0.18 deg, leave-one-out shifts <= 2.0 m.",
+    "alternatives": [
+      {
+        "lat": 40.606208,
+        "lon": -6.829104,
+        "place": "Station building centroid (OSM)",
+        "why": "fallback; ~13 m west"
+      }
+    ],
+    "used_other_panoramas": "Station identity and position come from its own content (name board visible, own resection). Only as a consistency check: #064 (39 s earlier) resects 2.1 m east, as expected."
+  },
+  {
+    "file": "IMG_20260813_112252_00_681.jpg",
+    "lat": 39.747502,
+    "lon": -8.809244,
+    "error_radius_m": 8,
+    "confidence": "high",
+    "place": "Castelo de Leiria, Leiria (PT): lit cobbled path in the castle's northern enclosure (praca de armas), between the medieval granaries (Silos / Celeiros Medievais) and the white stone bench at the path junction",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 20,
+    "evidence": [
+      "Low stone wall topped by a salmon-pink floor at yaw -96..-66 deg = east wall of the Silos (OSM walls x<=21.9 m; pink rectangle in Esri imagery); predicted yaw -95..-62 deg from the fitted point",
+      "White stone bench block on a white slab platform ~8-10 m to the E (yaw 52-74 deg), matching a white object in Esri z19 imagery at the junction of the OSM footways (39.74752,-8.80913)",
+      "View NNE-NE (yaw 0-30 deg) over Leiria with a large car park and the castle's crenellated north wall below; round crenellated tower (Torre dos Sinos area) high up through the trees to the SSE (yaw 128-140 deg, top at pitch +27 deg); lamp posts at yaw -30 and +86 deg, ~5 m",
+      "Heading from shadows (two people's shadows point to yaw -57..-61 deg -> sun at yaw ~121 deg) with UTC clock (az 140.7 deg) = 20 deg; UTC+1 (heading ~0 deg) misplaces the Silos by ~20 deg. The sun disc itself is unusable here (sky saturated over yaw 75-160)"
+    ],
+    "method": "North-up ground-plane reprojection (h ~2.3 m) at heading 20 deg overlaid on OSM API data and Esri imagery; position fixed by the bench platform (bearing ~77 deg, ~10 m), the Silos east wall angular span, the two lamp posts and the cobbled path (camera on the path's south edge; OSM path line ~2 m south of the visible cobbles)",
+    "alternatives": [
+      {
+        "lat": 39.74748,
+        "lon": -8.80925,
+        "place": "same path ~2.5 m further south (on the OSM footway line)",
+        "why": "OSM centreline of footway 535288492 vs. visible cobble band"
+      }
+    ],
+    "used_other_panoramas": "none for the position; UTC clock reading taken from #695/#683/#685 geometry and the coordinator's cross-set confirmation"
+  },
+  {
+    "file": "IMG_20260813_112936_00_683.jpg",
+    "lat": 39.747025,
+    "lon": -8.809906,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Castelo de Leiria, Leiria (PT): narrow cobbled west lane between the citadel wall and the outer west wall, right beside the Porta da Traicao sally port",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 101,
+    "evidence": [
+      "Information sign reading 'Porta da Tr...' next to a low arched opening closed by an iron grille, ~2 m from the camera (OSM node 'Porta da Traicao', sally_port, access=no, at 39.7470188,-8.809926)",
+      "Straight cobbled lane between high rubble-masonry walls running yaw +85 (south, rising, crenellations at the far end) to yaw -100 (north); at the north end a small arched gate with the city visible through it and a tower with a twin-arched window",
+      "Curved (round-tower) masonry right beside the camera to the W-NW; stairs rising on the east side towards the north enclosure",
+      "Sun at yaw ~+42, pitch ~60. UTC clock: az 143.5 -> heading ~101 deg, which aligns the lane with the OSM west-lane axis (~184 deg); UTC+1 (heading ~80 deg) would put the north gate outside the outer wall"
+    ],
+    "method": "Sign text + grilled sally port identify the OSM Porta da Traicao; camera placed ~2 m east of it in the lane (sally port at bearing ~250-270 deg with the UTC-sun heading), north gate ~12 m away from its angular size",
+    "alternatives": [
+      {
+        "lat": 39.74706,
+        "lon": -8.809895,
+        "place": "a few metres further north in the same lane",
+        "why": "distance to the north gate estimated only from its angular size"
+      }
+    ],
+    "used_other_panoramas": "none for the position; UTC clock reading consistent with #695 geometry"
+  },
+  {
+    "file": "IMG_20260813_113355_00_685.jpg",
+    "lat": 39.746583,
+    "lon": -8.809799,
+    "error_radius_m": 8,
+    "confidence": "high",
+    "place": "Castelo de Leiria, Leiria (PT): cobbled/gravel yard at the SW corner of the citadel, south end of the west lane ramp, below the redoubt's west wall",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 141,
+    "evidence": [
+      "Redoubt west wall with a doorway reached by steps (OSM building-passage steps at local -15.3,-8.7) at yaw -133.3 deg, keep's crenellated top behind it at yaw -135.8 deg / pitch +22..23 deg; same view as Commons photo 'Leiria (46517006631)' taken ~6 m away",
+      "Accessibility ramp with dark railing runs north along the west lane from ~5 m N of the camera to the twin-arched gate tower at the lane's north end (yaw -145.4 deg)",
+      "White stone bench ~4-5 m to the W (visible as a white rectangle in Esri imagery at 39.74658,-8.80984); crenellated outer wall ~6 m W and crenellated south wall ~6-7 m S; vintage blue pickup parked along the south wall to the E (also in Commons photo of the Pacos Novos accessibility platform)",
+      "Sun core at yaw +0.8..+5.7, pitch ~59. UTC clock: az 145.4 -> heading 139.7-144.6 deg, matching the geometric 140 +/- 3 deg; UTC+1 would give ~118-123 deg"
+    ],
+    "method": "North-up ground-plane reprojection (h ~2.5 m selfie-stick) matched to Esri z19 imagery and OSM: ramp south end (39.746634,-8.809817) ~5.5 m N and bench ~4.8 m W give camera (-17.0,-29.7) m in the castle frame; landmark bearings (door, keep NW corner, gate tower) from that point give heading 137-142 deg, consistent with the UTC sun",
+    "alternatives": [
+      {
+        "lat": 39.746537,
+        "lon": -8.809842,
+        "place": "same yard ~6 m further SW, closer to the south wall",
+        "why": "pure bearing least-squares (door/keep/gate are nearly collinear) is weak in range and prefers this point"
+      }
+    ],
+    "used_other_panoramas": "none for the position; UTC clock reading consistent with #695 geometry and the coordinator's cross-set finding"
+  },
+  {
+    "file": "IMG_20260813_115036_00_695.jpg",
+    "lat": 39.746731,
+    "lon": -8.809632,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Castelo de Leiria, Leiria (PT): top of the southern tower/wall-walk of the Ultimo Reduto (inner redoubt), about 24 m south of the Torre de Menagem, facing it",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 200,
+    "evidence": [
+      "Square crenellated keep seen face-on to the north: edges at yaw 139.3 and 173.8 deg, merlon tops at pitch +13.5 deg (OSM keep 15 x 9 m, top 109.6 m at geodetic vertex 'Leiria' RGN 538)",
+      "Estadio Dr. Magalhaes Pessoa (curved roof, athletics track) at yaw 97-120 deg; OSM stadium outline spans bearings 291-329 deg from this point -> heading ~202 deg",
+      "Red-tiled roofs of the Pacos Novos palace close by at yaw -105..-91 deg (OSM roof parts at bearings 88-121 deg)",
+      "Camera stands among merlons on a tower/wall top ~11 m above the redoubt courtyard, with Leiria spread below to the S and E; parapet wall-walk runs north to the keep",
+      "Sun at yaw -44.5, pitch +60.5. Filename time read as UTC gives solar az 153.2 / el 62.6 -> heading 197.7 deg (agrees with geometry within ~3 deg); read as UTC+1 gives 173 deg (off by ~28 deg). Clock = UTC used"
+    ],
+    "method": "Heading from stadium outline + UTC sun (~198-203 deg); camera triangulated from the two keep corner yaws for H = 196..204 deg -> local (E -0.9..-4.5 m, N -12.7..-13.6 m) of a frame at 39.74685,-8.80960, i.e. exactly at the OSM level-1/2 steps and top of the south tower of the redoubt; keep-top pitch gives eye ~104 m a.s.l., consistent with a ~12 m tower",
+    "alternatives": [
+      {
+        "lat": 39.746742,
+        "lon": -8.809717,
+        "place": "south end of the level-1 wall-walk on the redoubt's west wall",
+        "why": "keep angular width also fits there, but stadium yaw and UTC sun then disagree by ~15 deg"
+      }
+    ],
+    "used_other_panoramas": "none for the position; the UTC clock reading was cross-checked with same-day sibling #683/#685 geometry and the coordinator's note from other sets"
+  },
+  {
+    "file": "IMG_20260911_125512_00_749.jpg",
+    "lat": 38.826612,
+    "lon": -8.759686,
+    "error_radius_m": 8,
+    "confidence": "high",
+    "place": "Short concrete bridge of the 'Reta do Infantado' road over the Vale do Cobrão reservoir (Barragem de Vale do Cobrão), Samora Correia, Benavente (Santarém); camera on the NW sidewalk ~6 m from the bridge's NE end",
+    "urban": false,
+    "country": "PT",
+    "heading_yaw0_deg": 248.6,
+    "evidence": [
+      "Two-lane road on a short concrete bridge with yellow-painted railings/kerbs and white end pillars, crossing a reservoir with sandy banks; cork oaks, stone pines, poplars (Ribatejo/Alentejo montado)",
+      "Wikimedia Commons 'File:2135 Samora Correia, Portugal - panoramio (2).jpg' (geotagged 32 m from the fix) shows the same yellow-railed bridge with white end pillars and the pine shore",
+      "Esri imagery: road (bearing 60/240 deg) crosses the reservoir ~300 m north of the dam; bridge deck with expansion joints ~23 m apart",
+      "Clock: road-axis geometry gives yaw0 = 248.6 deg; sun read as UTC gives 250.8 deg (2.2 deg diff) vs UTC+1 224.8 deg (24 deg off) -> camera clock is UTC; UTC used"
+    ],
+    "method": "Bearings to the 4 railing-end pillars (far side yaw -136.1 and -42.3; own side -5.9 and 171.4) against their Esri z19 positions: free resection rms 1.3 deg at 38.826609,-8.759694; with heading fixed by road axis or UTC sun the two far-side pillars give 38.826616,-8.759689 / -8.759677. Pitch ratios of the pillar tops independently put the camera ~6 m from the NE end.",
+    "alternatives": [
+      {
+        "lat": 38.99662,
+        "lon": -8.68867,
+        "place": "Barragem de Magos (Salvaterra de Magos)",
+        "why": "checked and rejected: no road bridge across the reservoir matching the scene"
+      }
+    ],
+    "used_other_panoramas": "Yes, for the search radius only: no text or sign was legible, so candidate reservoirs were searched within ~40 km of the sibling #754's established location (Vila Franca de Xira). The final identification and position rest on this panorama alone (Commons photo match, pillar resection, UTC sun heading)."
+  },
+  {
+    "file": "IMG_20260911_132916_00_754.jpg",
+    "lat": 38.95389,
+    "lon": -8.97818,
+    "error_radius_m": 10,
+    "confidence": "high",
+    "place": "Small floating pontoon/jetty on the left (Lezíria) bank of the Tagus at Vila Franca de Xira, ~250 m SW of where the Ponte Marechal Carmona (EN10) lands, facing the town",
+    "urban": false,
+    "country": "PT",
+    "heading_yaw0_deg": 61.4,
+    "evidence": [
+      "Multi-span steel through-arch bridge (5 arch spans) with a concrete approach viaduct = Ponte Marechal Carmona (1951); Alcácer do Sal hypothesis rejected (bridge and hill do not match)",
+      "Across the river: hill with quarry scar and antenna masts above Vila Franca de Xira; the white angular 'Fábrica das Palavras' library appears at yaw -165, exactly the predicted bearing 256.9 deg from the fix",
+      "Wikimedia Commons 'File:Vila Franca de Xira - Portugal (42770191002).jpg' (geotagged 31 m from the fix) shows the same hill, quarry scar and arches",
+      "Clock: pier geometry gives yaw0 = 61.4 deg; sun (centroid yaw +140.5) read as UTC gives 63.5 deg (2.1 deg diff) vs UTC+1 38.1 deg (23 deg off) -> camera clock is UTC; UTC used"
+    ],
+    "method": "Yaws of 6 bridge piers (-0.3, -39.6, -64.6, -77.5, -84.4, -88.0) against pier positions from Esri z18 imagery + OSM bridge geometry (~100 m spacing): free resection rms 0.92 deg at 38.953905,-8.978173, which falls on the small jetty visible in z19 imagery; final point nudged ~4 m to the jetty's outer end where the pontoon sits.",
+    "alternatives": [
+      {
+        "lat": 38.3683,
+        "lon": -8.5133,
+        "place": "Alcácer do Sal riverside (Sado)",
+        "why": "initial triage hypothesis, rejected"
+      }
+    ],
+    "used_other_panoramas": "none"
+  },
+  {
+    "file": "IMG_20260922_172452_00_779.jpg",
+    "lat": 38.67672,
+    "lon": -9.32643,
+    "error_radius_m": 12,
+    "confidence": "high",
+    "place": "NW corner of the open field north of Forte de São Julião da Barra, top of the access road/car park running south to the sea; next to the Nova SBE campus, Carcavelos / Oeiras (Avenida Marginal side)",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 151.5,
+    "evidence": [
+      "Bastion fort with a square lighthouse tower and lantern at yaw ~+2.5 = Farol / Forte de São Julião da Barra (lantern at ~38.67451, -9.32518 in Esri imagery)",
+      "Modern low white campus buildings with glass on a grass slope behind the camera (yaw -173..-150) = Nova School of Business and Economics (Carcavelos), across the Marginal",
+      "Pedestrian-underpass sign, 'zona de coexistência' sign, P sign, turning circle with tyre marks and a white-walled ramp behind the camera = north edge plaza of the field by the Marginal",
+      "Straight low wall + calçada sidewalk + road with perpendicular parking on its west side running from the camera straight to the sea (yaw ~+37) = the access road along the field's west edge (bearing 188 deg in imagery)",
+      "Clock check (heading fixed from geometry, yaw0 = 151.5): saturated sun-glare centroid at yaw 107.8, pitch ~17 (lower half occluded by trees). Filename read as UTC -> sun az 259.7 / el 12.7 -> predicted yaw 108.2 (fits within 0.4 deg); read as UTC+1 (WEST) -> az 249.3 / el 24.0 -> predicted yaw 97.8 (10 deg off). Camera clock = UTC, as in the Marvila set. Photographer's shadow points to yaw ~-55..-70 (antisolar)",
+      "Cross-check: from the chosen point the lighthouse lantern is at bearing 156 deg (predicted yaw +4.6 vs observed +2.5); the SBE west wing at bearing ~345-355 (observed yaw -173..-150 -> 338-1)"
+    ],
+    "method": "Identified fort + campus, then matched the field outline, the curved low wall at the field's NW corner, the straight access road with parking and the plaza/ramp in Esri World Imagery z19; heading fixed from the road direction (independent of the clock) and verified with the lighthouse bearing and the sun under the UTC-clock hypothesis; camera placed on the corner wall next to the palm (z19 px ~ (648,550)). Clock hypothesis used for the sun check: UTC (UTC+1 rejected). The location does not depend on the clock.",
+    "alternatives": [
+      {
+        "lat": 38.67662,
+        "lon": -9.32647,
+        "place": "same wall ~12 m further south along the access road",
+        "why": "exact spot on the curved corner wall uncertain by ~10 m"
+      },
+      {
+        "lat": 38.6768,
+        "lon": -9.32443,
+        "place": "NE corner of the same field (car park to Praia da Torre side)",
+        "why": "only if the heading were wrong; rejected because the lighthouse/sea/sun bearings do not fit there"
+      }
+    ],
+    "used_other_panoramas": "none"
+  }
+]

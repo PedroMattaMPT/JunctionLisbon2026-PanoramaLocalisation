@@ -1,0 +1,21 @@
+<!-- @dsCard group="Human loop" height=564 subtitle="Open, hovered, chosen, not chosen, skipped" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>QuestionOption — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var q = S.CASE_A.question, E = S.CASE_A.evidence;
+var view = h(D.Page, null, h(D.Grid, { cols: 1 },
+  h(D.Cell, { label: 'Open', pad: false }, h(A.QuestionOption, { o: q.options[1], evidence: E })),
+  h(D.Cell, { label: 'Hover', pad: false }, h(A.QuestionOption, { o: q.options[2], evidence: E, hover: true })),
+  h(D.Cell, { label: 'Chosen (team answered)', pad: false }, h(A.QuestionOption, { o: q.options[0], evidence: E, state: 'chosen', showLinks: false })),
+  h(D.Cell, { label: '“None of these” exists only because the agent offered it', pad: false }, h(A.QuestionOption, { o: q.options[3], evidence: E }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

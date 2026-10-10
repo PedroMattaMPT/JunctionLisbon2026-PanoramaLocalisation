@@ -1,0 +1,19 @@
+<!-- @dsCard group="Shell" height=281 width=1440 subtitle="Always visible: case, timers, multiplier, expected score, GPU, worker" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RunBar — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, { pad: false }, h(D.Grid, { cols: 1, gap: 18 },
+  h(D.Cell, { label: 'Case A after an answered question (×0.95)', pad: false }, h(A.RunBar, { c: S.CASE_A })),
+  h(D.Cell, { label: 'Special One · over budget · worker offline', pad: false }, h(A.RunBar, { c: Object.assign({}, S.CASE_B, { label: 'Special One', special: true, run: Object.assign({}, S.CASE_B.run, { used: 948, budget: 900, session: 3410 }) }), online: false })),
+  h(D.Cell, { label: 'Urban label unknown: both expected scores', pad: false }, h(A.RunBar, { c: Object.assign({}, S.CASE_B, { urban: 'unknown', urbanSource: 'unknown', run: Object.assign({}, S.CASE_B.run, { split: { urban: 2900, nonUrban: 11300 } }) }), tilesOffline: true }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

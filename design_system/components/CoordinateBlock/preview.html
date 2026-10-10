@@ -1,0 +1,16 @@
+<!-- @dsCard group="Output" height=224 subtitle="Once, in mono, with order, radius, role, method and multiplier" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CoordinateBlock — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 }, h(D.Cell, { pad: false }, h(A.CoordinateBlock, { a: S.CASE_A.answer })), h(D.Cell, { pad: false }, h(A.CoordinateBlock, { a: Object.assign({}, S.CASE_B.answer, { r: null }) }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

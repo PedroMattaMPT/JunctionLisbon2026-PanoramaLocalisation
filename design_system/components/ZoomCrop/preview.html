@@ -1,0 +1,19 @@
+<!-- @dsCard group="Panorama" height=254 subtitle="Full-resolution crop around one box" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZoomCrop — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 3 },
+  h(D.Cell, { pad: false }, h(A.ZoomCrop, { c: S.CASE_A, target: 't2', width: 300 })),
+  h(D.Cell, { pad: false }, h(A.ZoomCrop, { c: S.CASE_A, target: 't1', width: 300 })),
+  h(D.Cell, { pad: false }, h(A.ZoomCrop, { c: S.CASE_A, target: 'd4', width: 300, fov: 22 }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

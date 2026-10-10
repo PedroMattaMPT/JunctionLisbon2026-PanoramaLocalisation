@@ -1,0 +1,9 @@
+/* specimen helpers (previews only) */
+.aq-spec-page { padding: var(--space-4); background: var(--surface-1); min-height: 100vh; }
+.aq-spec-page.no-pad { padding: 0; }
+.aq-spec-grid { display: grid; gap: var(--space-4); align-items: start; }
+.aq-spec-cell { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.aq-spec-cell.is-wide { grid-column: 1 / -1; }
+.aq-spec-l { color: var(--ink-3); }
+.aq-spec-b { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; min-width: 0; }
+.aq-spec-cell.no-pad .aq-spec-b { display: block; }

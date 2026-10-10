@@ -1,0 +1,18 @@
+<!-- @dsCard group="Beliefs" height=176 subtitle="Country → region → town → spot" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Funnel — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Case A, at spot', pad: false }, h(A.Funnel, { levels: S.CASE_A.funnel })),
+  h(D.Cell, { label: 'Case B, stops at region (no tighter than the evidence)', pad: false }, h(A.Funnel, { levels: [{ level: 'Country', name: 'Portugal (Spain open)', v: 0.83 }, { level: 'Region', name: 'Alentejo', v: 0.75 }, { level: 'Town', name: 'not resolved', v: 0.12 }, { level: 'Spot', name: 'not resolved', v: 0.02 }], current: 1 }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

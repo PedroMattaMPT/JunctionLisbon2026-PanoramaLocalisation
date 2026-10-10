@@ -1,0 +1,23 @@
+<!-- @dsCard group="Intake" height=682 subtitle="Empty, dragging, valid, warning, error" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DropZone — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Empty', pad: false }, h(A.DropZone, { state: 'empty' })),
+  h(D.Cell, { label: 'Dragging', pad: false }, h(A.DropZone, { state: 'dragging', count: 6 })),
+  h(D.Cell, { label: 'Valid · warning · error', wide: true, pad: false }, h(A.DropZone, { state: 'valid', files: [
+    { file: S.CASE_A.file, urban: 'urban', source: 'official' },
+    { file: 'IMG_20260512_110547_00_318.jpg', size: [5760, 2880], urban: 'non-urban', source: 'official', message: 'Not 6080×3040 — accepted as 2:1 equirectangular, flagged in the log.' },
+    { file: 'panorama-final(2).jpg', urban: 'unknown', source: 'unknown', message: 'Filename does not parse: date, UTC time and shot will be unknown. Sun-based north will be unavailable.' },
+    { file: 'IMG_20260601_120000_00_412.jpg', size: [4000, 3000], status: 'error', message: 'Not 2:1 (4000×3000), so it cannot be an equirectangular panorama. Not added.' }] }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

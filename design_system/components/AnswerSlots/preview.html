@@ -1,0 +1,16 @@
+<!-- @dsCard group="Output" height=564 subtitle="One coordinate ×10 with rank weights — expandable, never ten identical rows by default" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AnswerSlots — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 }, h(D.Cell, { label: 'Collapsed (default)', pad: false }, h(A.AnswerSlots, { a: S.CASE_A.answer })), h(D.Cell, { label: 'Expanded', pad: false }, h(A.AnswerSlots, { a: S.CASE_A.answer, expanded: true }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

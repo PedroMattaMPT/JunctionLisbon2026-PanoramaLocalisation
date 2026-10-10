@@ -1,0 +1,16 @@
+<!-- @dsCard group="Output" height=739 subtitle="The JSON log as a readable list; one row expands to raw JSON" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EventLog — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(A.EventLog, { events: S.LOG_A, json: 6, current: 212 }));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

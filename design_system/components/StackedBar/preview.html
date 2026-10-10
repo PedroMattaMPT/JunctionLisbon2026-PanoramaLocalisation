@@ -1,0 +1,16 @@
+<!-- @dsCard group="Charts" height=114 subtitle="The 100% bar both votes and shares are built on" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>StackedBar — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h('div', { style: { maxWidth: 520 } }, h(A.StackedBar, { title: 'Detections by verdict', parts: [{ id: 'kept', v: 17, color: 'var(--model)' }, { id: 'rejected by SAM 3', v: 3, color: 'var(--contra)' }] })));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

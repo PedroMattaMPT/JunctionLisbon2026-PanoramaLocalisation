@@ -1,0 +1,19 @@
+<!-- @dsCard group="Beliefs" height=408 subtitle="Rank, level, estimate with range, change, ▲/▼ counts" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CandidateRow — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var cs = S.CASE_A.candidatesBefore;
+var view = h(D.Page, null, h('div', { role: 'table' },
+  h(A.CandidateRow, { c: cs[0], selected: true, max: 0.7 }), h(A.CandidateRow, { c: cs[1], max: 0.7 }), h(A.CandidateRow, { c: cs[3], max: 0.7 }), h(A.CandidateRow, { c: cs[4], max: 0.7 }),
+  h(A.CandidateRow, { c: S.CASE_A.candidatesAfter[2], max: 0.7 }), h(A.CandidateRow, { c: S.CASE_B.candidates[3], max: 0.7 })));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

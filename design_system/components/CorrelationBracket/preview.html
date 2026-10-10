@@ -1,0 +1,17 @@
+<!-- @dsCard group="Reasoning" height=564 subtitle="Sources sharing one encoder speak as one voice" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CorrelationBracket — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var n = S.CASE_A.matrix.names, E = S.CASE_A.evidence, g = S.CASE_A.groups[0];
+var view = h(D.Page, null, h('div', { style: { maxWidth: 460 } }, h(A.CorrelationBracket, { label: g.label, cap: g.cap, note: g.note }, g.members.map(function (id) { return h(A.EvidenceCard, { key: id, e: E.find(function (e) { return e.id === id; }), names: n }); }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

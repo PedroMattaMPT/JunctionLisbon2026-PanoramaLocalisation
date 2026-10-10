@@ -1,0 +1,18 @@
+<!-- @dsCard group="Shell" height=134 subtitle="Who produced it: model, solver or team" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ModelChip — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 1 },
+  h(D.Cell, { label: 'Medium' }, h(A.ModelChip, { name: 'Qwen3.5-9B', role: 'vision-language' }), h(A.ModelChip, { name: 'Solver', actor: 'solver' }), h(A.ModelChip, { name: 'Team', actor: 'team' })),
+  h(D.Cell, { label: 'Small' }, h(A.ModelChip, { name: 'PP-OCRv6-medium', size: 'sm' }), h(A.ModelChip, { name: 'Solver', actor: 'solver', size: 'sm' }), h(A.ModelChip, { name: 'Team', actor: 'team', size: 'sm' }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

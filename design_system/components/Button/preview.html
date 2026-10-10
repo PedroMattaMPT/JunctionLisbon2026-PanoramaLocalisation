@@ -1,0 +1,23 @@
+<!-- @dsCard group="Base" height=254 subtitle="Primary once per view; costs shown before the click" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var B = A.Button, C = D.Cell;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(C, { label: 'Variants (console)' }, h(B, { variant: 'primary', icon: 'submit', shortcut: '⏎' }, 'Submit answer'), h(B, null, 'Copy coordinates'), h(B, { variant: 'quiet', icon: 'download' }, 'Export log')),
+  h(C, { label: 'Costs points: the multiplier is on the button' }, h(B, { cost: 0.95, shortcut: '1' }, 'Answer A'), h(B, { icon: 'cue', cost: 0.8 }, 'Send cue')),
+  h(C, { label: 'Skip: free, changes nothing, never styled like No' }, h(B, { variant: 'skip', icon: 'skip', shortcut: 'S' }, 'Skip question')),
+  h(C, { label: 'States' }, h(B, { forceState: 'hover' }, 'Hover'), h(B, { forceState: 'focus' }, 'Focus'), h(B, { disabled: true }, 'Disabled'), h(B, { busy: 'Writing log… 00:02' }, 'Export')),
+  h(C, { label: 'Stage density', wide: true }, h(A.Density, { value: 'stage' }, h('div', { className: 'aq-row' }, h(B, { variant: 'primary' }, 'Start the run'), h(B, { cost: 0.95, shortcut: '1' }, 'Answer A'), h(B, { variant: 'skip', icon: 'skip', shortcut: 'S' }, 'Skip'))))
+));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

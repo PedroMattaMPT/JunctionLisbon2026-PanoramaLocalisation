@@ -1,0 +1,18 @@
+<!-- @dsCard group="Base" height=194 subtitle="Real waits only: what runs, real elapsed time, real deadline" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WaitState — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, null, h(A.WaitState, { what: 'Describing the scene', who: 'Qwen3.5-9B · local', elapsed: 14, deadline: 45, partial: '4 of 11 checklist items answered so far', fallback: 'Gemma 4 12B' })),
+  h(D.Cell, null, h(A.WaitState, { what: 'Matching reference photos', who: 'ALIKED + LightGlue', elapsed: 31, deadline: 60, partial: '2 of 3 reference photos matched' }))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>

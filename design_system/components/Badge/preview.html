@@ -1,0 +1,21 @@
+<!-- @dsCard group="Base" height=134 subtitle="Tone means something: actor, cost, polarity" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Badge — preview</title>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var A = window.Aqui, h = React.createElement, D = A.Docs, S = A.Samples;
+var Bd = A.Badge;
+var view = h(D.Page, null, h(D.Grid, { cols: 2 },
+  h(D.Cell, { label: 'Actors' }, h(Bd, { tone: 'model', icon: 'model' }, 'model'), h(Bd, { tone: 'solver', icon: 'solver' }, 'solver'), h(Bd, { tone: 'team', icon: 'team' }, 'team')),
+  h(D.Cell, { label: 'Cost and polarity' }, h(Bd, { tone: 'cost', icon: 'cost' }, '×0.95'), h(Bd, { tone: 'support', icon: 'support' }, 'supports'), h(Bd, { tone: 'contra', icon: 'contra' }, 'contradicts')),
+  h(D.Cell, { label: 'Neutral and outline' }, h(Bd, null, 'Urban · official'), h(Bd, { tone: 'outline', icon: 'special' }, '×3 Special One')),
+  h(D.Cell, { label: 'Solid (one per view)' }, h(Bd, { tone: 'team', solid: true, icon: 'submit' }, 'Submitted'), h(Bd, { tone: 'neutral', solid: true }, 'Case 3'))));
+ReactDOM.createRoot(document.getElementById('root')).render(view);
+</script>
+</body>
+</html>
