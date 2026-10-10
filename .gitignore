@@ -5,3 +5,25 @@ research_notes/
 
 # Archive duplicates of extracted datasets (over GitHub's 100 MB file limit)
 Data/*.zip
+
+# OSV-5M reference photo bank (tools/fetch_osv5m.sh)
+Data/osv5m/
+
+# Python environment (tools/setup_env.sh)
+.venv/
+
+# Downloaded reference data: geography, landmarks, landmark photos, external test panoramas
+Data/geo/
+Data/wikidata/
+Data/gallery/
+Data/panoramax/
+
+# Run logs written by panoloc/runlog.py, one folder per panorama run (tools/sample_log.py writes runs/sample/)
+runs/
+
+# Name index built by tools/build_name_index.py from Data/wikidata and Data/geo/geonames
+Data/index/
+
+# Python bytecode
+__pycache__/
+*.pyc
