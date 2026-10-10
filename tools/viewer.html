@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panorama Viewer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
+<style>
+  :root { --bg: #111; --fg: #eee; --muted: #999; --accent: #ffd54a; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font: 14px system-ui, sans-serif; }
+  header { display: flex; gap: 8px; align-items: center; padding: 8px 12px; flex-wrap: wrap; }
+  select, button { background: #222; color: var(--fg); border: 1px solid #444; border-radius: 4px; padding: 4px 8px; font: inherit; }
+  #meta { color: var(--accent); margin-left: 8px; }
+  #hint { color: var(--muted); margin-left: auto; }
+  #pano { position: absolute; top: 48px; bottom: 0; left: 0; right: 0; }
+</style>
+</head>
+<body>
+<header>
+  <button id="prev" title="Previous (←)">◀</button>
+  <select id="pick"></select>
+  <button id="next" title="Next (→)">▶</button>
+  <span id="meta"></span>
+  <span id="hint">drag to look · scroll to zoom · ←/→ switch · ?dir=folder/</span>
+</header>
+<div id="pano"></div>
+<script>
+// Serve the project root with `python3 -m http.server 8000`, then open
+// http://localhost:8000/tools/viewer.html?dir=Data/Panorama%20Warm-Up/
+const params = new URLSearchParams(location.search);
+const dir = params.get('dir') || 'Data/Panorama Warm-Up/';
+const base = '../' + dir.replace(/\/?$/, '/');
+const pick = document.getElementById('pick');
+let files = [], viewer = null;
+
+function describe(name) {
+  const m = name.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})_\d+_(\d+)/);
+  return m ? `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}:${m[6]} · #${m[7]}` : '';
+}
+
+function show(i) {
+  i = (i + files.length) % files.length;
+  pick.selectedIndex = i;
+  document.getElementById('meta').textContent = describe(files[i]);
+  const yaw = viewer ? viewer.getYaw() : 0;
+  if (viewer) viewer.destroy();
+  viewer = pannellum.viewer('pano', {
+    type: 'equirectangular', panorama: base + encodeURIComponent(files[i]),
+    autoLoad: true, yaw, hfov: 100, minHfov: 10, showZoomCtrl: true
+  });
+}
+
+fetch(base).then(r => r.text()).then(html => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  files = [...doc.querySelectorAll('a')].map(a => decodeURIComponent(a.getAttribute('href')))
+    .filter(h => /\.jpe?g$/i.test(h)).sort();
+  files.forEach((f, i) => pick.add(new Option(`${String(i + 1).padStart(2, '0')}  ${f}`, i)));
+  if (files.length) show(0); else document.getElementById('meta').textContent = 'No JPGs found in ' + dir;
+});
+pick.onchange = () => show(+pick.value);
+document.getElementById('prev').onclick = () => show(pick.selectedIndex - 1);
+document.getElementById('next').onclick = () => show(pick.selectedIndex + 1);
+// Only when the page has focus; inside the panorama the arrows pan the view.
+addEventListener('keydown', e => {
+  if (e.target !== document.body) return;
+  if (e.key === 'ArrowLeft') show(pick.selectedIndex - 1);
+  if (e.key === 'ArrowRight') show(pick.selectedIndex + 1);
+});
+</script>
+</body>
+</html>
