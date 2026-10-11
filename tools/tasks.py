@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add, update, delete and list the tasks in TASKS.md. The /task skill drives it; anyone can run it.
+"""Add, update, delete and list the tasks in docs/TASKS.md. The /task skill drives it; anyone can run it.
 
 TASKS.md is the only store: one Markdown table row per task, under level-2 phase headings written
 "## <key> · <title>" (keys A, B, C, D, Run, Backlog). A write edits task rows in place and leaves every
@@ -616,8 +616,8 @@ def cmd_sync(doc, args, plan):
 def main():
     ap = argparse.ArgumentParser(prog="tasks.py", description=__doc__.split("\n\n")[0],
                                  epilog="Full usage: the header of tools/tasks.py, or the /task skill.")
-    ap.add_argument("--tasks", type=Path, default=ROOT / "TASKS.md", help="tracker file (default: TASKS.md)")
-    ap.add_argument("--plan", type=Path, default=ROOT / "PLAN.md", help="plan whose checkboxes follow it")
+    ap.add_argument("--tasks", type=Path, default=ROOT / "docs" / "TASKS.md", help="tracker file (default: docs/TASKS.md)")
+    ap.add_argument("--plan", type=Path, default=ROOT / "docs" / "PLAN.md", help="plan whose checkboxes follow it")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     p = sub.add_parser("list", help="open tasks by phase")

@@ -1,6 +1,6 @@
 # Challenge rules
 
-Rules for the Albatroz "Panorama Localisation" challenge at JunctionX Lisbon 2026, from the challenge PDF (`Albatroz Challenge - JunctionX Lisbon 2026.pdf`) and from what the partner told us on site. Where the two differ, the partner's clarification wins.
+Rules for the Albatroz "Panorama Localisation" challenge at JunctionX Lisbon 2026, from the challenge PDF ([`challenge/Albatroz Challenge - JunctionX Lisbon 2026.pdf`](challenge/Albatroz%20Challenge%20-%20JunctionX%20Lisbon%202026.pdf)) and from what the partner told us on site. Where the two differ, the partner's clarification wins.
 
 ## The task
 
