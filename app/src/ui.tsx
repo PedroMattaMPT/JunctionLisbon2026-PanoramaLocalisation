@@ -11,8 +11,9 @@ import { DropZone } from '@ds/extra';
 import { arr, finite, record, str, type CaseRecord, type Candidate, type Output, type RunEvent } from './model';
 import type { WorkerStatus } from './data';
 import { captionFor } from './captions';
-import { coordinates, distance, roleText, time } from './format';
+import { coordinates, distance, modelName, roleText, time } from './format';
 import { parseFilename } from './reducer';
+import { CandidateLocation } from './candidate-location';
 
 // Adapt element props and missing runtime slots; never change a DS component or stylesheet.
 export type ElementProps = Record<string, any>;
@@ -33,7 +34,7 @@ export function Panel({ title, aside, children, className = '' }: { title?: stri
   return <section className={`aq-panel ${className}`}>{title && <header className="aq-panel-h"><h2 className="console-title">{title}</h2>{aside}</header>}{children}</section>;
 }
 // Native disclosure keeps the complete content in the page and supplies keyboard semantics.
-export function Disclosure({ title, aside, children, className = '', open, onOpenChange }: { title: string; aside?: ReactNode; children: ReactNode; className?: string; open?: boolean; onOpenChange?(open: boolean): void }) {
+export function Disclosure({ title, aside, children, className = '', open, onOpenChange }: { title: ReactNode; aside?: ReactNode; children: ReactNode; className?: string; open?: boolean; onOpenChange?(open: boolean): void }) {
   const ref = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     if (!className.includes('app-disclosure-float')) return;
@@ -60,7 +61,8 @@ export function UploadDropZone({ onChoose }: { onChoose(): void }) {
   return <>{mapTree(DropZone({ count: 6 }), node => node.type === Button ? React.cloneElement(node, { onClick: onChoose }) : node)}</>;
 }
 export function LoggedRoster({ status, models }: { status?: WorkerStatus; models: ElementProps[] }) {
-  return <>{mapTree(ModelRoster({ models: status?.models.length ? status.models : models, compact: true, title: status?.mock ? 'Mock pipeline · no models running' : 'Local model roles' }), node => !status?.models.length && typeof node.props.children === 'string' && node.props.children.startsWith('all open weights') ? React.cloneElement(node, {}, status?.mock ? 'Scripted evidence · no inference package' : 'Residency and memory not reported') : node)}</>;
+  const displayModels = (status?.models.length ? status.models : models).map(model => ({ ...model, name: modelName(str(model.name)) }));
+  return <>{mapTree(ModelRoster({ models: displayModels, compact: true, title: status?.mock ? 'Mock pipeline · no models running' : 'Local model roles' }), node => !status?.models.length && typeof node.props.children === 'string' && node.props.children.startsWith('all open weights') ? React.cloneElement(node, {}, status?.mock ? 'Scripted evidence · no inference package' : 'Residency and memory not reported') : node)}</>;
 }
 export function Filename(props: ElementProps) {
   const parsed = parseFilename(props.file);
@@ -125,10 +127,10 @@ function SupportRow(props: ElementProps) {
       return React.cloneElement(node, { 'aria-label': `support ${c.v.toFixed(2)}${c.lo !== undefined && c.hi !== undefined ? `, range ${c.lo.toFixed(2)} to ${c.hi.toFixed(2)}` : ''}` });
     }
     return node;
-  })}<p className="console-micro aq-ink3 app-candidate-role">{roleText(c.role)} · {c.r === null ? 'uncertainty unknown' : `± ${distance(c.r)}`}{props.compact ? '' : ` · ${String(c.details.extent_source ?? c.source ?? 'source not logged')}`}.</p></div>;
+  })}<CandidateLocation candidate={c} /><p className="console-micro aq-ink3 app-candidate-role">{roleText(c.role)} · {c.r === null ? 'uncertainty unknown' : `± ${distance(c.r)}`}{props.compact ? '' : ` · ${String(c.details.extent_source ?? c.source ?? 'source not logged')}`}.</p></div>;
 }
 export function Candidates({ c, selected, onSelect, compact = false }: { c: CaseRecord; selected?: string; onSelect(id: string): void; compact?: boolean }) {
-  const tree = CandidateList({ candidates: compact ? c.candidates.slice(0, 3) : c.candidates, selected, ruledOut: compact ? [] : c.ruledOut, title: compact ? 'Leading candidates' : 'Candidates', caption: compact ? 'Support' : 'Support · weight ÷ total weight · two decimals' });
+  const tree = CandidateList({ candidates: compact ? c.candidates.slice(0, 3) : c.candidates, selected, ruledOut: compact ? [] : c.ruledOut, title: 'Candidate answers', caption: compact ? 'Relative support' : 'Support · weight ÷ total weight · two decimals' });
   return <div onClick={e => { const id = (e.target as HTMLElement).closest('[data-link]')?.getAttribute('data-link'); if (id) onSelect(id); }} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { const id = (e.target as HTMLElement).closest('[data-link]')?.getAttribute('data-link'); if (id) { e.preventDefault(); onSelect(id); } } }}>
     {c.candidates.length ? mapTree(tree, node => node.type === CandidateRow ? <SupportRow {...node.props} compact={compact} max={node.props.max || 1} /> : node) : <EmptyState icon="pin" title="Candidates will appear here" body="The solver has not logged any candidate support." />}
     {!compact && c.candidates.length > 0 && <p className="console-micro aq-ink3 app-pad">Support is unnormalised fusion weight shown as a share; it is not a calibrated estimate of location.</p>}
@@ -151,12 +153,12 @@ export function Matrix({ c, candidate, selected, onSelect }: { c: CaseRecord; ca
 }
 export function Log({ events }: { events: RunEvent[] }) {
   const [filter, setFilter] = useState('all'), [selected, setSelected] = useState<number>();
-  const rows = events.map(e => ({ ...e, actor: e.actor === 'agent' ? 'solver' : e.actor, text: captionFor(e).caption }));
+  const rows = events.map(e => ({ ...e, model: e.model ? modelName(e.model, str(e.payload.kind)) : e.model, actor: e.actor === 'agent' ? 'solver' : e.actor, text: captionFor(e).caption }));
   return <>{mapTree(EventLog({ events: rows, filter }), node => {
     if (typeName(node) === 'Tabs') return React.cloneElement(node, { onChange: setFilter });
     if (node.type === 'li' && node.props.className?.includes('aq-log-r')) return React.cloneElement(node, { tabIndex: 0, onClick: () => setSelected(Number(node.key)), onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter') setSelected(Number(node.key)); } });
     return node;
-  })}{selected !== undefined && <pre className="aq-raw console-data-sm">{JSON.stringify(rows.filter(e => filter === 'all' || e.actor === filter)[selected], null, 2)}</pre>}</>;
+  })}{selected !== undefined && <pre className="aq-raw console-data-sm">{JSON.stringify(rows.filter(e => filter === 'all' || e.actor === filter)[selected], (key, value) => ['model', 'vlm', 'worded_by'].includes(key) && typeof value === 'string' ? modelName(value) : value, 2)}</pre>}</>;
 }
 export function ReplayControls({ events, t, speed, playing, onSeek, onPlay, onSpeed, compact = false }: { events: RunEvent[]; t: number; speed: 1 | 2 | 5; playing: boolean; onSeek(t: number): void; onPlay(): void; onSpeed(s: 1 | 2 | 5): void; compact?: boolean }) {
   const duration = events.at(-1)?.t || 1;

@@ -1,0 +1,39 @@
+{
+  "viewport": [
+    1440,
+    900
+  ],
+  "checks": [
+    "Logged detection boxes draw in with real WAAPI transitions; visible scan/orbits; model-free Thinking caption and real findings",
+    "Question still fits and J/K works; candidate Street View opens in Details without answering",
+    "Street View and Compare render real viewer canvases; linked turning and zoom, flicker release, nearby photo resets alignment; Copy and GET-only coordinate requests",
+    "Reduced motion suppresses ambient animations; offline fallback keeps original image/Copy/links; no horizontal overflow at 1280, 800 or 390"
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/streetview/nearest"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streetview/image/mock/invented-0/sd"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streetview/nearest"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streetview/image/mock/invented-0/sd"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streetview/image/mock/invented-1/sd"
+    },
+    {
+      "method": "GET",
+      "path": "/api/streetview/nearest"
+    }
+  ]
+}

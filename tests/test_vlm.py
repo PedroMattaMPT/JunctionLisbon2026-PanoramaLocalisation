@@ -346,6 +346,15 @@ class DescribeTest(unittest.TestCase):
         ev = [e for e in run.events if e["type"] == "evidence.added"]
         self.assertTrue(all(e["stage"] == "describe" and e["model"] == "qwen3.5:9b" for e in ev))
         self.assertEqual(ev[0]["payload"]["box"], {"yaw": 0.0, "pitch": 0.0, "w": 90.0, "h": 90.0})
+        features = ev[0]["payload"]["features"]
+        self.assertEqual(len(features), len(vlm.KEYS))
+        self.assertIn({"key": "post_box", "label": "Post box", "value": "red", "description": "red",
+                       "countries": ["PT"], "regions": [], "strength": "strong"}, features)
+        self.assertIn("Portugal", ev[0]["payload"]["inference"])
+        progress = [e["payload"] for e in run.events if e["type"] == "stage.progress"]
+        self.assertEqual(progress[0]["completed"], 0)
+        self.assertEqual(progress[-1]["completed"], 9)
+        self.assertTrue(all(p["total"] == 9 for p in progress))
         summary, landmark = ev[-2]["payload"], ev[-1]["payload"]
         self.assertEqual(summary["aggregate"]["post_box"]["support"], 8)
         self.assertEqual(summary["aggregate"]["pavement"]["support"], 9)  # ground too
@@ -355,6 +364,26 @@ class DescribeTest(unittest.TestCase):
         self.assertNotIn("lat", landmark)
         self.assertEqual(run.events[-1]["type"], "stage.finished")
         json.dumps(run.events)  # everything logged is JSON
+
+    def test_parallel_views_stream_as_ready_while_the_result_keeps_view_order(self):
+        from threading import Event
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        published = Event()
+        def on_event(e):
+            if e["type"] == "evidence.added" and e["payload"].get("view") == "h045":
+                published.set()
+        run = Run(PANORAMA, self.dir, on_event=on_event)
+        client = SimpleNamespace(model="test-model", parallel=2, load=lambda: 0, settings=lambda: {})
+        def describe(client, view, **kwargs):
+            if view.name == "h000":
+                self.assertTrue(published.wait(3), "The ready view must stream before the slow view finishes")
+            return view_result(view.name, post_box="red")
+        with patch.object(vlm, "describe_view", side_effect=describe):
+            result = vlm.describe_panorama([FakeView("h000"), FakeView("h045")], client, run=run)
+        logged = [e["payload"]["view"] for e in run.events if e["payload"].get("kind") == "vlm_checklist"]
+        self.assertEqual(logged, ["h045", "h000"])
+        self.assertEqual([r.view for r in result.views], ["h000", "h045"])
 
     def test_ollama_down_fails_the_stage_after_logging_and_the_run_goes_on(self):
         transport = FakeTransport(urllib.error.URLError(ConnectionRefusedError(111, "Connection refused")))

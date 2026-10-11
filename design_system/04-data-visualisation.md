@@ -15,14 +15,6 @@ Model outputs are estimates, not calibrated probabilities. Label them so, show r
 | Confidence | `ConfidenceMeter` | Three cells + value + word; unknown is three dashed cells and the word "unknown". |
 | Rank weights | `AnswerSlots` | Ten bars at 1.00 … 0.63 under the coordinate shown once ×10. |
 
-Scoring reference used by the charts: the top slot scores 1000 × θ, each step down × 0.95; Urban θ = 2 / (1 + d/100), non-Urban θ = 2 / (1 + d/10000), d in metres, under 10 m counts as 0; maximum 16,050.52 (48,151.57 for the Special One). An answered question pays off above +5.26% expected gain; a cue above +25%.
+Charts are interactive: hover or focus a bar, cell or segment for its exact value and its source. Every chart carries its values in an `aria-label`.
 
-| Distance error | Urban keeps | Non-Urban keeps |
-|---|---:|---:|
-| 25 m | 80% | 99.8% |
-| 100 m | 50% | 99.0% |
-| 1 km | 9.1% | 90.9% |
-| 5 km | 2.0% | 66.7% |
-| 10 km | 1.0% | 50.0% |
-
-Charts are interactive in the app: hover a bar, cell or segment for its exact value and source event; every chart has a table view in the case report.
+`ScoreCurve` and `AnswerSlots` build in the challenge scoring (`theta`, `RANK_W` and `MAX_SCORE` in `components/src/rt.ts`): Urban θ = 2 / (1 + d/100), non-Urban θ = 2 / (1 + d/10000), d in metres, rank weights 0.95ⁿ.

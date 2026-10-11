@@ -56,12 +56,34 @@ export interface DataSource {
   list(): Promise<RunSummary[]>;
   status(): Promise<WorkerStatus>;
 }
-function apiBase() {
+export function apiBase() {
   const base = str(import.meta.env.VITE_API_BASE);
   if (!base) return '';
   const url = new URL(base, location.origin);
   if (url.origin !== location.origin && !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)) throw new Error('The agent API must be served locally.');
   return url.href.replace(/\/$/, '');
+}
+export interface StreetPicture {
+  provider: string; id: string; lat: number; lng: number; distance_m: number;
+  captured_at: string | number | null; heading_deg: number | null;
+  image_url: string; page_url: string | null; license: string; attribution: string;
+}
+/** Display-only lookup. It never uses a run ID, upload or write token. */
+export async function streetImagery(lat: number, lng: number, signal: AbortSignal): Promise<StreetPicture[]> {
+  const response = await fetch(`${apiBase()}/api/streetview/nearest?${new URLSearchParams({ lat: String(lat), lng: String(lng) })}`, { signal });
+  if (!response.ok) throw new Error('Street imagery is unavailable. You can still open the location in Google Street View.');
+  const result = record(await response.json());
+  if (!arr(result.pictures).length && arr(result.unavailable).length) throw new Error('The street imagery provider could not be reached. You can still open the location in Google Street View.');
+  return arr(result.pictures).map(record).flatMap(p => {
+    const lat = finite(p.lat), lng = finite(p.lng), distance = finite(p.distance_m), image = str(p.image_url);
+    if (lat === null || lng === null || Math.abs(lat) > 90 || Math.abs(lng) > 180 || distance === null || distance < 0 || distance > 1000 || !/^\/api\/streetview\/image\/(panoramax|mapillary|mock)\/[a-zA-Z0-9-]{1,80}\/(sd|hd)$/.test(image)) return [];
+    let page: string | null = null;
+    try { const url = new URL(str(p.page_url)); if (url.protocol === 'https:' && ['panoramax.xyz', 'www.mapillary.com'].includes(url.hostname)) page = url.href; } catch { /* mock or missing source */ }
+    return [{ provider: str(p.provider), id: str(p.id), lat, lng, distance_m: distance,
+      captured_at: typeof p.captured_at === 'number' || typeof p.captured_at === 'string' ? p.captured_at : null,
+      heading_deg: finite(p.heading_deg), image_url: `${apiBase()}${image}`, page_url: page,
+      license: str(p.license), attribution: str(p.attribution) }];
+  }).slice(0, 8);
 }
 export class LiveSource implements DataSource {
   readonly mode = 'live';

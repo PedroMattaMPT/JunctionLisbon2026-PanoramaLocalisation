@@ -12,7 +12,7 @@ npm install
 npm run dev
 ```
 
-Open <http://127.0.0.1:5178/>. The `predev`, `prebuild` and `pretest` scripts generate the tokens and invented fixtures. No inference dependencies are installed. The app uses the existing components and fonts in `../design_system/`; that directory must remain present when developing or building.
+Open <http://127.0.0.1:5178/>. The opening screen introduces the investigation; **Start exploring** opens panorama setup. The `predev`, `prebuild` and `pretest` scripts generate the tokens and invented fixtures. No inference dependencies are installed. The app uses the existing components and fonts in `../design_system/`; that directory must remain present when developing or building.
 
 ```sh
 npm run build
@@ -84,7 +84,33 @@ The scrubber has 1×, 2× and 5× playback. Event timestamps stay real; speed co
 
 Select a candidate in the list or map to open Compare. Arrow keys cycle its linked reference photos. The label distinguishes similar photo-bank neighbours, landmark photos and accepted/rejected geometric matches. Keypoint lines require logged geometry; missing positions and ranges stay absent. The JSON export includes the complete imported log, even when the replay cursor is earlier.
 
-The run opens on **Now**, showing one observation and the leading candidates. Use the Evidence, Stages, Matrix and Log tabs for the complete record; expand **Candidate details**, **Run details**, **Timeline** or **Layers and bearings** for sources, diagnostics and controls. Switch between Panorama and 360° view, and select evidence to open its pixels. Completed question zones are available in **Map key**. **Tools** contains the case report, system states, stage window and keyboard map; the answer folds its score curve, slots and earlier outputs.
+The **focus console** is the default. Add the files, mark the Special One and press Start; the Urban label and its source are under each file’s **Advanced** disclosure and default to Unknown. Case pills open each case in its current state. Working shows the panorama, progress and leading candidates above the map; an open question shows every option beside its map; Answer makes **Copy lat, lng** the primary action. Hover or focus an option for the agent’s original wording and map links. **Details** or **I** opens the full evidence, candidates, questions, stages, matrix, log and run tools; Escape or I closes it. Candidate reference comparison opens in that sheet. GPU, worker and tile status live under **Agent**. **⋯** holds Replay a log (including prepared replays), Stage window, Case report, System states, Keyboard shortcuts and **Full console**. The full layout is also available at `?view=full`; the menu choice is remembered when local storage is available, and `?view=focus` overrides it.
+
+**Candidate answers (N)** in the toolbar opens every candidate, including while a question is open or after completion. Working and Answer show the leading three as ranked cards with latitude/longitude, relative support and **Google Maps** links; **View all N** opens the complete list. Select a card to inspect it in Compare, where its coordinates remain visible. The full list also shows coordinates and map links. Missing positions say **Coordinates unavailable**. Area centres and landmark points are labelled separately from camera locations; inspecting an alternative keeps the logged prediction and question state intact. Map links use the full stored coordinates.
+
+**Full console** retains the earlier Now/Evidence/Stages/Matrix/Log layout, Candidate details, Timeline, Layers and bearings, Map key, and the answer’s folded score curve and history. Both views use the same event record and backend penalty receipts. Stage mode and the printed case report keep their existing layouts. With the current D5 pipeline defaults, live runs finish without questions; `--ask-anyway` remains available for an interactive rehearsal.
+
+When a run finishes, **Answer** opens with its latest logged coordinates, including an earlier estimate retained after free skips. Completed cases reopened from the queue or backend run list also open on Answer; an unknown uncertainty does not hide the coordinates.
+
+## Detection motion and street panorama comparison
+
+While working, the panorama has a slow scanning light and the status reads **Thinking**, with an orbiting activity indicator. New logged object boxes draw their corner outlines; readings and feature cards arrive with transitions. These effects indicate activity, not a completion percentage. Reduced-motion preferences disable the scanning and continuous animations.
+
+VLM observations use **VLM** as their source label in Detected features, analysis summaries, captions, model rosters, question wording and displayed log metadata.
+
+Answer keeps the original photo visible and offers **Map / Street View / Compare**. Choose Compare, or **Compare with street view**, for two interactive 360° views: original photo on the left, the street panorama near the estimate on the right. Turn both to the same feature and press **Lock alignment**; turning, pitch and zoom then follow together. **Link turning and zoom** can be switched off. Hold **F** or the flicker button to put the street picture over the original, and release to return. **[ / ]**, Previous/Next and the distance buttons cycle nearby pictures. Candidate Compare also has a **Street View** source alongside its logged reference photos.
+
+Completed maps show **Open Google Maps** and **Open Google Street View** in Focus, Full and Stage views. Both links use the full predicted latitude/longitude, independently of map tiles and street-photo coverage. Street View and Compare keep those links available too; a nearby photo's camera position never replaces the prediction in the links.
+
+The source, capture date, distance from the estimate, heading and licence stay visible. A north-up diagram distinguishes the estimate (blue) from the street camera (gold). Pictures more than 50 m away carry an area-comparison warning. Missing imagery leaves the original photo, Copy and Submit available. If a photo fails to load, the console tries the other returned photos once each, stopping after at most eight attempts. **G** switches the answer between Street View and Compare.
+
+The live server searches **Panoramax** without a key. If `MAPILLARY_TOKEN` is present in the server environment, **Mapillary** is tried first; its token stays on the server. Public images and metadata are cached under `runs/app/streetview/`. `--no-streetview` disables the lookup. The mock serves clearly labelled invented pictures and makes no network requests. The new backend routes require an idle `app/start.sh restart`; later frontend-only edits still use `app/start.sh build`.
+
+The OSM base map and Panoramax street photos are separate services. Panoramax coverage can be sparse, and its federation catalog can still list photos on an unreachable image host. The nearest-photo list reserves a fallback from each supported host; an image-host failure starts a 30-second cooldown for that host without blocking the catalog or other hosts. Empty coverage and image-loading failures have different messages. Public city-centre checks and browser evidence are recorded in [the Google Maps verification](docs/google-maps-verification.json) and [provider investigation](docs/google-maps-investigation.json).
+
+Street imagery is optional external content: it loads only when the Street View or Compare view is opened. Startup, replay, the map and answer controls remain independent of it. Only the coordinate goes to an imagery provider; original panorama pixels, crops and embeddings remain local. The comparison never writes a run event, supplies evidence to the pipeline, changes a coordinate or charges a penalty. Do not use it while evaluating the warm-up, `val` or `final` sets; this visual check is for the operator during a solving run.
+
+The public provider response follows the [Panoramax API](https://docs.panoramax.fr/backend/api/api/); interactive views use the bundled [Pannellum API](https://pannellum.org/documentation/api/). Google Maps and Street View use the official [Maps URLs](https://developers.google.com/maps/documentation/urls/get-started) as external links, so no Google API key is needed.
 
 ## Stage mode and case report
 
@@ -112,6 +138,14 @@ VITE_TILE_SOURCE='/tiles/pt-es-fr.pmtiles' npm run dev
 
 Place those files under `app/public/tiles/` or serve their URLs locally. PMTiles vector styling expects OpenMapTiles `water`, `building`, `transportation` and `boundary` layers. Raster PMTiles need an appropriate local tile URL adapter; `VITE_TILE_FORMAT=raster` is for z/x/y raster URLs. `/api/status.tile_source` can also supply a local source. Map errors fall back to the outlines. Actual venue tile extracts still need integration verification.
 
+## Live investigation
+
+Working shows each running task, its elapsed time and the scene model's measured view count. **Detected features** retains every logged object, sign reading and scene view, with the unclear or unseen checks available under each view. Select an observation to inspect its pixels. A scene-view frame marks the area inspected; it does not imply an individual feature was localized inside it.
+
+**How the clues connect** shows short explanations based on validated observations and their geographic implications. The scene model publishes each completed view immediately, including when views finish out of order. The feed stays available with the answer. Cached perception runs restore saved sign geometry and scene checks with new evidence IDs.
+
+The map follows country clues, provisional retrieval leads, fused candidates and the output as they arrive. It labels the source of its current view and stays broad when country clues conflict or position uncertainty is unknown. Both tile maps and bundled outlines move smoothly. Seeking a replay and reduced motion cut directly to the requested view. Animation tokens in seconds are converted to milliseconds for browser animations and map flights.
+
 ## Keyboard and accessibility
 
 | Key | Action |
@@ -122,12 +156,16 @@ Place those files under `app/public/tiles/` or serve their URLs locally. PMTiles
 | S | Free, neutral skip |
 | O | Copy the question's external links |
 | C | Open the text cue composer, ×0.8 shown before confirmation |
-| L | Show/hide layer controls |
+| I | Open/close Details |
+| L | Open Details → Run in focus; show/hide layer controls in Full console |
+| G | Answer: Street View / Compare |
+| F (hold) | Flicker the aligned street panorama over the original |
+| [ / ] | Previous / next nearby street photo |
 | V | Focus the 360° viewer; arrows then turn it |
 | M | Return the map camera to the selection |
 | Space | Play/pause replay |
-| Shift+Enter | Review the current output before submitting |
-| 1–6 on Queue | Open a sealed case |
+| Shift+Enter | Review the current output; replay review cannot submit |
+| 1–6 on Queue (Full console) | Open a sealed case |
 | Escape | Close the active dialog or Compare |
 
 Inputs retain their native keys. Tabs, radio groups, the replay slider and dialogs support keyboard navigation and a token focus ring. Captions and stage rows announce changes politely. With reduced motion, event beats use quick cross-fades, counts jump to the logged value and map flights cut.

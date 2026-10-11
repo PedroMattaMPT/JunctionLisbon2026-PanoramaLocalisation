@@ -10,6 +10,7 @@ export interface Box { yaw: number; pitch: number; w: number; h: number }
 export interface Stage {
   id: string; name: string; models: string[]; status: string; dur: number | null;
   started: number; deadline: number | null; optional: boolean; note?: string; fallback?: string; seq: number;
+  progress?: { message: string; completed: number | null; total: number | null; view?: string; box?: Box };
 }
 export interface Evidence {
   id: string; kind: string; stage: string; actor: Actor; model: string; t: number; seq: number;

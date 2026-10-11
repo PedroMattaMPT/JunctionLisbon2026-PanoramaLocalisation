@@ -19,7 +19,7 @@ Perception cache (evaluation only): with Models(perception_cache=DIR), OCR and V
 kNN, region-head, GeoCLIP and landmark candidates (retrieval.json, geoclip.json, landmarks.json), are stored in
 DIR/<file name>-<size>/ and reused when the same file is run again, so fusion can be recalibrated (T39)
 without paying a minute of OCR and VLM per panorama again. A cached stage logs a perception_cache
-evidence event and the items and hints it reused, not every sign. The live CLI uses no cache unless
+evidence event and the saved signs, scene checks, items and hints it reused. The live CLI uses no cache unless
 --perception-cache is given. A cache entry describes one image file only; nothing crosses panoramas.
 
 Models (OCR engine, VLM client, name index, PE-Core and the bank) load once in a Models object and are
@@ -44,8 +44,9 @@ regions ... down to parishes; T32) when the index is built, else latitude/longit
 zone questions chain: the next one stays inside the zone an answer picked, with an explicit outside
 option, and a picked zone that holds no hypothesis gets its weight spread over its subzones.
 
-Gate: a question is asked when its expected gain beats min_gain (default questions.BREAK_EVEN, the
-x0.95 break-even; the T79 sweep on val kept it), at most MAX_QUESTIONS place/zone answers and
+Questions are off by default (ASK_QUESTIONS, user decision Sun 05:30: with a realistic team every gate lost
+to never asking); ask_anyway=True or an explicit min_gain turns them on. Gate: a question is asked when its
+expected gain beats min_gain (default MIN_GAIN, the x0.95 break-even), at most MAX_QUESTIONS place/zone answers and
 MAX_CELL_QUESTIONS cell answers. A skipped question may come back, identical, up to CELL_SKIP_RETRIES /
 MAIN_SKIP_RETRIES times on a fixed schedule; nothing is inferred from the skip and it costs nothing.
 
@@ -90,7 +91,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from panoloc import fusion, questions, urban
-from panoloc.candidates import Candidate, normalise
+from panoloc.candidates import Candidate, Output, normalise
 from panoloc.runlog import Run
 from panoloc.views import cut_views, load_panorama, parse_filename
 
@@ -103,6 +104,19 @@ except ImportError:
 # other, and together they carry 0.55. On Panoramax val (track 2), GeoCLIP alone scored non-urban 3,507 and
 # kNN 2,479; on OSV-5M val, kNN 5,288 and GeoCLIP 1,432: they are complementary.
 VLM_PLUGIN = "panoloc.local_vlm"  # optional, untracked: a module with make_client, selected_model and claims
+# Place reasoning (panoloc.reason): the VLM sees the whole panorama and every other finding, then names places.
+# On (Sun 09:15). Warm-up, no questions: own-category mean 36.5% -> 56.0%, and 5 -> 10 urban panoramas within
+# 100 m. First 30 of val: 21.8% -> 43.1%, all 30 answered, median 16.5 s per panorama with perception cached. The
+# reply carries answers only, never the model's reasoning. REASON_LOCAL (the local VLM) has not been measured.
+REASON = True
+REASON_LOCAL = False
+# Refine (T83): the VLM plugin's optional refine(models, pano, fused, reasoned, log), a tool-using step that looks
+# for the exact camera position around the first output (map features, imagery, bearing resection in code). Its
+# answer becomes a second output; a timeout, failure or no answer keeps the first. Measured Sun 10:05 with no
+# questions: val first 30 39.3% -> 58.9% (urban within 100 m 14 -> 20 of 29), warm-up 61.7% -> 79.3%.
+REFINE = True
+REFINE_DEADLINE_S = 200.0
+REFINE_UNCERTAINTY_M = {"high": 10.0, "medium": 25.0, "low": 100.0}
 KNN_RELIABILITY = 0.3
 REGION_HEAD_RELIABILITY = 0.375  # x1.5 by T39 (see fusion.OCR_NAME_RELIABILITY)
 GEOCLIP_RELIABILITY = 0.35
@@ -123,6 +137,12 @@ VERIFY_TOP = 10
 VLM_DEADLINE_S = 90.0
 OCR_DEADLINE_S = 40.0
 MAX_QUESTIONS = 6  # place and zone answers; the gain gate usually stops sooner (T79: 4 beat 2 at every gate)
+MIN_GAIN = questions.BREAK_EVEN  # a question is asked only when its expected gain beats this
+# Questions are off by default (user, Sun 05:30): with a realistic simulated team (70% right, 10% wrong, 20%
+# sticky skips) every gate lost to never asking on the warm-up (19 x 3 seeds): never 36.5% of max, gate 1.0
+# 33.2% (0.4 questions per panorama), gate 0.5 32.1% (1.6), the 05:00 default 26.3% (7.1); val ES30 22.1% /
+# 22.7% / 21.1% / 21.7%. ask_anyway, or an explicit min_gain, turns them on (rehearsals, a team that wants them)
+ASK_QUESTIONS = False
 ANSWER_ACCURACY = questions.DEFAULT_ANSWER_ACCURACY  # assumed share of right answers: the gate's expected gain,
 # the soft update after an answer and the cell routes all use it (the app's realistic batch: 8 of 58 answers wrong)
 # Skips (Sun 03:20): a skipped question may come back, identical, on a fixed schedule; nothing is inferred
@@ -296,14 +316,27 @@ def _store(file, doc):
 def _read(models, path, pano, views, run):
     file = _cache_file(models, path, "ocr.json")
     def log_items(doc, model):
+        sign_ids = {}
+        signs = {s["sign_id"]: s for s in doc["signs"]}
+        for sign in doc["signs"]:
+            if sign.get("text") and sign.get("box"):
+                sign_ids[sign["sign_id"]] = run.evidence("ocr_text", {k: sign.get(k) for k in
+                    ("sign_id", "text", "confidence", "box", "views", "alternatives", "reread", "source",
+                     "in_photographer_zone")}, stage="read", model=model)
         for item in doc["items"]:
-            run.evidence(item["kind"], {k: item.get(k) for k in ("item_id", "sign_id", "value", "countries",
-                                                                 "regions", "strength", "source")},
+            payload = {k: item.get(k) for k in ("item_id", "sign_id", "value", "countries", "regions", "strength",
+                                               "source", "notes", "details", "readings")}
+            sign = signs.get(item.get("sign_id"), {})
+            if item.get("sign_id") in sign_ids:
+                payload.update(text=item.get("raw", sign.get("text")), box=sign.get("box"),
+                               confidence=sign.get("confidence"), ocr_evidence_id=sign_ids[item["sign_id"]])
+            run.evidence(item["kind"], payload,
                          stage="read", model=model)
 
     doc = _cached(run, "read", file, "PP-OCRv6", log_items)
     if doc is not None:
-        signs = [SimpleNamespace(sign_id=s["sign_id"], confidence=s["confidence"]) for s in doc["signs"]]
+        signs = [SimpleNamespace(sign_id=s["sign_id"], confidence=s["confidence"], text=s.get("text"),
+                                 box=s.get("box")) for s in doc["signs"]]
         return SimpleNamespace(items=doc["items"], signs=signs)
     from panoloc.ocr import log_ocr, read_panorama
     engine = models.ocr()
@@ -344,10 +377,8 @@ def _plugin_for_names():
 
 def _describe(models, path, views, run):
     def log_landmarks(doc, model):
-        for lm in doc["landmarks"]:  # "kind" is the evidence kind: the place's kind goes in place_kind, as in vlm.py
-            run.evidence("landmark_hypothesis", {("place_kind" if k == "kind" else k): lm.get(k)
-                                                 for k in ("name", "kind", "confidence", "views")},
-                         stage="describe", model=doc.get("model") or model)
+        from panoloc.vlm import log_cached_results
+        log_cached_results(run, doc, model)
 
     name = models.vlm_name()
     file = _cache_file(models, path, _vlm_cache_name(name))
@@ -376,6 +407,113 @@ def _describe(models, path, views, run):
             _store(file, doc)
         return result
     return None
+
+
+def _reason(models, path, pano, ocr, vlm, clues, hints, run):
+    """Place reasoning (panoloc.reason): the reply dict, or None when it is off, unavailable or failed."""
+    if not REASON:
+        return None  # off: no stage, no event, so runs match the measured configuration
+    from panoloc import reason
+    from panoloc.vlm import VLMError
+    name = models.vlm_name()  # without building the client: a cached answer loads no model
+    plugin = vlm_plugin()
+    if not (plugin and plugin.claims(name)) and not REASON_LOCAL:
+        run.skip_stage("reason", "place reasoning is off for the local VLM (pipeline.REASON_LOCAL)")
+        return None
+    file = _cache_file(models, path, reason.cache_name(name))
+    doc = _cached(run, "reason", file, name, lambda d, m: _log_reasoning(run, d, m))
+    if doc is not None:
+        return doc
+    client = models.vlm()
+    context = reason.build_context(filename=Path(path).name, ocr=ocr, vlm=vlm, clues=clues, hints=hints,
+                                   zones=models.zones())
+    with run.stage("reason", optional=True, model=client.model, deadline_s=reason.TIMEOUT_S * 2):
+        try:
+            doc = reason.reason_place(client, pano, context, signs=getattr(ocr, "signs", []) if ocr else [])
+        except VLMError as exc:
+            run.evidence("reason_failed", {"observation": f"place reasoning failed: {exc}"[:300]}, stage="reason",
+                         model=client.model)
+            return None
+        _log_reasoning(run, doc, client.model)
+        _write_json(run.dir / "reason.json", doc)
+        _store(file, doc)
+        return doc
+    return None
+
+
+def _apply_reasoning(clues, doc, run):
+    """OCR name clues the reasoning ruled out are dropped (a panel depicting another town, a brand); its places
+    are added as VLM landmark clues, looked up near the municipality it gives."""
+    from panoloc import reason
+    from panoloc.names import NameIndex
+    bad = reason.misleading_keys(doc)
+    kept = [c for c in clues if not (c.kind == "ocr_name" and reason.is_misleading(c.text, bad))]
+    if len(kept) < len(clues):
+        run.evidence("ocr_dropped", {"observation": "OCR names the place reasoning ruled out: " + ", ".join(
+            c.text for c in clues if c not in kept)}, stage="names", actor="agent")
+    with NameIndex.open() as names:
+        added = reason.clues_from_reasoning(doc, names)
+    run.evidence("reasoning_clues", {"observation": f"{len(added)} clues from place reasoning", "clues": [
+        {"clue_id": c.clue_id, "text": c.text, "reliability": round(c.reliability, 3), "candidates": len(c.candidates),
+         "best": c.candidates[0].label if c.candidates else None} for c in added]}, stage="names", actor="agent")
+    return kept + added
+
+
+def _refine(models, pano, fused, reasoned, run):
+    """The plugin's refine step under a hard wall-time cap: a second Output, or None (the first output stands)."""
+    import threading
+    from panoloc.scoring import haversine_m
+    plugin = vlm_plugin()
+    name = models.vlm_name()
+    if not (REFINE and models.use["vlm"] and plugin is not None and hasattr(plugin, "refine") and plugin.claims(name)):
+        return None
+    stop, box = threading.Event(), {}
+
+    def log(payload):
+        if not stop.is_set():
+            run.evidence("refine_tool", payload, stage="refine", model=name)
+
+    def work():
+        try:
+            box["result"] = plugin.refine(models, pano, fused, reasoned, log)
+        except Exception as exc:  # reported below; the first output stands
+            box["error"] = exc
+
+    def keep(why):
+        run.evidence("refine_skipped", {"observation": f"refine: {why}; the first output stands"[:300]},
+                     stage="refine", actor="agent")
+
+    with run.stage("refine", optional=True, model=name, deadline_s=REFINE_DEADLINE_S):
+        worker = threading.Thread(target=work, daemon=True)
+        worker.start()
+        worker.join(REFINE_DEADLINE_S)
+        stop.set()
+        if worker.is_alive():
+            return keep(f"no answer within {REFINE_DEADLINE_S:.0f} s")
+        if "error" in box:
+            return keep(f"failed: {type(box['error']).__name__}: {box['error']}")
+        r = box.get("result")
+        if not r:
+            return keep("no position submitted")
+        conf, method = r.get("confidence", "low"), r.get("method", "")
+        moved = haversine_m((fused.output.lat, fused.output.lng), (r["lat"], r["lng"]))
+        out = Output(r["lat"], r["lng"], "coarse_candidate", "camera", [f"refine:{conf}"] + list(fused.output.sources[:3]),
+                     REFINE_UNCERTAINTY_M.get(conf, 100.0), "source_estimate",
+                     f"refined camera position ({conf}: {method}); {moved:.0f} m from the first output")
+        run.evidence("refined_position", {"observation": out.note, "confidence": conf, "method": method,
+                                          "moved_m": round(moved, 1), "steps": r.get("steps"),
+                                          "elapsed_s": r.get("elapsed_s")}, stage="refine", actor="agent")
+        return out
+    return None
+
+
+def _log_reasoning(run, doc, model):
+    run.evidence("place_reasoning", {
+        "observation": "; ".join(f"{p['name']} ({p.get('municipality')}, {p['country']}) p={p['probability']:.2f}"
+                                 for p in doc.get("places") or []) or "no place named",
+        "places": doc.get("places"), "camera_street": doc.get("camera_street"),
+        "misleading_texts": doc.get("misleading_texts"), "country": doc.get("country"),
+        "timing": doc.get("timing")}, stage="reason", model=model)
 
 
 def _short(cands, n=3):
@@ -920,8 +1058,8 @@ def _ask_loop(run, hypotheses, operator, *, category, urban_probability, max_que
 
 
 def run_panorama(path, models=None, *, runs_dir="runs", operator="never", category=None, category_source=None,
-                 special_one=False, urban_probability=None, max_questions=MAX_QUESTIONS,
-                 ask_anyway=False, min_gain=questions.BREAK_EVEN, print_fn=print, on_event=None, run_id=None):
+                 special_one=False, urban_probability=None, max_questions=None,
+                 ask_anyway=False, min_gain=None, print_fn=print, on_event=None, run_id=None, max_cell_questions=None):
     """Solve one panorama alone; returns a PanoramaResult. The run log is finished (log.json) on return.
 
     on_event(event) is called with every event as it is logged (panoloc.runlog.Run), e.g. for the console;
@@ -976,6 +1114,11 @@ def run_panorama(path, models=None, *, runs_dir="runs", operator="never", catego
                 run.skip_stage(stage, "disabled for this run")
         name_clues, hints = _clues(ocr, vlm, run)
         clues += name_clues
+        reasoned = None
+        if models.use["vlm"]:
+            reasoned = _reason(models, path, pano, ocr, vlm, clues, hints, run)
+            if reasoned:
+                clues = _apply_reasoning(clues, reasoned, run)
         timings["clues_s"] = round(time.perf_counter() - t0, 2)
 
         cat = run.category["value"]
@@ -1007,12 +1150,22 @@ def run_panorama(path, models=None, *, runs_dir="runs", operator="never", catego
         fused.output.log(run)  # the initial answer, before any question
         timings["first_output_s"] = round(time.perf_counter() - t0, 2)
         outputs = [fused.output]
+        refined = _refine(models, pano, fused, reasoned, run)
+        if refined is not None:
+            refined.log(run)
+            outputs.append(refined)
+            timings["refined_output_s"] = round(time.perf_counter() - t0, 2)
 
-        if operator != "never":
+        if operator != "never" and not (ASK_QUESTIONS or ask_anyway or min_gain is not None):
+            run.skip_stage("ask", "questions are off by default (pipeline.ASK_QUESTIONS): the first output stands")
+        elif operator != "never":
             with run.stage("ask", optional=True):  # a failure here is logged; the outputs so far stand
                 _ask_loop(run, fused.hypotheses, operator, category=cat, urban_probability=urban_probability,
-                          max_questions=max_questions, ask_anyway=ask_anyway, print_fn=print_fn,
-                          zones=models.zones(), min_gain=min_gain, urban_auto=urban_auto, outputs=outputs)
+                          max_questions=MAX_QUESTIONS if max_questions is None else max_questions,
+                          ask_anyway=ask_anyway, print_fn=print_fn, zones=models.zones(),
+                          min_gain=MIN_GAIN if min_gain is None else min_gain, urban_auto=urban_auto,
+                          outputs=outputs,
+                          max_cell_questions=MAX_CELL_QUESTIONS if max_cell_questions is None else max_cell_questions)
         timings["total_s"] = round(time.perf_counter() - t0, 2)
     finally:
         log_path = run.finish()
@@ -1066,9 +1219,9 @@ def main(argv=None):
     parser.add_argument("--no-retrieval", action="store_true")
     parser.add_argument("--vlm-model")
     parser.add_argument("--perception-cache", help="reuse and store OCR/VLM results here (evaluation only)")
-    parser.add_argument("--max-questions", type=int, default=MAX_QUESTIONS)
-    parser.add_argument("--min-gain", type=float, default=questions.BREAK_EVEN,
-                        help="ask only when the expected gain exceeds this (default: the x0.95 break-even, 0.0526)")
+    parser.add_argument("--max-questions", type=int, default=None, help="place/zone answers (default MAX_QUESTIONS)")
+    parser.add_argument("--min-gain", type=float, default=None,
+                        help="ask only when the expected gain exceeds this (default MIN_GAIN)")
     parser.add_argument("--ask-anyway", action="store_true",
                         help="ask the first question even below break-even (rehearsals, Gate A)")
     args = parser.parse_args(argv)

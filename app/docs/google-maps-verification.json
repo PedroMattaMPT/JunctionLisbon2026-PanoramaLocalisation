@@ -1,0 +1,86 @@
+{
+  "target": "http://127.0.0.1:5178",
+  "backend": "Live updated street service; restarted only after the evaluation batch finished and the server was idle",
+  "original": "Procedural urban fixture, no evaluation images",
+  "checks": [
+    "Completed focus map links use the full estimate, including negative longitude; no imagery lookup required",
+    "Click opens the exact coordinate URL in a separate tab with no opener",
+    "Full console final map also has the links",
+    "Stage final map also has the links",
+    "Unavailable closest image automatically advances to an available nearby photo; links keep the estimate rather than the camera coordinate",
+    "All failed photos stop after one attempt each, retain Google links, and update them when the estimate changes",
+    "Empty coverage keeps links visible at 390 px, including negative latitude, without horizontal overflow",
+    "Real public Panoramax comparison succeeded through the updated live backend after 8 bounded photo attempts"
+  ],
+  "errors": [],
+  "imageryRequests": [
+    {
+      "phase": "fallback",
+      "path": "/api/streetview/nearest"
+    },
+    {
+      "phase": "fallback",
+      "path": "/api/streetview/image/mock/unavailable/sd"
+    },
+    {
+      "phase": "fallback",
+      "path": "/api/streetview/image/mock/available/sd"
+    },
+    {
+      "phase": "all-failed",
+      "path": "/api/streetview/nearest"
+    },
+    {
+      "phase": "all-failed",
+      "path": "/api/streetview/image/mock/unavailable-a/sd"
+    },
+    {
+      "phase": "all-failed",
+      "path": "/api/streetview/image/mock/unavailable-b/sd"
+    },
+    {
+      "phase": "all-failed",
+      "path": "/api/streetview/image/mock/unavailable-c/sd"
+    },
+    {
+      "phase": "empty",
+      "path": "/api/streetview/nearest"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/nearest"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/7cf46afc-9630-4ba5-a32f-b418693e8150/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/3aa58578-fe2d-4e41-bf43-da732e9a9b33/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/1ea06357-dcd1-4532-8e31-32ad219a6aa4/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/8062b408-242b-482f-b397-0e3f8daa7717/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/32cfe5cf-33fc-4a51-9ee8-bf3ec1606bc4/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/51b1f758-9684-44c7-bbae-0ad1763d92f7/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/bf988923-8dd2-4c69-8ac3-a6b57d762381/sd"
+    },
+    {
+      "phase": "real",
+      "path": "/api/streetview/image/panoramax/5c65c067-9af5-44a0-a7c9-49e4e0e24526/sd"
+    }
+  ]
+}

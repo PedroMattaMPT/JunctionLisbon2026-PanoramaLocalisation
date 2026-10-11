@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Working shows three ranked candidate cards above the map, with coordinates and exact Google Maps links",
+    "Direct shortcut exposes every candidate, with no invented position or link for missing coordinates",
+    "Card inspection and J/K comparison show the selected candidate coordinates",
+    "Candidates remain accessible during questions without answering, skipping, changing penalties or issuing API writes",
+    "Completed answer keeps candidate cards and the final Google Maps link visible",
+    "Inspecting an alternative leaves the final prediction unchanged",
+    "390 px layout exposes all coordinates without horizontal overflow",
+    "Full console also exposes the shortcut, coordinates and candidate inspection"
+  ],
+  "errors": [],
+  "writes": [],
+  "source": "Invented candidates and procedural image; no evaluation run modified"
+}

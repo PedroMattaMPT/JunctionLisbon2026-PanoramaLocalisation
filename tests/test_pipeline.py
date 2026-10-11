@@ -86,6 +86,34 @@ class PipelineTest(unittest.TestCase):
         self.assertEqual(lm["place_kind"], "building")
         self.assertFalse([e for e in events(result) if e["type"] == "stage.failed"])
 
+    def test_cached_observations_keep_scene_features_and_sign_geometry_without_loading_models(self):
+        from panoloc.vlm import PanoramaResult, ViewResult
+        cache = Path(self.tmp.name) / "cache"
+        entry = cache / f"{self.path.name}-{self.path.stat().st_size}"
+        entry.mkdir(parents=True)
+        box = {"yaw": 45, "pitch": 10, "w": 12, "h": 5}
+        sign = {"sign_id": "s1", "confidence": 0.9, "text": "Rua inventada", "box": box, "views": ["h045"]}
+        item = {"item_id": "i1", "sign_id": "s1", "kind": "language", "value": "portuguese",
+                "countries": ["PT"], "regions": [], "strength": "strong", "source": "reading"}
+        (entry / "ocr.json").write_text(json.dumps({"signs": [sign], "items": [item]}))
+        view = ViewResult("h000", 0, 0, 90, 0, {"post_box": "red", "roof": "not_visible"})
+        scene = PanoramaResult("test", "single", [view]).summarise().to_dict(raw=False)
+        (entry / "vlm.json").write_text(json.dumps(scene))
+        models = Models(ocr=True, vlm=True, retrieval=False, perception_cache=cache)
+        result = run_panorama(self.path, models, runs_dir=Path(self.tmp.name) / "runs", print_fn=lambda *a: None)
+        observed = [e["payload"] for e in events(result) if e["type"] == "evidence.added"]
+        reading = next(p for p in observed if p.get("kind") == "ocr_text")
+        parsed = next(p for p in observed if p.get("kind") == "language")
+        checklist = next(p for p in observed if p.get("kind") == "vlm_checklist")
+        self.assertEqual(reading["box"], box)
+        self.assertEqual(parsed["ocr_evidence_id"], reading["evidence_id"])
+        self.assertEqual(checklist["seen"], {"post_box": "red"})
+        self.assertEqual(len(checklist["features"]), 2)
+        self.assertIn("Portugal", checklist["inference"])
+        self.assertIsNone(models._ocr)
+        self.assertIsNone(models._vlm)
+        self.assertFalse([e for e in events(result) if e["type"] == "stage.failed"])
+
     def test_none_of_these_moves_to_zones(self):
         def none_of_these(q):  # a whole-area zone question has no complement: take its first cell
             return next((o.id for o in q.options if o.complement), q.options[0].id)
@@ -188,6 +216,13 @@ class PipelineTest(unittest.TestCase):
         self.assertIsNotNone(zones.locate(out.lat, out.lng))
         q = asked[0]
         self.assertTrue(q.option_for(Candidate(out.lat, out.lng, "area", "t:out")).complement)
+
+    def test_questions_off_by_default(self):
+        result = self.run_it(operator=lambda q: q.options[0].id)
+        ev = events(result)
+        self.assertFalse([e for e in ev if e["type"] == "question.asked"])
+        self.assertIn("ask", [e["stage"] for e in ev if e["type"] == "stage.skipped"])
+        self.assertEqual(sum(e["type"] == "output.produced" for e in ev), 1)
 
     def test_operator_is_checked(self):
         with self.assertRaises(ValueError):

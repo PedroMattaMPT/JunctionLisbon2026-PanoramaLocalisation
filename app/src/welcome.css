@@ -1,0 +1,29 @@
+.welcome { flex: 1; min-height: 0; overflow: auto; padding: var(--space-6) clamp(24px, 6vw, 96px); background: var(--surface-0); }
+.welcome-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-bottom: var(--space-6); border-bottom: var(--border-hair) solid var(--line-1); }
+.welcome-body { display: grid; grid-template-columns: 1fr 1.08fr; align-items: center; gap: var(--space-8); max-width: 1440px; margin: auto; min-height: min(66vh, 680px); padding-block: var(--space-8); }
+.welcome-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); position: relative; z-index: 1; animation: welcome-arrive var(--dur-cinematic) var(--ease-enter) both; }
+.welcome-eyebrow { color: var(--model); }
+.welcome h1 { font-family: var(--font-serif); font-size: clamp(52px, 6.5vw, 100px); font-weight: 400; line-height: 1.02; letter-spacing: -0.035em; }
+.welcome h1:focus { outline: none; box-shadow: none; }
+.welcome h1 em { color: var(--solver); font-weight: 400; }
+.welcome-description { font-family: var(--font-sans); font-size: 18px; line-height: 1.65; color: var(--ink-2); max-width: 440px; }
+.welcome-copy > .aq-btn { min-height: 52px; padding-inline: var(--space-6); font-size: 16px; margin-top: var(--space-2); }
+.welcome-atlas { position: relative; min-width: 0; aspect-ratio: 640 / 520; overflow: hidden; border: var(--border-hair) solid var(--line-1); background: var(--map-water); animation: welcome-arrive var(--dur-cinematic) var(--ease-enter) both; }
+.welcome-atlas-map { position: absolute; inset: 0; opacity: var(--opacity-dim); }
+.welcome-atlas-map .aq-map, .welcome-atlas-map svg { width: 100%; height: 100%; }
+.welcome-atlas-map .aq-map-bar, .welcome-atlas-map .aq-map-scale { display: none; }
+.welcome-atlas-marks { position: absolute; inset: 0; width: 100%; height: 100%; stroke: var(--solver); stroke-width: 1; }
+.welcome-atlas-marks circle { opacity: 0.5; stroke-dasharray: 4 6; }
+.welcome-atlas-marks circle:nth-child(2) { stroke-dasharray: none; opacity: 0.35; }
+.welcome-atlas-marks path { opacity: 0.55; }
+.welcome-atlas-marks .welcome-atlas-cross { stroke-width: 2; opacity: 1; }
+.welcome-atlas-north { position: absolute; right: var(--space-5); top: var(--space-5); color: var(--ink-2); }
+.welcome-atlas-caption { position: absolute; inset: auto var(--space-5) var(--space-5); display: flex; flex-direction: column; gap: var(--space-1); }
+.welcome-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; max-width: 1440px; margin: auto; padding: var(--space-6) 0; border-top: var(--border-hair) solid var(--line-1); gap: var(--space-6); }
+.welcome-steps li { display: flex; align-items: flex-start; gap: var(--space-4); }
+.welcome-steps li > span { color: var(--solver); padding-top: var(--space-half); }
+.welcome-steps li > div { display: flex; flex-direction: column; gap: var(--space-2); }
+@keyframes welcome-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (max-width: 900px) { .welcome-body { grid-template-columns: 1fr 0.8fr; gap: var(--space-5); } .welcome-description { font-size: 16px; } }
+@media (max-width: 650px) { .welcome { padding: var(--space-4); } .welcome-body { grid-template-columns: 1fr; padding-block: var(--space-6); } .welcome h1 { font-size: 64px; } .welcome-atlas { max-height: 260px; aspect-ratio: 640 / 350; } .welcome-steps { grid-template-columns: 1fr; gap: var(--space-5); } .welcome-header { padding-bottom: var(--space-4); } }
+@media (prefers-reduced-motion: reduce) { .welcome-copy, .welcome-atlas { animation: none; } }

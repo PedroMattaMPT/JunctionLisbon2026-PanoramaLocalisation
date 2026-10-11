@@ -471,11 +471,11 @@ The name index and landmark gallery do not depend on the photo bank. Their owner
 - [x] Build the local name index, zone boundaries and landmark gallery (sections 4.4–4.5). [T31, T32, T33]
 - [x] Finish and verify the selected photo bank, metadata and embeddings. [T34, T35]
 - [x] Build kNN and train/calibrate the simple mini-PIGEON head on external training/validation data. [T36, T37]
-- [ ] Compare candidate generation and conservative fusion on external validation cases; test the second geolocation model only if time allows. [T39]
+- [x] Compare candidate generation and conservative fusion on external validation cases; test the second geolocation model only if time allows. [T39]
 - [x] Run paired autonomous and assisted validation against the warm-up JSON baseline, reporting nominal scores, radius sensitivity, place-option recall and answered/skipped question counts. [T40]
 - [x] Validate MegaLoc and geometric matching on separate-capture examples; enable the working path where coverage exists. [T41]
 - [x] Implement and check the landmark/cell route: exhaustive options, interior representative points, distance bounds, recovery choices and automatic coordinate generation from clicks. [T42]
-- [ ] Run the section 4.8 accuracy gate and record whether each target passes; test each implemented coordinate branch. [T43]
+- [x] Run the section 4.8 accuracy gate and record whether each target passes; test each implemented coordinate branch. [T43]
 - [ ] Add targeted detector crops if they fix observed OCR/perception failures. [T44]
 - [ ] Consider SAM 3, segmentation, solar checks, rich grid features and the feature table only after the preceding tasks meet their gates. [T45]
 - [x] Rehearse the retained configuration, including unavailable network access, module timeouts and unknown category handling. [T46]
@@ -484,8 +484,8 @@ The name index and landmark gallery do not depend on the photo bank. Their owner
 
 ### Sunday before 10:00
 
-- [ ] Stop adding features around 08:00, freeze weights/configuration/dependencies and keep a known working fallback. [T53]
-- [ ] Evaluate the retained version on the reserved external subset once; record assumptions and observed failures. [T54]
+- [x] Stop adding features around 08:00, freeze weights/configuration/dependencies and keep a known working fallback. [T53]
+- [x] Evaluate the retained version on the reserved external subset once; record assumptions and observed failures. [T54]
 - [ ] Rehearse six independent, unfamiliar external panoramas within 60 minutes, with separate logs, no carried-over evidence and actual human answers. Record score/accuracy against supplied GPS, source uncertainty, question penalties and whether the section 4.8 targets hold on the rehearsal. [T55]
 - [ ] Confirm output coordinate order, log export and whatever label/feedback format the organisers actually supply. [T56]
 

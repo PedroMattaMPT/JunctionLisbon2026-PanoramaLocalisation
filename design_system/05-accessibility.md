@@ -56,16 +56,21 @@ Separation is measured as OKLab ΔE ×100 under protanopia and deuteranopia (Mac
 
 ## Keyboard
 
-Everything is reachable in reading order (run bar → panorama → reasoning → map). One focus ring everywhere (`focus-ring`: 2 px surface gap + 2 px `focus`, at least 7.8:1). Tabs and option lists move with arrow keys; dialogs trap focus and close with Esc. The full key map is in "Screens and layout"; every key is shown as a `KeyCap` next to its action. Question answers are 1–4 and Skip is S; the shortcuts never fire while the cue box has focus.
+- One focus ring everywhere (`focus-ring`: 2 px surface gap + 2 px `focus`, at least 7.8:1).
+- `Tabs`, `Segmented` and option lists move with the arrow keys, Home and End.
+- `Dialog`, `Modal` and the Details sheet trap focus, close with Esc and return focus to where it was.
+- `QuestionCard` and `FocusQuestion` are radio groups: 1–4 answer, S skips. Every key appears as a `KeyCap` beside its action, and no shortcut fires while a text field has focus.
+- Interactive marks on the strip, matrix and map take focus like buttons.
+- Focus order follows reading order within each component; the order across components is the app's to set.
 
 ## Screen readers
 
-Charts carry an `aria-label` with their values; `StageRow` and `WaitState` use `aria-live="polite"` and announce real times; `CaptionBar` is a polite live region; the map has a text equivalent in `CandidateList`; the question card is a radio group.
+Charts carry an `aria-label` with their values; `StageRow` and `WaitState` use `aria-live="polite"` and announce real times; `CaptionBar`, `Thinking`, `FocusQuestion` and `WorkerBanner` are polite live regions; the map has a text equivalent in `CandidateList`; the question card is a radio group.
 
 ## Reduced motion
 
-With `prefers-reduced-motion: reduce`, every beat becomes a 180 ms cross-fade (`dur-quick`), counts jump to their final value and map flights cut. Motion never carries information on its own.
+With `prefers-reduced-motion: reduce`, every animation becomes a 180 ms cross-fade (`dur-quick`), counts jump to their final value, map flights cut and ambient loops play once. Motion never carries information on its own.
 
 ## Projector check
 
-The stage theme was tuned for a washed-out 1920×1080 projector: a deeper ground (`surface-0` #010f1e), wider lightness steps between surfaces (0.06–0.07 OKLCH L), brighter accents, doubled line weights (`border-rule`), and no text under 20 px. Check the room once with the opening card: if the model list reads from the back row, everything else will.
+The stage theme was tuned for a washed-out 1920×1080 projector: a deeper ground (`surface-0` #010f1e), wider lightness steps between surfaces (0.06–0.07 OKLCH L), brighter accents, doubled line weights (`border-rule`), and no text under 20 px. Check the room once with `ModelRoster` at stage density: if the model list reads from the back row, everything else will.

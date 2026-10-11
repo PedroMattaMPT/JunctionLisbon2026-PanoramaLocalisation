@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { MatchView } from '@ds/extra';
-import { Button, EmptyState, Stamp } from '@ds/base';
+import { Button, EmptyState, Stamp, Tabs } from '@ds/base';
 import { CandidateRow } from '@ds/beliefs';
 import { ScoreCurve } from '@ds/output';
 import { PolarityChip } from '@ds/reasoning';
@@ -11,6 +11,8 @@ import { imageCase, Viewer, Crop, perspectiveImage, referenceFor } from './panor
 import type { PanoramaImage } from './images';
 import { Disclosure, mapTree, useWidth, Matrix, Panel } from './ui';
 import { ExternalLinks, optionLinks } from './human';
+import { StreetWorkspace } from './streetview';
+import { CandidateLocation } from './candidate-location';
 
 export function candidateReferences(c: CaseRecord, candidate: Candidate) {
   return [...c.neighbours, ...c.matches].filter(e => candidate.evidence.includes(e.id) || e.payload.candidate_id === candidate.id || strings(e.payload.candidate_ids).includes(candidate.id) || referenceFor(e).source === candidate.source || (e.pol[candidate.id] ?? 0) > 0);
@@ -36,6 +38,8 @@ export function LoggedMatch({ c, image, e }: { c: CaseRecord; image?: PanoramaIm
   })}<div className="app-stack console-body"><p>{payload.accepted === true ? 'Accepted' : payload.accepted === false ? 'Rejected' : 'Verdict not logged'}{finite(payload.threshold) !== null ? ` · threshold ${payload.threshold} inliers` : ' · threshold not logged'} · {str(payload.reason, 'Reason not logged')}.</p>{payload.accepted === true && <Stamp kind="confirmed" />}{!query && <p className="aq-ink3">Query image, yaw or field of view not logged; no keypoint lines are inferred.</p>}</div></div>;
 }
 export function Compare({ c, candidate, image, yaw, setYaw, refIndex, setRefIndex, onEvidence, onError, onClose }: { c: CaseRecord; candidate: Candidate; image?: PanoramaImage; yaw: number; setYaw(yaw: number): void; refIndex: number; setRefIndex(index: number): void; onEvidence(id: string): void; onError(message: string): void; onClose(): void }) {
+  const [photoSource, setPhotoSource] = useState('references');
+  useEffect(() => setPhotoSource('references'), [candidate.id]);
   const references = candidateReferences(c, candidate), e = references[(refIndex + references.length) % Math.max(1, references.length)];
   const reference = e ? referenceFor(e) : undefined, queryYaw = e ? finite(e.payload.query_yaw) : null;
   const related = c.evidence.find(e => candidate.evidence.includes(e.id) && e.box);
@@ -45,9 +49,11 @@ export function Compare({ c, candidate, image, yaw, setYaw, refIndex, setRefInde
   return <section className="app-compare app-stack" aria-label={`Compare ${candidate.name}`}>
     <header className="aq-panel-h"><h2 className="narrative-title">Compare</h2><Button variant="quiet" icon="close" onClick={onClose}>Close</Button></header>
     <CandidateRow c={{ ...candidate, sup: candidate.sup ?? 'unknown', con: candidate.con ?? 'unknown' }} selected max={1} showDelta={candidate.delta !== null} />
+    <CandidateLocation candidate={candidate} />
     <p className="console-micro aq-ink3">{candidate.v === null ? 'Support unknown' : `Support ${candidate.v.toFixed(2)} · weight ÷ total weight`}.</p>
     <p className="console-body aq-ink2">{roleText(candidate.role)} · ± {distance(candidate.r)}.</p>
-    {e?.kind === 'match' ? <LoggedMatch c={c} image={image} e={e} /> : <div className="app-compare-pair"><Panel title="This panorama">{related?.box ? <Crop c={c} image={image} evidence={related} /> : <Viewer c={c} image={image} yaw={yaw} onYaw={setYaw} />}</Panel><Panel title="Reference photo">{reference && localAsset(reference.photo_url) ? <><img className="app-reference" src={localAsset(reference.photo_url)} alt={`${str(reference.place, 'Reference')} · ${str(reference.source)}`} /><p className="console-body">{e?.kind === 'landmark_photo' ? 'Landmark photo: its coordinate is the landmark’s, not where the camera stood.' : `Photo-bank neighbour: looks similar${finite(reference.similarity) !== null ? ` · similarity ${Number(reference.similarity).toFixed(2)}` : ''}.`}</p>{point(reference) && <p className="console-data aq-ink3">{coordinates(point(reference)!.lat, point(reference)!.lng)} · {e?.kind === 'landmark_photo' ? 'landmark coordinate' : 'camera GPS'}</p>}</> : <EmptyState icon="neighbour" title="No linked reference photo" body="The log has not supplied a reference for this candidate." />}</Panel></div>}
+    <Tabs label="Comparison source" tabs={[{ id: 'references', label: 'Reference photos' }, { id: 'street', label: 'Street View' }]} value={photoSource} onChange={setPhotoSource} />
+    {photoSource === 'street' && pointOfCandidate ? <StreetWorkspace key={candidate.id} c={c} image={image} point={pointOfCandidate} mode="compare" yaw={yaw} setYaw={setYaw} /> : e?.kind === 'match' ? <LoggedMatch c={c} image={image} e={e} /> : <div className="app-compare-pair"><Panel title="This panorama">{related?.box ? <Crop c={c} image={image} evidence={related} /> : <Viewer c={c} image={image} yaw={yaw} onYaw={setYaw} />}</Panel><Panel title="Reference photo">{reference && localAsset(reference.photo_url) ? <><img className="app-reference" src={localAsset(reference.photo_url)} alt={`${str(reference.place, 'Reference')} · ${str(reference.source)}`} /><p className="console-body">{e?.kind === 'landmark_photo' ? 'Landmark photo: its coordinate is the landmark’s, not where the camera stood.' : `Photo-bank neighbour: looks similar${finite(reference.similarity) !== null ? ` · similarity ${Number(reference.similarity).toFixed(2)}` : ''}.`}</p>{point(reference) && <p className="console-data aq-ink3">{coordinates(point(reference)!.lat, point(reference)!.lng)} · {e?.kind === 'landmark_photo' ? 'landmark coordinate' : 'camera GPS'}</p>}</> : <EmptyState icon="neighbour" title="No linked reference photo" body="The log has not supplied a reference for this candidate." />}</Panel></div>}
     <div className="aq-row"><Button icon="back" shortcut="←" disabled={references.length < 2} onClick={() => setRefIndex((refIndex - 1 + references.length) % references.length)}>Previous photo</Button><span className="console-data aq-ink3">{references.length ? `${refIndex % references.length + 1} of ${references.length}` : 'No reference'}</span><Button icon="forward" shortcut="→" disabled={references.length < 2} onClick={() => setRefIndex((refIndex + 1) % references.length)}>Next photo</Button></div>
     <Disclosure title="Evidence for this candidate"><Matrix c={c} candidate={candidate.id} onSelect={onEvidence} /></Disclosure>
     <Disclosure title="Distance and estimated score">

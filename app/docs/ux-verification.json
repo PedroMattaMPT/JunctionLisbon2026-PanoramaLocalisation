@@ -1,0 +1,140 @@
+{
+  "viewport": [
+    1440,
+    900
+  ],
+  "cases": {
+    "porto": {
+      "cursors": {
+        "working": 40.8,
+        "question": 88,
+        "answer": 340
+      },
+      "fit": {
+        "width": 1440,
+        "horizontal": 1440,
+        "paneHeight": 811,
+        "scroll": 811,
+        "questionBottom": 863.4791870117188,
+        "optionBottoms": [
+          635.1041679382324,
+          687.8958549499512,
+          740.6875419616699,
+          793.4791679382324
+        ],
+        "map": 740.2708587646484
+      },
+      "narrow": {
+        "width": 1280,
+        "horizontal": 1280,
+        "paneHeight": 811,
+        "scroll": 811,
+        "questionBottom": 827.4791870117188,
+        "optionBottoms": [
+          599.1041679382324,
+          651.8958549499512,
+          704.6875419616699,
+          757.4791679382324
+        ],
+        "map": 671.6354217529297
+      },
+      "states": {
+        "working": {
+          "text": 321,
+          "content": "1\n●\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n00:40 / 05:40\nPanorama\nStrip\n360°\nV1\nV2\nV3\nV4\nV5\nV6\nV7\nV8\nsky view above 45°\n360° view · yaw 0°\n\nRead “CAFÉ” at confidence 0.97. · PP-OCRv6-medium · 4 s\n\n●\nRead\n·\nDescribe\n·\nRetrieve\n·\nFuse\n·\nAsk\nDetails\nI\nStreets\nSatellite\nOutlines\n\n© OpenStreetMap contributors",
+          "width": 1440
+        },
+        "question": {
+          "text": 663,
+          "content": "1\n?\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n01:28 / 05:40\nPanorama\nStrip\n360°\nV1\nV2\nV3\nV4\nV5\nV6\nV7\nV8\nsky view above 45°\nsun · yaw 141° · elevation 22°\n360° view · yaw 0°\nN 0°\n45°\nE 90°\n135°\nS 180°\n225°\nW 270°\n315°\nTrue bearing · sun fix ± 12°\nQuestion 1\nWorth asking (+19%)\nDetails\nI\nWhich zone contains the camera?\nA\nPorto riverfront, Ribeira to Miragaia\n1.3 km × 534 m area\n1\nB\nVila Nova de Gaia riverfront\n1.3 km × 434 m area\n2\nC\nRest of Porto district\n3\nD\nNone of these (anywhere else in PT, ES or FR)\n4\nSkip\nfree\nS\n\nAn answer costs ×0.95. Skip changes nothing.\n\nReplay · read-only\n\nStreets\nSatellite\nOutlines\nA\nB\n\n© OpenStreetMap contributors",
+          "width": 1440
+        },
+        "details": {
+          "text": 6130,
+          "content": "1\n?\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n01:28 / 05:40\nPanorama\nStrip\n360°\nV1\nV2\nV3\nV4\nV5\nV6\nV7\nV8\nsky view above 45°\nsun · yaw 141° · elevation 22°\n360° view · yaw 5°\nN 0°\n45°\nE 90°\n135°\nS 180°\n225°\nW 270°\n315°\nTrue bearing · sun fix ± 12°\nQuestion 1\nWorth asking (+19%)\nDetails\nI\nWhich zone contains the camera?\nA\nPorto riverfront, Ribeira to Miragaia\n1.3 km × 534 m area\n1\nB\nVila Nova de Gaia riverfront\n1.3 km × 434 m area\n2\nC\nRest of Porto district\n3\nD\nNone of these (anywhere else in PT, ES or FR)\n4\nSkip\nfree\nS\n\nAn answer costs ×0.95. Skip changes nothing.\n\nReplay · read-only\n\nStreets\nSatellite\nOutlines\nA\nB\n\n© OpenStreetMap contributors\n\nDetails\nClose details\nEvidence\nCandidates\nQuestions\nStages\nMatrix\nLog\nRun\nContradiction\nFusion\n01:26\nIn conflict\nthe postcode outweighs a low-confidence landmark guess; Alfama stays, its range widens.\nLisboa · Alfama\nSolver\ncode, not a model\n\nPosition not logged on the panorama.\n\nname_match\nName lookup\n01:25\nObserved\n“4050”: 1 places match in the local index.\nPorto · Ribeira\nSolver\ncode, not a model\n\nPosition not logged on the panorama.\n\ngeo_sample\nPixel geolocation\n01:24\nObserved\n5 logged sampled points are on the map.\nGeoCLIP\nlocal · open weights\n\nPosition not logged on the panorama.\n\nOne voice: pe-core\nweight capped at 0.35\nReference-photo neighbours\nPixel geolocation\n01:22\nObserved\nA photo-bank neighbour around Porto · Cais da Ribeira was logged with similarity 0.83.\nPE-Core\nlocal · open weights\n\nPosition not logged on the panorama.\n\nReference-photo neighbours\nPixel geolocation\n01:22\nObserved\nA photo-bank neighbour around Porto · Miragaia was logged with similarity 0.79.\nPE-Core\nlocal · open weights\n\nPosition not logged on the panorama.\n\nReference-photo neighbours\nPixel geolocation\n01:22\nObserved\nA photo-bank neighbour around Vila Nova de Gaia · Cais was logged with similarity 0.77.\nPE-Core\nlocal · open weights\n\nPosition not logged on the panorama.\n\nReference-photo neighbours\nPixel geolocation\n01:22\nObserved\nA photo-bank neighbour around Porto · Ribeira was logged with similarity 0.74.\nPE-Core\nlocal · open weights\n\nPosition not logged on the panorama.\n\nReference-photo neighbours\nPixel geolocation\n01:22\nObserved\nA photo-bank neighbour around Lisboa · Alfama was logged with similarity 0.61.\nPE-Core\nlocal · open weights\n\nPosition not logged on the panorama.\n\nRegion estimate\nPixel geolocation\n01:23\nObserved\nThe model supplied region estimates from the panorama pixels.\nPorto · Ribeira\nPorto · Miragaia\nVila Nova de Gaia · riverside\nLisboa · Alfama\nmini-PIGEON\nlocal · open weights\n\nPosition not logged on the panorama.\n\nSun and compass\nMeasure\n01:13\nObserved\nSun at 205°, 22° up; bearings are now true, ± 12°.\nPorto · Ribeira\nVila Nova de Gaia · riverside\nPorto · Miragaia\npvlib\nlocal · open weights\n\nPosition not logged on the panorama.\n\nscene_shares\nMeasure\n01:12\nObserved\nLogged scene shares describe visible pixels, not land cover.\nPorto · Ribeira\nVila Nova de Gaia · riverside\nPorto · Miragaia\nEoMT-L\nlocal · open weights\n\nPosition not logged on the panorama.\n\nChecklist answer\nDescribe\n01:07\nCan't tell\nVegetation: can't tell\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nChecklist answer\nDescribe\n01:07\nCan't tell\nCalçada portuguesa pavement: can't tell\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nChecklist answer\nDescribe\n01:06\nObserved\nRiver visible: yes\na riverfront; narrows to the banks of the Douro\nPorto · Ribeira\nPorto · Miragaia\nVila Nova de Gaia · riverside\nLisboa · Alfama\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nChecklist answer\nDescribe\n01:06\nObserved\nWrought-iron balconies: yes\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nChecklist answer\nDescribe\n01:06\nObserved\nBlue-and-white azulejo façade: yes\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nChecklist answer\nDescribe\n01:06\nObserved\nGranite masonry: yes\ngranite is the northern building stone; Lisbon builds in limestone\nPorto · Ribeira\nPorto · Miragaia\nVila Nova de Gaia · riverside\nLisboa · Alfama\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nLanguage vote\nRead\n00:43\nObserved\npt 0.93 · gl 0.04 · es 0.02 · ca 0.00 · eu 0.00 · fr 0.01\nPorto · Ribeira\nPorto · Miragaia\nVila Nova de Gaia · riverside\nLisboa · Alfama\nLanguage-ID ×3\nlocal · open weights\n\nPosition not logged on the panorama.\n\nphone\nRead\n00:42\nObserved\n22• ••• •••\n0.71\nmedium\na Portuguese landline; prefix 22 is Porto and Gaia\nPorto · Ribeira\nPorto · Miragaia\nVila Nova de Gaia · riverside\nLisboa · Alfama\nPP-OCRv6-medium\nlocal · open weights\npostcode\nRead\n00:41\nObserved\n4050-253\n0.94\nhigh\na Portuguese postcode; area 4050 is central Porto\nPorto · Ribeira\nPorto · Miragaia\nVila Nova de Gaia · riverside\nLisboa · Alfama\nPP-OCRv6-medium\nlocal · open weights\nText read\nRead\n00:41\nObserved\nCAFÉ\n0.97\nhigh\nthe same word in pt, es and fr — no help on its own\nPP-OCRv6-medium\nlocal · open weights\nObjects found\nDetect\n00:34\nObserved\ngranary · rejected\nSAM 3\nlocal · open weights\nObjects found\nDetect\n00:34\nObserved\nchurch · rejected\nSAM 3\nlocal · open weights\nObjects found\nDetect\n00:34\nObserved\nlicence plate · rejected\nSAM 3\nlocal · open weights\nObjects found\nDetect\n00:28\nObserved\nstreet lamp · kept\nYOLOE-26-L\nlocal · open weights\nObjects found\nDetect\n00:27\nObserved\nbollard · kept\nYOLOE-26-L\nlocal · open weights\nObjects found\nDetect\n00:27\nObserved\nazulejo panel · kept\nYOLOE-26-L\nlocal · open weights\nObjects found\nDetect\n00:27\nObserved\nbalcony · kept\nYOLOE-26-L\nlocal · open weights\nObjects found\nDetect\n00:27\nObserved\nshop sign · kept\nYOLOE-26-L\nlocal · open weights\nObjects found\nDetect\n00:27\nObserved\nshop sign · kept\nYOLOE-26-L\nlocal · open weights\nLanguage vote · 3 voters\npt 93\npt\n0.93\ngl\n0.04\nes\n0.02\nca\n0.00\neu\n0.00\nfr\n0.01\nShare of votes, not a probability of country\nScene shares (EoMT-L)\nsky 26\nbuilding 37\nroad 14\nmasked 15\nsky\n0.31\nbuilding\n0.44\ntree\n0.03\nroad\n0.17\nwater\n0.05\nmasked\n0.18\nvisible share, not land cover\nRegion estimates\nPorto\n0.47\nBraga\n0.12\nLisboa\n0.11\nViana do Castelo\n0.06\nGalicia (ES)\n0.05\nOther\n0.19",
+          "width": 1440
+        },
+        "answer": {
+          "text": 412,
+          "content": "1\n✓\n+ Add\n×0.95\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n05:40 / 05:40\nBest estimate\nLatitude, longitude · WGS84\n41.14081, −8.61315\n\nA camera position, probably within 22 m.\n\nChosen for its estimated score; it differs from the leading candidate.\n\nScore estimate ≈ 12,498 (urban)\n\n×0.95 after 1 answer\n\nCopy lat, lng\nSubmit answer\n⇧⏎\nDetails\nI\nMap\nStreets\nSatellite\nOutlines\n± 22 m\n\n© OpenStreetMap contributors",
+          "width": 1440
+        }
+      },
+      "reductions": {
+        "question": 0.7273848684210527,
+        "answer": 0.5804480651731161
+      }
+    },
+    "real": {
+      "cursors": {
+        "working": 10.438,
+        "question": 46.811,
+        "answer": 47.022
+      },
+      "fit": {
+        "width": 1440,
+        "horizontal": 1440,
+        "paneHeight": 811,
+        "scroll": 811,
+        "questionBottom": 844.4583435058594,
+        "optionBottoms": [
+          616.0833549499512,
+          668.8750419616699,
+          721.6666679382324,
+          774.4583549499512
+        ],
+        "map": 740.2708587646484
+      },
+      "narrow": {
+        "width": 1280,
+        "horizontal": 1280,
+        "paneHeight": 811,
+        "scroll": 811,
+        "questionBottom": 808.4583435058594,
+        "optionBottoms": [
+          580.0833549499512,
+          632.8750419616699,
+          685.6666679382324,
+          738.4583549499512
+        ],
+        "map": 671.6354217529297
+      },
+      "states": {
+        "working": {
+          "text": 264,
+          "content": "1\n●\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n00:10 / 00:47\nPanorama\nStrip\n360°\n360° view · yaw 0°\n\nRead in progress. · PP-OCRv6-medium · 8 s\n\n●\nRead\n●\nDescribe\n·\nRetrieve\n·\nFuse\n·\nAsk\nDetails\nI\nStreets\nSatellite\nOutlines\n\n© OpenStreetMap contributors",
+          "width": 1440
+        },
+        "question": {
+          "text": 523,
+          "content": "1\n?\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n00:46 / 00:47\nPanorama\nStrip\n360°\n360° view · yaw 0°\nQuestion 1\nWorth asking (+132%)\nDetails\nI\nWhere was this panorama taken? A place counts only if the camera stood within the distance given for it.\nA\nViana do Castelo (PT)\nwithin 27.3 km\n1\nB\nBraganca (PT)\nwithin 45.8 km\n2\nC\nGuarda (PT)\nwithin 26.2 km\n3\nD\nNone of these\n4\nSkip\nfree\nS\n\nAn answer costs ×0.95. Skip changes nothing.\n\nReplay · read-only\n\nStreets\nSatellite\nOutlines\nA\nB\nC\n\n© OpenStreetMap contributors",
+          "width": 1440
+        },
+        "details": {
+          "text": 4486,
+          "content": "1\n?\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n00:46 / 00:47\nPanorama\nStrip\n360°\n360° view · yaw 5°\nQuestion 1\nWorth asking (+132%)\nDetails\nI\nWhere was this panorama taken? A place counts only if the camera stood within the distance given for it.\nA\nViana do Castelo (PT)\nwithin 27.3 km\n1\nB\nBraganca (PT)\nwithin 45.8 km\n2\nC\nGuarda (PT)\nwithin 26.2 km\n3\nD\nNone of these\n4\nSkip\nfree\nS\n\nAn answer costs ×0.95. Skip changes nothing.\n\nReplay · read-only\n\nStreets\nSatellite\nOutlines\nA\nB\nC\n\n© OpenStreetMap contributors\n\nDetails\nClose details\nEvidence\nCandidates\nQuestions\nStages\nMatrix\nLog\nRun\nfusion\nFusion\n00:47\nObserved\n47 hypotheses from 4 clues and 6 hints; P(country) PT 75%, ES 19%, FR 6%; best point OSV-5M photo 988856571650709 (Guarda, PT) (expected theta 0.2783)\nSolver\ncode, not a model\n\nPosition not logged on the panorama.\n\nurban_probability\nFusion\n00:47\nObserved\ncategory unknown: assumed P(urban) = 0.33 from GHSL at the hypotheses (26% of their weight in urban cells)\nSolver\ncode, not a model\n\nPosition not logged on the panorama.\n\nname_lookups\nName lookup\n00:47\nObserved\n0 clues from names, postcodes and regions\nSolver\ncode, not a model\n\nPosition not logged on the panorama.\n\nlandmark_gallery\nlandmarks\n00:47\nObserved\n10 gallery landmark hits, 0 verified\nCommons gallery + ALIKED/LightGlue\nlocal · open weights\n\nPosition not logged on the panorama.\n\ngeoclip\ngeoclip\n00:45\nObserved\nGeoCLIP: ES GeoCLIP stock gallery point 3472, PT GeoCLIP stock gallery point 10919, PT GeoCLIP stock gallery point 4210\nGeoCLIP\nlocal · open weights\n\nPosition not logged on the panorama.\n\nregion_head\nretrieve\n00:44\nObserved\nregion head: PT Braganca, PT Viana do Castelo, PT Guarda, PT Porto\nPE-Core region head\nlocal · open weights\n\nPosition not logged on the panorama.\n\nknn\nretrieve\n00:44\nObserved\n20 photo-bank neighbour groups; top: PT Guarda, PT Vila Real, PT Guarda\nPE-Core-L-14-336\nlocal · open weights\n\nPosition not logged on the panorama.\n\nOne voice: vlm-checklist\nvlm_checklist\nDescribe\n00:06\nObserved\nh000: pavement=grey_setts, wall_finish=granite, roof=orange_canal_tiles, terrain=flat_plain (20 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:11\nObserved\nh045: pavement=grey_setts, wall_finish=whitewash_plain, roof=orange_canal_tiles, terrain=flat_plain (20 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:16\nObserved\nh090: pavement=grey_setts, wall_finish=granite, roof=orange_canal_tiles, terrain=flat_plain (20 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:21\nObserved\nh135: pavement=grey_setts, wall_finish=granite, roof=orange_canal_tiles, terrain=flat_plain (20 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:26\nObserved\nh180: pavement=grey_setts, wall_finish=granite, roof=orange_canal_tiles (21 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:31\nObserved\nh225: pavement=grey_setts, wall_finish=granite, roof=orange_canal_tiles (21 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:37\nObserved\nh270: pavement=granite_slabs, wall_finish=granite, roof=orange_canal_tiles, utility_pole=ladder_tall_openings_holes, terrain=flat_plain (19 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:42\nObserved\nh315: pavement=grey_setts, wall_finish=granite, roof=orange_canal_tiles (21 of 24 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_checklist\nDescribe\n00:43\nObserved\nground: pavement=grey_setts (0 of 1 not visible)\nQwen3.5-9B\nlocal · open weights\nvlm_summary\nDescribe\n00:43\nObserved\nVLM checklist over 9 views: utility_pole=ladder_tall_openings_holes (PT, medium-strong, 1 view); roof=orange_canal_tiles (the south, weak, 8 views); wall_finish=granite (PT/ES/FR, weak, 7 views)\nQwen3.5-9B\nlocal · open weights\n\nPosition not logged on the panorama.\n\nphone\nRead\n00:10\nObserved\n926450732\n1.00\nhigh\nPP-OCRv6-medium\nlocal · open weights\nphone\nRead\n00:10\nObserved\n925 450732\n1.00\nhigh\nPP-OCRv6-medium\nlocal · open weights\nocr_text\nRead\n00:10\nObserved\n209120\n0.63\nmedium\nPP-OCRv6-medium\nlocal · open weights\nocr_text\nRead\n00:10\nObserved\nVENDE-SE\n1.00\nhigh\nPP-OCRv6-medium\nlocal · open weights\nocr_text\nRead\n00:10\nObserved\n925 450732\n1.00\nhigh\nPP-OCRv6-medium\nlocal · open weights\nocr_text\nRead\n00:10\nObserved\nTI\n0.52\nmedium\nPP-OCRv6-medium\nlocal · open weights\nfilename\nprepare\n00:02\nObserved\nfilename parsed\nSolver\ncode, not a model\n\nPosition not logged on the panorama.",
+          "width": 1440
+        },
+        "answer": {
+          "text": 372,
+          "content": "1\n✓\n+ Add\n×1.00\n00:00 / 60:00\nAgent\n⋯\nReplay\nPlay\n1×\n2×\n5×\n00:47 / 00:47\nBest estimate\nLatitude, longitude · WGS84\n40.58097, −7.47327\n\nUncertainty unknown.\n\nChosen for its estimated score; it differs from the leading candidate.\n\n×1.00 after 0 answers\n\nCopy lat, lng\nSubmit answer\n⇧⏎\nDetails\nI\nMap\nStreets\nSatellite\nOutlines\n? · radius unknown\n\n© OpenStreetMap contributors",
+          "width": 1440
+        }
+      },
+      "reductions": {
+        "question": 0.8141435678749112,
+        "answer": 0.7854671280276817
+      }
+    }
+  },
+  "checks": [
+    "porto: exact wording; whole question and map visible at 1440×900; no horizontal overflow at 1280",
+    "porto: J/K, hover/focus wording and map link, V/arrows, M, I, Escape; all Details tabs reachable",
+    "porto: final opens Answer; five-decimal copy with true minus; Shift+Enter review cannot submit a replay",
+    "real: exact wording; whole question and map visible at 1440×900; no horizontal overflow at 1280",
+    "real: J/K, hover/focus wording and map link, V/arrows, M, I, Escape; all Details tabs reachable",
+    "real: final opens Answer; five-decimal copy with true minus; Shift+Enter review cannot submit a replay",
+    "Full console menu and URL work, persist on reload, and ?view=focus overrides saved full view"
+  ],
+  "errors": []
+}

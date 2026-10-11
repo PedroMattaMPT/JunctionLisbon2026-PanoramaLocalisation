@@ -6,6 +6,7 @@ import { GainMeter } from '@ds/charts';
 import { ModelChip } from '@ds/shell';
 import type { Evidence, Option, Question } from './model';
 import { mapTree, Modal, type ElementProps } from './ui';
+import { modelName } from './format';
 
 export function optionLinks(o: Pick<Option, 'point' | 'links'>) {
   const supplied = Object.entries(o.links ?? {}).filter(([, value]) => { try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol); } catch { return false; } });
@@ -31,9 +32,9 @@ function InteractiveOption({ onAnswer, disabled, ...props }: ElementProps & { on
   const tree = QuestionOption({ ...props, showLinks: false });
   return React.cloneElement(tree, { 'aria-disabled': disabled, 'data-option-id': o.id, onClick: () => { if (!disabled) onAnswer(o.id); }, onKeyDown: (e: React.KeyboardEvent) => { if (!disabled && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onAnswer(o.id); } } });
 }
-export function QuestionView({ q, evidence, disabled, onAnswer, onSkip, onError, brief = false, readOnly = false }: { q: Question; evidence: Evidence[]; disabled: boolean; onAnswer(id: string): void; onSkip(): void; onError(message: string): void; brief?: boolean; readOnly?: boolean }) {
+export function QuestionView({ q, evidence, disabled, onAnswer, onSkip, onError, brief = false, readOnly = false, inspection = false }: { q: Question; evidence: Evidence[]; disabled: boolean; onAnswer(id: string): void; onSkip(): void; onError(message: string): void; brief?: boolean; readOnly?: boolean; inspection?: boolean }) {
   const links = Object.fromEntries(q.options.flatMap(o => Object.entries(optionLinks(o)).map(([label, url]) => [`${o.key} · ${label}`, url])));
-  const card = QuestionCard({ q, evidence, state: q.status, brief, cueLine: true, number: Number(/^q(\d+)$/.exec(q.id)?.[1]) || 1 });
+  const card = QuestionCard({ q: { ...q, wordedBy: q.wordedBy ? modelName(q.wordedBy) : undefined }, evidence, state: q.status, brief, cueLine: true, number: Number(/^q(\d+)$/.exec(q.id)?.[1]) || 1 });
   return <>{mapTree(card, node => {
     if (node.type === QuestionOption) return <InteractiveOption {...node.props} disabled={disabled || q.status !== 'open'} onAnswer={onAnswer} />;
     if (node.type === GainMeter && q.gain === null) return <div className="console-body aq-ink3 app-pad">Expected gain not logged · any answer costs ×0.95; Skip is free.</div>;
@@ -44,7 +45,7 @@ export function QuestionView({ q, evidence, disabled, onAnswer, onSkip, onError,
       if (node.props.icon === 'qr') return null; // QR buttons below contain real links, never showcase placeholders.
     }
     return node;
-  })}{!brief && Object.keys(links).length > 0 && <ExternalLinks links={links} onError={onError} />}{disabled && q.status === 'open' && <p className="console-micro aq-ink3 app-pad">{brief ? 'The operator console records the answer or a free skip.' : readOnly ? 'Replay is read-only; the recorded response will appear at its real timestamp.' : 'Waiting for the backend receipt; the multiplier has not changed.'}</p>}</>;
+  })}{!brief && Object.keys(links).length > 0 && <ExternalLinks links={links} onError={onError} />}{disabled && q.status === 'open' && <p className="console-micro aq-ink3 app-pad">{inspection ? 'Close Details to answer or skip the open question.' : brief ? 'The operator console records the answer or a free skip.' : readOnly ? 'Replay is read-only; the recorded response will appear at its real timestamp.' : 'Waiting for the backend receipt; the multiplier has not changed.'}</p>}</>;
 }
 export function CueView({ onSend, pending }: { onSend(text: string): Promise<boolean>; pending: boolean }) {
   const [text, setText] = useState(''), [confirm, setConfirm] = useState(false);

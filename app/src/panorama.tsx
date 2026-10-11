@@ -17,9 +17,12 @@ export function imageCase(c: CaseRecord, image?: PanoramaImage) {
     ...c.evidence.filter(e => e.box && e.kind === 'checklist').map(e => ({ ...e.box, id: e.id, label: str(e.payload.item), kept: true, score: unknownNumber })),
   ], texts: c.texts.map(t => ({ ...t, conf: t.conf ?? unknownNumber })) };
 }
-export function Strip({ c, image, selected, yaw, layers, onSelect, onYaw }: { c: CaseRecord; image?: PanoramaImage; selected?: string; yaw: number; layers: Record<string, boolean>; onSelect(id: string): void; onYaw(yaw: number): void }) {
+export function Strip({ c, image, selected, yaw, layers, onSelect, onYaw, focus = false }: { c: CaseRecord; image?: PanoramaImage; selected?: string; yaw: number; layers: Record<string, boolean>; onSelect(id: string): void; onYaw(yaw: number): void; focus?: boolean }) {
   const { ref, width } = useWidth<HTMLDivElement>(); const stage = useDensity() === 'stage';
   const mask = useMask(c.maskUrl, c.maskPalette);
+  const scene = c.evidence.find(e => e.id === selected && e.kind === 'vlm_checklist');
+  const progress = c.stages.find(s => s.status === 'running' && s.progress?.box)?.progress;
+  const inspected = scene?.box ?? progress?.box;
   const safeLayers = { ...layers, mask: layers.mask && c.photographerMask !== undefined, sectors: layers.sectors && c.viewCount === 8, seg: false, sun: layers.sun && c.sun?.yaw !== undefined };
   const tree = PanoramaStrip({ c: imageCase(c, image), width, selected, fov: { yaw, fov: 90 }, layers: safeLayers, ruler: c.yawToBearing !== null ? 'bearing' : 'yaw', labelMode: width > 1000 ? 'all' : 'selected' });
   return <div ref={ref} className="app-strip" data-motion-target="intake" onClick={e => {
@@ -27,6 +30,7 @@ export function Strip({ c, image, selected, yaw, layers, onSelect, onYaw }: { c:
     if (id) onSelect(id); else { const svg = target.closest('svg'); if (svg) { const bounds = svg.getBoundingClientRect(); onYaw((e.clientX - bounds.left) / bounds.width * 360); } }
   }}>{image ? mapTree(tree, node => {
     if (typeName(node) === 'EquiScene') return <image href={image.stripUrl} x={0} y={0} width={width} height={width / 2} preserveAspectRatio="none" />;
+    if (focus && typeName(node) === 'BearingRuler' && c.yawToBearing === null) return null;
     if (typeName(node) === 'BearingRuler' && c.yawToBearingErr === undefined) return React.cloneElement(node, { err: unknownNumber });
     if (node.props.className === 'aq-ov-mask') return React.cloneElement(node, { y: width / 2 * (1 - c.photographerMask!), height: width / 2 * c.photographerMask! });
     if (node.props.className === 'aq-ov-maskline') return React.cloneElement(node, { y1: width / 2 * (1 - c.photographerMask!), y2: width / 2 * (1 - c.photographerMask!) });
@@ -39,7 +43,12 @@ export function Strip({ c, image, selected, yaw, layers, onSelect, onYaw }: { c:
     }
     if (node.type === 'svg' && node.props.className === 'aq-pano-svg') {
       const children = React.Children.toArray(node.props.children);
-      return React.cloneElement(node, {}, children.slice(0, 2), layers.seg && mask.url ? <image className="app-seg-tint" data-motion-target="measure" href={mask.url} width={width} height={width / 2} /> : null, children.slice(2));
+      const area = inspected && layers.boxes ? (() => {
+        const x = (inspected.yaw - inspected.w / 2) / 360 * width, y = (90 - inspected.pitch - inspected.h / 2) / 180 * width / 2, w = inspected.w / 360 * width, h = inspected.h / 180 * width / 2;
+        const shifts = [0, ...(x < 0 ? [width] : x + w > width ? [-width] : [])];
+        return <g aria-label={scene ? 'Inspected scene view' : 'Scene view being checked'}>{shifts.map(shift => <rect key={shift} className="investigation-view-area" x={x + shift} y={y} width={w} height={h} />)}<rect x={Math.max(4, x)} y={Math.max(4, y)} width={140} height={22} fill="var(--photo-halo)" /><text className="investigation-view-label" x={Math.max(4, x) + 6} y={Math.max(4, y) + 15}>{scene ? 'Inspected scene view' : 'Checking this view'}</text></g>;
+      })() : null;
+      return React.cloneElement(node, {}, children.slice(0, 2), layers.seg && mask.url ? <image className="app-seg-tint" data-motion-target="measure" href={mask.url} width={width} height={width / 2} /> : null, children.slice(2), area);
     }
     return node;
   }) : <><EmptyState icon="photo" title="Panorama file not available for this log" body="Open this run’s JPEG to link the evidence to pixels." /><div className={stage ? 'stage-label aq-ink3' : 'console-micro aq-ink3'}>No image positions are drawn until the panorama is available.</div></>}{layers.seg && mask.error && <p className="console-micro aq-ink3" role="status">Segmentation tint unavailable: {mask.error} Scene shares remain available.</p>}</div>;
@@ -61,7 +70,7 @@ function useMask(input?: string, palette?: Record<string, unknown>) {
   }, [input, palette]);
   return state;
 }
-function LoggedCompass(props: { c: CaseRecord; yaw: number }) {
+export function LoggedCompass(props: { c: CaseRecord; yaw: number }) {
   const { c, yaw } = props;
   return <>{mapTree(CompassDial({ yawToBearing: c.yawToBearing, err: c.yawToBearingErr, sun: c.sun, viewYaw: yaw }), node => {
     if (c.yawToBearing !== null && c.yawToBearingErr === undefined) {
@@ -74,38 +83,44 @@ function LoggedCompass(props: { c: CaseRecord; yaw: number }) {
 }
 interface PannellumViewer {
   getYaw(): number; setYaw(yaw: number, animate?: boolean): void; setPitch(pitch: number, animate?: boolean): void;
+  getPitch(): number; setHfov(hfov: number, animate?: boolean): void;
   getHfov(): number; on(event: string, callback: () => void): void; destroy(): void;
   setUpdate(update: boolean): void; resize(): void;
 }
 declare global { interface Window { pannellum: { viewer(container: HTMLElement, config: Record<string, unknown>): PannellumViewer } } }
-export function Viewer({ c, image, yaw, pitch = 0, selected, onYaw }: { c: CaseRecord; image?: PanoramaImage; yaw: number; pitch?: number; selected?: string; onYaw(yaw: number): void }) {
+export function Viewer({ c, image, yaw, pitch = 0, hfov = 90, selected, onYaw, onHfov, onPitch, aspect = 0.58, showBoxes = true }: { c: CaseRecord; image?: PanoramaImage; yaw: number; pitch?: number; hfov?: number; selected?: string; onYaw(yaw: number): void; onHfov?(hfov: number): void; onPitch?(pitch: number): void; aspect?: number; showBoxes?: boolean }) {
   const { ref, width } = useWidth<HTMLDivElement>(360); const host = useRef<HTMLDivElement>(null), viewer = useRef<PannellumViewer>();
   const onYawRef = useRef(onYaw); onYawRef.current = onYaw;
-  const [failure, setFailure] = useState(false); const height = width * 0.58;
+  const onHfovRef = useRef(onHfov); onHfovRef.current = onHfov;
+  const onPitchRef = useRef(onPitch); onPitchRef.current = onPitch;
+  const [failure, setFailure] = useState(false); const height = width * aspect;
   useEffect(() => {
     if (!image || !host.current) return;
     setFailure(false);
     try {
-      const v = window.pannellum.viewer(host.current, { type: 'equirectangular', panorama: image.canvas, dynamic: true, dynamicUpdate: true, autoLoad: true, showControls: false, yaw: yaw - 180, pitch, hfov: 90, autoRotate: false, compass: false, ignoreGPanoXMP: true, mouseZoom: true, keyboardZoom: false, disableKeyboardCtrl: true });
+      const v = window.pannellum.viewer(host.current, { type: 'equirectangular', panorama: image.canvas, dynamic: true, dynamicUpdate: true, autoLoad: true, showControls: false, yaw: yaw - 180, pitch, hfov, minHfov: 30, maxHfov: 120, autoRotate: false, compass: false, ignoreGPanoXMP: true, mouseZoom: true, keyboardZoom: false, disableKeyboardCtrl: true });
       viewer.current = v;
       v.on('load', () => v.setUpdate(false)); // upload the decoded canvas once, then render only on interaction
-      const sync = () => onYawRef.current((v.getYaw() + 180 + 360) % 360);
+      const sync = () => { onYawRef.current((v.getYaw() + 180 + 360) % 360); onHfovRef.current?.(v.getHfov()); onPitchRef.current?.(v.getPitch()); };
       v.on('mouseup', sync); v.on('touchend', sync); v.on('animatefinished', sync); v.on('error', () => setFailure(true));
+      v.on('zoomchange', sync);
       // Pannellum emits movement events at rest; pointer movement samples only while dragging.
       let dragging = false;
-      const down = () => { dragging = true; }, up = () => { dragging = false; sync(); }, move = () => { if (dragging) sync(); };
+      const down = () => { dragging = true; }, up = () => { if (dragging) { dragging = false; sync(); } }, move = () => { if (dragging) sync(); };
       const el = host.current; el.addEventListener('pointerdown', down); el.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
       return () => { el.removeEventListener('pointerdown', down); el.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); v.destroy(); viewer.current = undefined; };
     } catch { setFailure(true); }
   }, [image]);
-  useEffect(() => { if (viewer.current && Math.abs(((viewer.current.getYaw() + 180 + 360) % 360) - yaw) > 0.2) viewer.current.setYaw(yaw - 180, false); }, [yaw]);
+  useEffect(() => { if (viewer.current && Math.abs(((viewer.current.getYaw() + 180 - yaw + 540) % 360) - 180) > 0.2) viewer.current.setYaw(yaw - 180, false); }, [yaw]);
   useEffect(() => { viewer.current?.setPitch(pitch, false); }, [pitch]);
+  useEffect(() => { if (viewer.current && Math.abs(viewer.current.getHfov() - hfov) > 0.2) viewer.current.setHfov(hfov, false); }, [hfov]);
   useEffect(() => { viewer.current?.resize(); }, [width]);
   // Keep the original Viewer360 frame, captions, crosshair and logged overlays.
-  const tree = Viewer360({ c: imageCase(c, image), yaw: Math.round(yaw * 10) / 10, pitch, width, height, selected, showBoxes: true });
+  const tree = Viewer360({ c: imageCase(c, image), yaw: Math.round(yaw * 10) / 10, pitch, fov: hfov, width, height, selected, showBoxes });
   return <div ref={ref} className="app-viewer" tabIndex={0} aria-label="360° view; use arrow keys to turn" onKeyDown={e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); onYaw((yaw + (e.key === 'ArrowRight' ? 5 : -5) + 360) % 360); } }}>
     {mapTree(tree, node => {
       if (node.type === 'svg' && node.props.role === 'img') return <div className="app-viewer-image" style={{ height }}><div ref={host} className="app-pannellum" />{image && !failure ? <svg className="app-viewer-overlay" viewBox={`0 0 ${width} ${height}`} width={width} height={height}>{mapTree(node.props.children, child => typeName(child) === 'PerspScene' ? null : child)}</svg> : <EmptyState icon="camera" title={failure ? '360° viewer unavailable' : 'No panorama loaded'} body={failure ? 'The panorama strip and its crops are still available.' : 'Open this run’s JPEG to turn the view.'} />}</div>;
+      if (node.props.className?.includes('aq-ov-box') || node.props.className?.includes('aq-ov-text')) return React.cloneElement(node, { 'data-motion-id': node.props['data-link'] });
       return node;
     })}
   </div>;

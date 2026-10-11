@@ -33,6 +33,7 @@ def stand_in(path, models=None, *, runs_dir="runs", operator="never", category=N
     try:
         with run.stage("prepare"):
             run.evidence("filename", {"valid": False, "observation": "stand-in"}, stage="prepare", actor="agent")
+            run.progress("prepare", "Preparing stand-in panorama views.", completed=0, total=2)
         run.output([(38.7, -9.1)] * 10, method="coarse_candidate", source_role="area", sources=["stand-in"])
         if name.startswith("boom"):
             raise RuntimeError("stand-in failure outside a stage")
@@ -138,6 +139,7 @@ class LiveTests(unittest.TestCase):
         self.assertTrue(all(e["run_id"] == run_id for e in events))
         self.assertEqual([e["seq"] for e in events], list(range(1, len(events) + 1)))
         types = [e["type"] for e in events]
+        self.assertIn("stage.progress", types)
         self.assertIn("question.answered", types)
         self.assertIn("question.skipped", types)
         self.assertNotIn("cue.sent", types)

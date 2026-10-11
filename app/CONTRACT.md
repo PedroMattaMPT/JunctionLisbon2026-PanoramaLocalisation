@@ -1,6 +1,6 @@
 # Event and HTTP contract
 
-`panoloc/runlog.py` is authoritative. **Existing** below means the current Python writer or candidate schema already defines the field. **Proposed** means the frontend reads it and fixtures/mock exercise it; the production pipeline and HTTP service must adopt or negotiate it. The app does not modify `panoloc/`.
+`panoloc/runlog.py` is authoritative. **Existing** below means the current Python writer or candidate schema already defines the field. **Proposed** means the frontend reads it and fixtures/mock exercise it; the production pipeline and HTTP service must adopt or negotiate it.
 
 ## Existing event envelope
 
@@ -53,6 +53,10 @@ Candidate `role` is `camera`, `landmark` or `area`. Their labels respectively sa
 Support is non-negative fusion weight divided by the sum of weights, to two decimals. It is labelled support, not presented as a calibrated location likelihood. A zero total gives unknown support. Missing intervals are not invented. Score estimates use the existing `rt.theta`, logged radius as a distance proxy, rank weights and the output's penalty snapshot. This is an estimate, not validation against a true location; an unknown Urban label shows both scenarios and a null radius produces no numeric score.
 
 ## Evidence payloads: existing subsets and proposed additions
+
+The live scene stage also emits `stage.progress`: `{message, completed, total, view?, box?}`. Counts are measured completed views (`0 <= completed <= total`), with `total > 0`; absent counts remain unknown. The reducer attaches progress to the running stage without creating an observation or changing its status. `box` uses the same angular convention as evidence boxes. Older logs need no progress events.
+
+`vlm_checklist` retains `answers`, `seen`, `counts`, the inspected view's `box`, and `features: {key, label, value, description, countries, regions, strength}[]`. `inference` is a short public explanation derived from validated checklist answers and the clue catalogue. `vlm_summary` carries the combined hints and a similar explanation. A view-level box frames the inspected perspective; it is not a localized object detection. These events stream per completed view, and cached runs restore the saved observations with fresh IDs.
 
 The real sample currently contains postcode/text, checklist, landmark hypothesis and views observations. Evidence payloads are open dictionaries in the existing writer; the richer fields below form the proposed UI contract. Every subset renders without invented boxes, votes, counts or match lines.
 
@@ -126,6 +130,8 @@ All paths are local, preferably same-origin behind `/api`. Every write must reac
 | `POST /api/runs/{run_id}/skip-remaining` | `{}`; live server: skips the open question and every later one of that run (free, neutral), each logged as `operator.auto_skip` `{question_id, reason: 'skip_remaining' \| 'timeout', waited_s, timeout_s}` before the pipeline's `question.skipped`; returns `{accepted, open_question}` |
 | `GET /api/tiles/{layer}/{z}/{x}/{y}` | Live server: one cached base-map tile (`streets`, `satellite`); 404/503/504 JSON when unavailable, 403 for other sites' pages |
 | `POST /api/tiles/prefetch` | `{run_id, question_id, layer}`; warms the tile cache behind one open question's options (at most 48 tiles, zoom ≤ 16) |
+| `GET /api/streetview/nearest?lat={lat}&lng={lng}` | Display-only lookup: `{pictures, unavailable}`; at most eight panoramas within 1 km with coordinate, distance, date, heading, credit, licence, source page and a local image-proxy URL. Only coordinates go upstream; no run ID, upload or evidence is accepted |
+| `GET /api/streetview/image/{provider}/{id}/{sd\|hd}` | Cached public JPEG from previously resolved metadata; approved hosts and redirects only. 503 when disabled/unavailable and 403 for other sites' pages; an image-host outage leaves other hosts and the catalog usable |
 
 The live server adds `tile_layers: {id, name, url, max_zoom, attribution, attribution_url}[]`, `current`, `current_panorama`, `queue`, `current_question: {question_id, text, kind, waiting_s, timeout_in_s} | null` and `question_timeout_s`; its `/api/runs` rows add `panorama`, `question`, `skip_remaining` and a queue `position`. Model-roster entries use `{id, name, role, state, gb}`. Unknown GPU residency and memory remain unknown. `tile_source` is a local z/x/y raster URL or PMTiles URL; vector extracts must use the agreed source-layer schema.
 

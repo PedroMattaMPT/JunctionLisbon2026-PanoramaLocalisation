@@ -1,0 +1,93 @@
+{
+  "checked_at": "2026-10-11",
+  "coordinates": "Generic public city streets; no evaluation coordinates",
+  "coverage_and_hosts": [
+    {
+      "label": "Lisbon city centre",
+      "within_1km": 1,
+      "within_50m": 0,
+      "image_hosts": {
+        "panoramax.ign.fr": 1
+      }
+    },
+    {
+      "label": "Porto city centre",
+      "within_1km": 2,
+      "within_50m": 0,
+      "image_hosts": {
+        "panoramax.ign.fr": 2
+      }
+    },
+    {
+      "label": "Paris public test",
+      "within_1km": 100,
+      "within_50m": 75,
+      "image_hosts": {
+        "panoramax.openstreetmap.fr": 54,
+        "panoramax.ign.fr": 46
+      },
+      "image_checks": [
+        {
+          "host": "panoramax.openstreetmap.fr",
+          "error": "URLError",
+          "detail": "<urlopen error [Errno 101] Network is unreachable>"
+        },
+        {
+          "host": "panoramax.ign.fr",
+          "jpeg": true,
+          "bytes": 211269
+        }
+      ]
+    }
+  ],
+  "updated_service_fallback": [
+    {
+      "id": "7cf46afc-9630-4ba5-a32f-b418693e8150",
+      "distance_m": 1.3,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "3aa58578-fe2d-4e41-bf43-da732e9a9b33",
+      "distance_m": 8.4,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "1ea06357-dcd1-4532-8e31-32ad219a6aa4",
+      "distance_m": 10.1,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "8062b408-242b-482f-b397-0e3f8daa7717",
+      "distance_m": 15.0,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "32cfe5cf-33fc-4a51-9ee8-bf3ec1606bc4",
+      "distance_m": 17.8,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "51b1f758-9684-44c7-bbae-0ad1763d92f7",
+      "distance_m": 17.9,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "bf988923-8dd2-4c69-8ac3-a6b57d762381",
+      "distance_m": 20.1,
+      "host": "panoramax.openstreetmap.fr",
+      "unavailable": true
+    },
+    {
+      "id": "5c65c067-9af5-44a0-a7c9-49e4e0e24526",
+      "distance_m": 24.3,
+      "host": "panoramax.ign.fr",
+      "loaded_bytes": 211269
+    }
+  ]
+}

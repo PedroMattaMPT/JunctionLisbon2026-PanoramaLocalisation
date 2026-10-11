@@ -3,7 +3,7 @@ import { coordinates, distance, modelName, stageName, time } from './format';
 
 export interface Caption { headline: string; caption: string; actor: Actor; source: string; t: number }
 export function captionFor(e: RunEvent): Caption {
-  const p = e.payload, stage = stageName(e.stage), source = e.actor === 'team' ? 'Team' : e.actor === 'agent' || e.actor === 'solver' ? 'Solver' : modelName(e.model);
+  const p = e.payload, stage = stageName(e.stage), source = e.actor === 'team' ? 'Team' : e.actor === 'agent' || e.actor === 'solver' ? 'Solver' : modelName(e.model, str(p.kind));
   const actor: Actor = e.actor === 'team' ? 'team' : e.actor === 'model' ? 'model' : 'solver';
   const n = (key: string) => finite(p[key]);
   const penalty = snapshot(p.penalty);
@@ -15,6 +15,7 @@ export function captionFor(e: RunEvent): Caption {
     case 'run.finished': headline = 'Run finished'; caption = `Finished${n('duration_s') !== null ? ` in ${time(n('duration_s')!)}` : ''}${penalty ? ` at ${mult}` : ''}.`; break;
     case 'run.submitted': headline = 'Answer submitted'; caption = `The solver output ${str(p.output_id, 'on screen')} was submitted with its logged snapshot.`; break;
     case 'stage.started': headline = e.stage === 'views' ? 'Preparing the views' : `${stage} is running`; caption = e.stage === 'views' && n('views') !== null ? `Preparing ${n('views')} views, plus sky and ground.` : `${e.model ? modelName(e.model) : source} is running ${stage.toLowerCase()}${n('deadline_s') !== null ? ` with a ${n('deadline_s')} s deadline` : ''}.`; break;
+    case 'stage.progress': headline = `${stage} in progress`; caption = str(p.message, 'Checking the panorama.'); break;
     case 'stage.finished': headline = `${stage} complete`; caption = `${stage} finished${n('elapsed_s') !== null ? ` in ${n('elapsed_s')!.toFixed(1)} s` : ''}${p.over_deadline ? ', beyond its deadline' : ''}.`; break;
     case 'stage.skipped': headline = `${stage} skipped`; caption = `${stage} was skipped${str(p.reason) ? `: ${str(p.reason)}` : ''}.`; break;
     case 'stage.failed': case 'stage.timed_out': {
@@ -42,13 +43,16 @@ export function captionFor(e: RunEvent): Caption {
       const kind = str(p.kind, 'evidence');
       switch (kind) {
         case 'object': headline = 'Looking for objects'; caption = `${str(p.label, 'An object')} ${p.kept === false ? 'was rejected' : p.kept === true ? 'was kept' : 'is being checked'}${n('score') !== null ? ` at model score ${n('score')!.toFixed(2)}` : ''}.`; break;
-        case 'postcode': case 'phone': case 'road_number': case 'text': headline = 'Reading signs'; caption = str(p.text) ? `Read “${str(p.text)}”${n('confidence') !== null ? ` at confidence ${n('confidence')!.toFixed(2)}` : ''}${str(p.country) ? `, parsed as ${str(p.country)}` : ''}.` : 'No text was recorded in this observation.'; break;
+        case 'postcode': case 'phone': case 'road_number': case 'text': case 'ocr_text': headline = 'Reading signs'; caption = str(p.text) ? `Read “${str(p.text)}”${n('confidence') !== null ? ` at confidence ${n('confidence')!.toFixed(2)}` : ''}${str(p.country) ? `, parsed as ${str(p.country)}` : ''}.` : 'No text was recorded in this observation.'; break;
         case 'language': {
           headline = 'Reading signs'; const votes = Array.isArray(p.votes) ? arr(p.votes).map(record) : Object.entries(record(p.votes)).map(([id, v]) => ({ id, v }));
           const top = votes.filter(v => finite(v.v) !== null).sort((a, b) => (finite(b.v) ?? 0) - (finite(a.v) ?? 0))[0];
           caption = top ? `Language vote: ${str(top.id)} ${(finite(top.v)! * 100).toFixed(0)}% of the logged votes.` : 'No language votes were logged.'; break;
         }
         case 'checklist': headline = 'Describing the scene'; caption = `${source}: ${str(p.item, 'checklist item')}, ${p.answer === 'not_visible' ? "can't tell" : str(p.answer, 'answer not logged')}${n('answered') !== null && n('total') !== null ? `; ${n('answered')} of ${n('total')} answered` : ''}.`; break;
+        case 'vlm_checklist': headline = 'Scene view checked'; caption = str(p.inference, str(p.observation, 'The scene features from this view are ready.')); break;
+        case 'vlm_summary': headline = 'Clues across views'; caption = str(p.inference, str(p.observation, 'The visible scene clues have been compared across views.')); break;
+        case 'knn': case 'region_head': case 'geoclip': case 'name_lookups': case 'landmark_gallery': case 'fusion': headline = kind === 'fusion' ? 'Evidence combined' : kind === 'name_lookups' ? 'Resolving places' : 'Geographic clues received'; caption = str(p.inference, str(p.observation, 'A geographic lead has been logged.')); break;
         case 'landmark_hypothesis': headline = 'Describing the scene'; caption = `The model proposes “${str(p.name, 'an unnamed landmark')}” as a hypothesis.`; break;
         case 'scene_shares': headline = 'Measuring the scene'; caption = 'Logged scene shares describe visible pixels, not land cover.'; break;
         case 'sun': headline = 'Finding north'; caption = n('azimuth') !== null && n('elevation') !== null ? `Sun at ${n('azimuth')}°, ${n('elevation')}° up${n('bearing_of_yaw0') !== null ? `; bearings are now true${n('err_deg') !== null ? `, ± ${n('err_deg')}°` : ''}` : '; north remains unknown'}.` : 'A sun observation was logged; the bearing fix is incomplete.'; break;

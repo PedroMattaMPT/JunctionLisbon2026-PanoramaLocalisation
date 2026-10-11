@@ -72,6 +72,13 @@ export function reduceEvent(previous: CaseRecord, e: RunEvent): CaseRecord {
       c.stages = existing ? c.stages.map(s => s.id === id ? stage : s) : [...c.stages, stage];
       if (id === 'views' && status === 'done') { c.viewCount = finite(p.views) ?? undefined; c.photographerMask = finite(p.photographer_masked) ?? undefined; }
     }
+    if (e.type === 'stage.progress' && existing?.status === 'running') {
+      const completed = nonnegative(p.completed), total = positive(p.total);
+      c.stages = c.stages.map(s => s.id !== id ? s : { ...s, progress: {
+        message: str(p.message), completed: completed !== null && total !== null && completed <= total ? completed : null,
+        total, view: str(p.view) || undefined, box: shifted(angularBox(p.box), c.yawShift),
+      } });
+    }
   }
   if (e.type === 'evidence.added') {
     const id = str(p.evidence_id, `seq-${e.seq}`), kind = str(p.kind, 'unknown'), box = shifted(angularBox(p.box), c.yawShift);

@@ -7,6 +7,7 @@ One worker takes queued, sealed runs. Questions pause their script until an answ
 or neutral skip arrives. Outputs remain reviewable until an audited submission.
 """
 import argparse
+import streetview as streetmod
 import hmac
 import json
 import mimetypes
@@ -265,8 +266,10 @@ class Handler(BaseHTTPRequestHandler):
             if not self.allowed_host():
                 return self.json({"error": "Local host required."}, 403)
             url = urlsplit(self.path)
+            if streetmod.handle(self, url):
+                return
             if url.path == "/api/status":
-                return self.json({"worker": "online", "mock": True, "gpu": {"used_gb": None, "total_gb": 16}, "models": [], "tile_source": None, "csrf_token": TOKEN})
+                return self.json({"worker": "online", "mock": True, "gpu": {"used_gb": None, "total_gb": 16}, "models": [], "tile_source": None, "csrf_token": TOKEN, "streetview": {"providers": ["mock"] if getattr(self.server, "streetview", None) else []}})
             if url.path == "/api/runs":
                 return self.json([{"run_id": run_id, "status": ctx.state, "special_one": ctx.run.special_one} for run_id, ctx in self.server.worker.runs.items()])
             match = re.fullmatch(r"/api/runs/([\w-]+)/(events|log\.json)", url.path)
@@ -402,12 +405,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8788)
     parser.add_argument("--pace", type=float, default=0.12, help="Scale only scripted compute sleeps, never log timestamps.")
+    parser.add_argument("--no-streetview", action="store_true")
     args = parser.parse_args()
     if args.port in (8000, 8765, 8799) or not 0 < args.pace <= 10:
         parser.error("Choose an unused port and a pace above zero, at most 10.")
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     server.daemon_threads = True
     server.worker = Worker(args.pace)
+    server.streetview = None if args.no_streetview else streetmod.MockStreetImagery(ROOT / "app/dev/upload-test.jpg")
     print(f"Aqui scripted mock: http://127.0.0.1:{args.port} · original uploads and real Run logs in runs/mock/", flush=True)
     try:
         server.serve_forever()

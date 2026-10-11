@@ -84,7 +84,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import Counter
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -1005,6 +1005,8 @@ def describe_panorama(views, client=None, *, plan=DEFAULT_PLAN, view_names=DEFAU
         result.views.append(r)
         if run is not None:
             ids[r.view] = log_view(run, r, client.model, stage)
+            run.progress(stage, f"Checked {len(result.views)} of {len(selected)} panorama views.",
+                         model=client.model, completed=len(result.views), total=len(selected))
         if on_view:
             on_view(r)
 
@@ -1013,12 +1015,21 @@ def describe_panorama(views, client=None, *, plan=DEFAULT_PLAN, view_names=DEFAU
         result.load_s = client.load()
         if workers <= 1:
             for view in selected:
+                if run is not None:
+                    yaw, pitch, fov = (getattr(view, k, None) for k in ("yaw_deg", "pitch_deg", "fov_deg"))
+                    box = {"yaw": yaw, "pitch": pitch, "w": fov, "h": fov} if None not in (yaw, pitch, fov) else None
+                    run.progress(stage, f"Checking {'the ground view' if view.name == 'ground' else f'panorama view {len(result.views) + 1} of {len(selected)}'}: "
+                                 "architecture, signs, road details and vegetation.", model=client.model,
+                                 completed=len(result.views), total=len(selected), view=view.name, box=box)
                 done(describe_view(client, view, plan=plan))
         else:
+            if run is not None:
+                run.progress(stage, f"Checking {len(selected)} panorama views for scene clues.", model=client.model,
+                             completed=0, total=len(selected))
             with ThreadPoolExecutor(workers, thread_name_prefix="vlm") as pool:
                 futures = [pool.submit(describe_view, client, view, plan=plan) for view in selected]
                 try:
-                    for future in futures:  # logged in view order, as in the sequential loop
+                    for future in as_completed(futures):  # publish each view as soon as it is ready
                         done(future.result())
                 except BaseException:
                     for future in futures:
@@ -1037,6 +1048,8 @@ def describe_panorama(views, client=None, *, plan=DEFAULT_PLAN, view_names=DEFAU
                                        "observation": f"VLM stage failed: {exc}"[:300]},
                          stage=stage, model=client.model)
         raise
+    order = {v.name: i for i, v in enumerate(selected)}
+    result.views.sort(key=lambda r: order[r.view])
     result.total_s = round(time.perf_counter() - t0, 3)
     result.summarise()
     if run is not None:
@@ -1053,13 +1066,42 @@ def _observation(r):
     return f"{r.view}: {seen} ({c[NOT_VISIBLE]} of {c['asked']} not visible){lm}"[:400]
 
 
+def _visible_features(r):
+    """Public descriptions of validated checklist answers; no model's internal thinking is logged here."""
+    features = []
+    for key, value in r.answers.items():
+        item = ITEMS.get(key)
+        option = item.option(value) if item else None
+        description = {NOT_VISIBLE: "Not visible", OTHER: "Other appearance", INVALID: "Unclear"}.get(value)
+        features.append({"key": key, "label": key.replace("_", " ").capitalize(), "value": value,
+                         "description": description or (option.looks if option and option.looks else value.replace("_", " ")),
+                         "countries": list(option.countries) if option else [],
+                         "regions": list(option.regions) if option else [], "strength": option.strength if option else None})
+    return features
+
+
+def _feature_summary(features):
+    geographic = [f for f in features if f["countries"] or f["regions"]]
+    order = {s: i for i, s in enumerate(STRENGTHS)}
+    geographic.sort(key=lambda f: order.get(f["strength"], len(STRENGTHS)))
+    names = {"PT": "Portugal", "ES": "Spain", "FR": "France"}
+    lines = [f"{f['label']}: {f['description']} supports "
+             + " or ".join(f["regions"] or [names.get(c, c) for c in f["countries"]]) + "."
+             for f in geographic[:3]]
+    if not lines:
+        lines = ["The visible features in this view provide no specific geographic clue yet."]
+    return " ".join(lines) + " These observations still need corroboration."
+
+
 def log_view(run, r, model, stage="describe"):
     """One vlm_checklist evidence event for a view; returns its evidence ID."""
+    features = _visible_features(r)
     return run.evidence("vlm_checklist", {
         "view": r.view, "box": r.box(), "answers": r.answers, "seen": r.seen, "counts": r.counts(),
         "landmarks": r.landmarks, "invalid": r.invalid, "rejected_landmarks": r.rejected_landmarks,
         "masked_fraction": round(r.masked_fraction, 4), "latency_s": r.latency_s, "requests": r.requests,
-        "group": "vlm-checklist", "observation": _observation(r)}, stage=stage, model=model)
+        "group": "vlm-checklist", "observation": _observation(r), "features": features,
+        "inference": _feature_summary(features)}, stage=stage, model=model)
 
 
 def log_summary(run, result, view_ids, stage="describe"):
@@ -1072,7 +1114,12 @@ def log_summary(run, result, view_ids, stage="describe"):
         "not_visible_rate": result.not_visible_rate(), "timing": result.timing(), "source_evidence": view_ids,
         "group": "vlm-checklist",
         "note": "Hints are positive observations only; an unseen feature is missing evidence, not absence.",
-        "observation": (f"VLM checklist over {len(result.views)} views: " + (top or "no hint"))[:400]},
+        "observation": (f"VLM checklist over {len(result.views)} views: " + (top or "no hint"))[:400],
+        "inference": _feature_summary([{"label": h["key"].replace("_", " ").capitalize(),
+                                        "description": h["value"].replace("_", " "),
+                                        "countries": h.get("countries", []), "regions": h.get("regions", []),
+                                        "strength": h.get("strength")} for h in result.hints
+                                       if h.get("majority") and not h.get("conflict")])},
         stage=stage, model=result.model)
     landmark_ids = []
     for lm in result.landmarks:
@@ -1089,6 +1136,16 @@ def log_results(run, result, stage="describe"):
     """Log a finished PanoramaResult into a Run: per-view vlm_checklist, vlm_summary, landmark_hypothesis."""
     view_ids = {r.view: log_view(run, r, result.model, stage) for r in result.views}
     return {"views": view_ids, **log_summary(run, result, view_ids, stage)}
+
+
+def log_cached_results(run, document, model, stage="describe"):
+    """Restore the saved scene observations and summaries, with this run's fresh evidence IDs."""
+    fields = set(ViewResult.__dataclass_fields__) - {"raw"}
+    views = [ViewResult(**{k: v for k, v in row.items() if k in fields}) for row in document.get("views", [])]
+    result = PanoramaResult(model, document.get("plan", DEFAULT_PLAN), views,
+                            partial=document.get("partial", False), aggregate=document.get("aggregate", {}),
+                            hints=document.get("hints", []), landmarks=document.get("landmarks", []))
+    return log_results(run, result, stage)
 
 
 # -- transcription for OCR checks -------------------------------------------------------------------

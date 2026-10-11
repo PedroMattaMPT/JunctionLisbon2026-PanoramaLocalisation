@@ -45,6 +45,7 @@ os.environ.setdefault("HF_HUB_OFFLINE", "1")  # every weight is cached locally (
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import server  # noqa: E402  the mock's HTTP layer; it puts the repository root on sys.path
 import tiles as tilemod  # noqa: E402
+import streetview as streetmod  # noqa: E402
 from panoloc import pipeline  # noqa: E402
 from panoloc.runlog import Run  # noqa: E402
 
@@ -418,6 +419,8 @@ class LiveHandler(server.Handler):
             if not self.allowed_host():
                 return self.json({"error": "Local host required."}, 403)
             url, worker = urlsplit(self.path), self.server.worker
+            if streetmod.handle(self, url):
+                return
             if url.path == "/api/status":
                 used, total = gpu_memory_gb()
                 with worker.condition:
@@ -429,6 +432,7 @@ class LiveHandler(server.Handler):
                                   "models": list(worker.status.values()), "csrf_token": server.TOKEN,
                                   "tile_source": tiles.describe()[0]["url"] if tiles else None,
                                   "tile_layers": tiles.describe() if tiles else [],
+                                  "streetview": {"providers": self.server.streetview.providers if getattr(self.server, "streetview", None) else []},
                                   "warm_s": worker.warm_s, "queue": queue, "current": current,
                                   "current_panorama": ctx.filename if ctx else None,
                                   "current_question": ctx.waiting_info() if ctx else None,
@@ -614,6 +618,7 @@ def main():
     parser.add_argument("--question-timeout", type=float, default=0,
                         help="skip a question nobody answered after this many seconds (free, logged); 0: wait")
     parser.add_argument("--no-tiles", action="store_true", help="no tile proxy: the map keeps its bundled outlines")
+    parser.add_argument("--no-streetview", action="store_true", help="disable the optional operator street-imagery lookup")
     parser.add_argument("--no-warm", action="store_true", help="load models lazily on the first panorama")
     parser.add_argument("--no-ocr", action="store_true")
     parser.add_argument("--no-vlm", action="store_true")
@@ -631,6 +636,7 @@ def main():
     http.daemon_threads = True
     http.dist = args.dist
     http.tiles = None if args.no_tiles else tilemod.TileProxy(server.ROOT / "runs/app/tiles", log=log)
+    http.streetview = None if args.no_streetview else streetmod.StreetImagery(server.ROOT / "runs/app/streetview", token=os.environ.get("MAPILLARY_TOKEN"))
     http.worker = LiveWorker(args)
     urls = [f"http://127.0.0.1:{args.port}/"]
     if args.console_port and args.console_port != args.port:
@@ -638,6 +644,7 @@ def main():
             extra = server.ThreadingHTTPServer(("127.0.0.1", args.console_port), LiveHandler)
             extra.daemon_threads = True
             extra.dist, extra.tiles, extra.worker = http.dist, http.tiles, http.worker
+            extra.streetview = http.streetview
             threading.Thread(target=extra.serve_forever, daemon=True, name="console-port").start()
             urls.insert(0, f"http://127.0.0.1:{args.console_port}/")
         except OSError as exc:

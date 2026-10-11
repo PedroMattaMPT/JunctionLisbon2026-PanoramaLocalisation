@@ -106,6 +106,15 @@ Each entry records what was decided, what was set aside, and how to go back. Tas
 - **Still cannot pass:** always-right (nominal oracle) runs and autonomous runs, which stay reported only.
 - **To go back:** only real-team runs pass Gate C, as in EVALUATION.md before 02:39.
 
+### D5 · Sunday 05:30 · No questions by default
+
+**Decision (user):** asked "With a realistic team, questions lose points at every setting on the warm-up. Which default should the app run at 07:00?", the user answered "Never ask".
+
+- **Evidence:** a sweep of the question gate and caps on cached perception, with the sticky-skip simulated team (warm-up 19 × 3 seeds; val ES30 as the check). Never asking scored 36.5% of max on the warm-up, against 33.2% at gate 1.0 (0.4 questions per panorama), 32.1% at gate 0.5 (1.6), and 26.3% for the previous default (7.1). On val: 22.1%, 22.7%, 21.1% and 21.7%.
+- **What changes:** `panoloc.pipeline.ASK_QUESTIONS = False`. The ask stage is skipped and logged, so the first output stands. `--ask-anyway` or an explicit `min_gain` still turns questions on, for rehearsals or a team that wants them.
+- **Cost:** questions helped urban precision slightly (5.7 against 5.0 urban hits ≤ 100 m per seed), and Gate C fails on urban hits either way.
+- **To go back:** set `ASK_QUESTIONS = True` (the gate defaults are unchanged).
+
 ## Critical path to Gate A
 
 The arrows are the Needs in TASKS.md on Saturday 18:30; TASKS.md is the live version.
