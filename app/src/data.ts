@@ -30,7 +30,7 @@ export interface WorkerStatus {
   tile_layers?: TileLayer[]; current?: string | null; current_panorama?: string | null; queue?: string[];
   current_question?: WaitingQuestion | null; question_timeout_s?: number | null;
 }
-export interface RunSummary { run_id: string; status: string; special_one: boolean; panorama?: string; question?: WaitingQuestion | null; skip_remaining?: boolean; position?: number; error?: string }
+export interface RunSummary { run_id: string; status: string; special_one: boolean; panorama?: string; question?: WaitingQuestion | null; skip_remaining?: boolean; can_review?: boolean; position?: number; error?: string }
 function waiting(value: unknown): WaitingQuestion | null {
   const q = record(value); if (!str(q.question_id)) return null;
   return { question_id: str(q.question_id), text: str(q.text) || null, kind: str(q.kind) || null, waiting_s: finite(q.waiting_s) ?? 0, timeout_in_s: finite(q.timeout_in_s) };
@@ -50,6 +50,7 @@ export interface DataSource {
   priority(runId: string): Promise<void>;
   /** Skip the open question and every later one of this run: free, neutral skips (live server). */
   skipRemaining(runId: string): Promise<void>;
+  review(runId: string, outputId: string): Promise<void>;
   /** Warm the tile cache behind one open question's options (live server; best effort). */
   prefetchTiles(runId: string, questionId: string, layer: string): Promise<void>;
   log(runId: string): Promise<unknown>;
@@ -137,9 +138,10 @@ export class LiveSource implements DataSource {
   async submit(r: string, o: string) { await this.request(`/api/runs/${encodeURIComponent(r)}/submit`, JSON.stringify({ output_id: o })); }
   async priority(r: string) { await this.request(`/api/runs/${encodeURIComponent(r)}/priority`, '{}'); }
   async skipRemaining(r: string) { await this.request(`/api/runs/${encodeURIComponent(r)}/skip-remaining`, '{}'); }
+  async review(r: string, outputId: string) { await this.request(`/api/runs/${encodeURIComponent(r)}/review`, JSON.stringify({ output_id: outputId })); }
   async prefetchTiles(r: string, q: string, layer: string) { await this.request('/api/tiles/prefetch', JSON.stringify({ run_id: r, question_id: q, layer })); }
   async log(r: string) { return (await this.request(`/api/runs/${encodeURIComponent(r)}/log.json`)).json() as Promise<unknown>; }
-  async list(): Promise<RunSummary[]> { const p = await (await this.request('/api/runs')).json() as unknown; return arr(Array.isArray(p) ? p : record(p).runs).map(record).map(r => ({ run_id: str(r.run_id), status: str(r.status, 'unknown'), special_one: r.special_one === true, panorama: str(r.panorama) || undefined, question: waiting(r.question), skip_remaining: r.skip_remaining === true, position: finite(r.position) ?? undefined, error: str(r.error) || undefined })); }
+  async list(): Promise<RunSummary[]> { const p = await (await this.request('/api/runs')).json() as unknown; return arr(Array.isArray(p) ? p : record(p).runs).map(record).map(r => ({ run_id: str(r.run_id), status: str(r.status, 'unknown'), special_one: r.special_one === true, panorama: str(r.panorama) || undefined, question: waiting(r.question), skip_remaining: r.skip_remaining === true, can_review: typeof r.can_review === 'boolean' ? r.can_review : undefined, position: finite(r.position) ?? undefined, error: str(r.error) || undefined })); }
 }
 /** Replay is immutable. It never writes a response or synthesises a penalty. */
 export class ReplaySource implements DataSource {
@@ -154,6 +156,7 @@ export class ReplaySource implements DataSource {
   async submit(): Promise<void> { return this.readonlyError(); }
   async priority(): Promise<void> { return this.readonlyError(); }
   async skipRemaining(): Promise<void> { return this.readonlyError(); }
+  async review(): Promise<void> { return this.readonlyError(); }
   async prefetchTiles(): Promise<void> {}
   async log(): Promise<unknown> { return { schema: 'panoloc.log/1', run_id: this.events[0]?.run_id, events: this.events }; }
   async list(): Promise<RunSummary[]> { return [{ run_id: this.events[0]?.run_id ?? '', status: 'replay', special_one: this.events[0]?.payload.special_one === true }]; }

@@ -64,3 +64,14 @@ local/
 .env.*
 *api_key*
 *.key
+
+# Organiser panorama sets beyond the first warm-up: the second warm-up and the final scoring set (their
+# references, where we have them, are in Data/*_locations.*)
+Data/Panorama Warm-Up2/
+Data/final_panoramas/
+
+# Pitch deck and its fonts (large binaries, kept outside the code)
+presentations/
+
+# Zipped demo runs (demo_runs/ above): they carry the warm-up references
+demo_runs.zip

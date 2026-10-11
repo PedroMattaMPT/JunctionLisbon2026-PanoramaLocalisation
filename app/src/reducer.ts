@@ -105,8 +105,9 @@ export function reduceEvent(previous: CaseRecord, e: RunEvent): CaseRecord {
   if (e.type === 'question.asked') {
     const options = arr(p.options).slice(0, 4).map((v, i) => {
       const o = record(v); const pp = Array.isArray(o.point) ? point({ lat: o.point[0], lng: o.point[1] }) : point(o.point);
+      const probability = finite(record(p.agent_probabilities)[str(o.id, 'abcd'[i])]) ?? finite(o.probability) ?? finite(o.support);
       // panoloc.questions marks "None of these" / "Outside" / "Elsewhere" with complement: true.
-      return { id: str(o.id, 'abcd'[i]), key: 'ABCD'[i], label: str(o.label, 'Option not labelled'), reason: str(o.reason, str(o.detail, 'Reason not logged')), chips: strings(o.evidence), point: pp ? [pp.lat, pp.lng] as [number, number] : undefined, zone: Object.keys(record(o.zone)).length ? record(o.zone) : undefined, region: str(o.region) || undefined, radius: positive(o.radius_m) ?? undefined, extent: extentOf(o.extent), none: o.none === true || o.complement === true, links: Object.fromEntries(Object.entries(record(o.links)).filter(([, v]) => typeof v === 'string')) as Record<string, string> };
+      return { id: str(o.id, 'abcd'[i]), key: 'ABCD'[i], label: str(o.label, 'Option not labelled'), reason: str(o.reason, str(o.detail, 'Reason not logged')), chips: strings(o.evidence), point: pp ? [pp.lat, pp.lng] as [number, number] : undefined, zone: Object.keys(record(o.zone)).length ? record(o.zone) : undefined, region: str(o.region) || undefined, radius: positive(o.radius_m) ?? undefined, extent: extentOf(o.extent), none: o.none === true || o.complement === true, probability: probability !== null && probability >= 0 && probability <= 1 ? probability : undefined, links: Object.fromEntries(Object.entries(record(o.links)).filter(([, v]) => typeof v === 'string')) as Record<string, string> };
     });
     const gain = record(p.expected_gain); // panoloc.pipeline nests the gate under expected_gain
     const q: Question = { id: str(p.question_id), text: str(p.text, 'Question text not logged'), kind: str(p.kind), options, scope: scopeText(p.scope), gain: finite(p.gain) ?? finite(gain.gain), breakEven: finite(p.break_even) ?? finite(gain.break_even) ?? 1 / 0.95 - 1, cost: 0.95, wordedBy: str(p.worded_by) || undefined, status: 'open', askedAt: e.t, before: c.candidates, multiplierBefore: c.penalty.multiplier };
@@ -125,6 +126,7 @@ export function reduceEvent(previous: CaseRecord, e: RunEvent): CaseRecord {
     }
   }
   if (e.type === 'run.finished') c.finished = true;
+  if (e.type === 'run.reopened') c.finished = false;
   if (e.type === 'run.submitted') c.submitted = true;
   // Rebuild derived links from logged identifiers only.
   c.evidence = c.evidence.map(ev => ({ ...ev, pol: { ...ev.pol, ...Object.fromEntries(c.candidates.flatMap(candidate => candidate.supports.includes(ev.id) ? [[candidate.id, 1]] : candidate.contradicts.includes(ev.id) ? [[candidate.id, -1]] : [])) } }));

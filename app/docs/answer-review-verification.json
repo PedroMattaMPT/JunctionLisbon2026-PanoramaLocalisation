@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "Completed live answer exposes Investigate further; a real resumed SSE stream shows Thinking and retains coordinates",
+    "A free self-question precedes a model-selected human question, with probabilities for all options including None of these",
+    "390 px question layout exposes option probabilities without horizontal overflow",
+    "Full console also shows the same model probabilities before any paid answer",
+    "Keyboard answer records exactly one 0.95 receipt, preserves the original receipt, then returns to Answer",
+    "A second investigation can ask a new question; keyboard Skip keeps coordinates and penalty unchanged",
+    "Model can keep its answer without asking; three requests enforce the per-run limit with generic UI wording"
+  ],
+  "errors": [],
+  "run_id": "r-20261011-104250-a9c7b7",
+  "multiplier": 0.95,
+  "source": "Isolated real HTTP worker/controller/SSE with deterministic VLM replies and a procedural image; no active or evaluation run modified"
+}

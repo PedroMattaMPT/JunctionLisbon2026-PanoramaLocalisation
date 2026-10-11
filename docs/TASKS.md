@@ -16,13 +16,13 @@ Change tasks with the `/task` skill in Claude Code, or with `python3 tools/tasks
 | B · Trial · Saturday 19:00–21:00 | 2 / 4 | 1 | 0 | 1 | 1 | T30 open |
 | C · Overnight · Saturday 21:00 to Sunday 08:00 | 22 / 24 | 0 | 0 | 2 | 1 | T52 passed |
 | D · Freeze and rehearsal · Sunday 08:00–10:00 | 3 / 6 | 0 | 0 | 3 | 1 | T59 open |
-| Run · Scoring and finals · Sunday from 10:00 | 0 / 4 | 0 | 0 | 4 | 0 |  |
+| Run · Scoring and finals · Sunday from 10:00 | 1 / 5 | 0 | 0 | 4 | 0 |  |
 | Backlog · Optional, only after a measured gain | 1 / 17 | 0 | 0 | 16 | 0 |  |
-| **All** | 51 / 79 | 2 | 0 | 26 | 4 | |
+| **All** | 52 / 80 | 2 | 0 | 26 | 4 | |
 
-Last change: Sun 10:21, T53 updated.
+Last change: Sun 11:54, T84 done.
 <!-- summary:end -->
-<!-- next-id: 84 -->
+<!-- next-id: 85 -->
 
 ## A · Before the trial · Saturday until 19:00
 
@@ -106,7 +106,7 @@ Last change: Sun 10:21, T53 updated.
 
 | ID | Status | Pri | Area | Task | Owner | Needs | Updated | Notes |
 |---|---|---|---|---|---|---|---|---|
-| T53 | done | P0 | team | Stop features at 08:00; freeze weights, config and dependencies; keep a working fallback |  |  | Sun 10:21 | `requirements.lock.txt` pins the packages · Sat 21:47: From T14: panoloc/ocr.py uses RapidOCR private loaders, tied to the pinned rapidocr 3.10.0: keep the pin · Sun 09:38: Frozen at 09:27, not 08:00: the user approved place reasoning after 08:00. The app backend started 09:26:48 runs the final code, with no edits since (checked 09:38). Fallbacks, one flag each: reason.SAMPLES = 1 (the 09:00 Gate C version), or pipeline.REASON = False (the version T54 measured). Nothing committed. · Sun 10:21: 10:14: the user moved the freeze again to adopt T83 (refine). The app backend started 10:14:14 runs REASON on, SAMPLES = 3, REFINE on. Fallbacks, one flag each: pipeline.REFINE = False (the 09:27 version, 60% warm-up), reason.SAMPLES = 1 (09:00), pipeline.REASON = False (the T54 version). |
+| T53 | done | P0 | team | Stop features at 08:00; freeze weights, config and dependencies; keep a working fallback |  |  | Sun 10:58 | `requirements.lock.txt` pins the packages · Sat 21:47: From T14: panoloc/ocr.py uses RapidOCR private loaders, tied to the pinned rapidocr 3.10.0: keep the pin · Sun 09:38: Frozen at 09:27, not 08:00: the user approved place reasoning after 08:00. The app backend started 09:26:48 runs the final code, with no edits since (checked 09:38). Fallbacks, one flag each: reason.SAMPLES = 1 (the 09:00 Gate C version), or pipeline.REASON = False (the version T54 measured). Nothing committed. · Sun 10:21: 10:14: the user moved the freeze again to adopt T83 (refine). The app backend started 10:14:14 runs REASON on, SAMPLES = 3, REFINE on. Fallbacks, one flag each: pipeline.REFINE = False (the 09:27 version, 60% warm-up), reason.SAMPLES = 1 (09:00), pipeline.REASON = False (the T54 version). · Sun 10:58: ~10:57 (user request, pipeline session, uncommitted): the pipeline falls back silently to the local VLM when the API plugin has no key or SDK. Local place reasoning is on (weight scale 0.5): val first 30 13.9% vs 1.7% without, warm-up 30.8% vs 29.1%. Local refine is off (panoloc/locate.py never triangulated on 4 warm-up panoramas). 411 tests OK. |
 | T54 | done | P0 | pixel | Evaluate the retained version once on the reserved external subset |  | T53 | Sun 08:36 | Record assumptions and observed failures · Sun 08:36: 08:17-08:36, one run through the app, questions off (runs/app/batch-T54-final): 87/92 ran, 5 refused (not 2:1, partial spheres). Mean 18% of max (conservative 18%); urban within 100 m 10/51; within 1 km 20%, 100 km 47%; median 116 km. PT 29%, ES 19%, FR 7% (none within 10 km). Landmark nearby 32% vs 10%. 13-15 s per panorama, 0 pipeline errors. |
 | T55 | todo | P0 | team | Rehearse six unfamiliar external panoramas within 60 minutes, with real human answers |  | T53 | Sat 18:25 | Separate logs, no carried-over evidence; include ES/FR, urban and non-urban (PLAN 4.8) |
 | T56 | todo | P0 | pipeline | Confirm coordinate order, log export and the organisers' label and feedback format |  | T08 | Sun 09:09 | Sat 20:37: Organisers: no required log schema (it must be understandable); a submission returns a distance; the Urban label comes after submission · Sun 09:09: 09:12 checked: each run's log.json final_output lists 10 ranked {lat, lng} (runs/app/<run>/<run>/log.json, also /api/runs/<id>/log.json); the console's answer card has 'Copy lat, lng' and Submit. Still to confirm with the organisers: the submission channel and how the label and distance come back. |
@@ -122,6 +122,7 @@ Last change: Sun 10:21, T53 updated.
 | T61 | todo | P0 | pipeline | Submit each panorama's coordinates and its JSON log |  |  | Sat 18:25 | The selected coordinate in all 10 slots; per-output penalty snapshots in the log |
 | T62 | todo | P1 | team | Prepare the presentation and its live panorama solve |  |  | Sat 18:25 |  |
 | T63 | todo | P2 | team | Final: play the other challenge winners on a new panorama, live |  |  | Sat 18:25 | Only if we win Albatroz |
+| T84 | done | P1 | pipeline | Review weak answers with model-chosen self-checks or human questions |  |  | Sun 11:54 | User requested an answer review mechanism: explicitly enable further investigation after an answer, let the model choose photo self-checks or existing human questions, preserve answer history and penalty state. · Sun 11:54: Implemented explicit Investigate further on completed live answers: VLM chooses keep, free photo self-check or existing human questions. Same Run resumes with monotonic IDs, all constraints/history/penalties; stale and repeated requests are rejected. Every multiple-choice option shows agent probability, including none/outside. Model distributions are validated; ordinary questions use logged support. Limits: 3 decisions, 1 self-check and 2 human questions per request, 3 requests per run; failures preserve coordinates and paid receipts. Strict build, 65 frontend tests, 420 repository tests (1 existing skip), 27 backend tests and 7 browser checks passed. Evidence: app/docs/answer-review-verification.json, app/docs/BUILD_REPORT.md and answer-review screenshots. Activated after the live queue finished, preserving saved flags; API capability enabled and 9/9 models warm. Test server and browsers closed. |
 
 ## Backlog · Optional, only after a measured gain
 

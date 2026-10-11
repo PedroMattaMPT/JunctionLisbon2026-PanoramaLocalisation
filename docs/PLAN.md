@@ -2,11 +2,11 @@
 
 **Updated:** 2026-10-10.
 **Status:** the working plan (v2). It replaced the first plan on Saturday 2026-10-10; section 9 records what changed and why.
-**Related:** [RULES.md](RULES.md), [MODEL_DECISIONS.md](MODEL_DECISIONS.md), [CLAUDE.md](CLAUDE.md).
+**Related:** [RULES.md](RULES.md), [MODEL_DECISIONS.md](MODEL_DECISIONS.md).
 
 Build a complete, local panorama localisation agent before expanding its model stack. Keep mini-PIGEON as a core preparation task, use several plausible candidates, and give precise coordinate generation an explicit place in the pipeline.
 
-Preparation builds reusable assets from independent external data. Each challenge panorama then runs with its own evidence, conversation, questions and temporary gallery. Warm-up validation uses [Data/warmup_locations.json](Data/warmup_locations.json) as the canonical coordinate baseline, including its reported error radii and annotation provenance.
+Preparation builds reusable assets from independent external data. Each challenge panorama then runs with its own evidence, conversation, questions and temporary gallery. Warm-up validation uses [Data/warmup_locations.json](../Data/warmup_locations.json) as the canonical coordinate baseline, including its reported error radii and annotation provenance.
 
 ## 1. Goal and strategy
 
@@ -347,7 +347,7 @@ Keep five distinct evaluation tracks:
 
 **External validation and final evaluation.** Set aside validation data for model choice, calibration and fusion weights. Reserve the OSV-5M official test split and an external panorama subset for final comparison. Include Portugal, Spain and France, urban-looking and rural scenes, off-road cases, landmarks and weak-clue cases. If the same test set is used repeatedly to choose models, treat it as validation rather than claiming it remains untouched.
 
-The saved Portuguese Panoramax metadata contains **710 images in 58 collections**, with **377 images in the largest two collections**. These are not 710 independent locations. Sample across collections and geography; split by collection and avoid overlap with training and gallery query images. Source: [saved Panoramax metadata](research_notes/Panorama%20geolocation%20model%20stack/artifacts_datasets/panoramax_PT_360.csv).
+The saved Portuguese Panoramax metadata contains **710 images in 58 collections**, with **377 images in the largest two collections**. These are not 710 independent locations. Sample across collections and geography; split by collection and avoid overlap with training and gallery query images. Source: saved Panoramax metadata (`research_notes/Panorama geolocation model stack/artifacts_datasets/panoramax_PT_360.csv`, kept locally).
 
 **Downloaded sample** (`tools/fetch_panoramax.py`, `Data/panoramax/`, 1.4 GB). Each country's CSV holds the GPS, licence and `split` per picture; whole collections are assigned to `val` or `final`.
 
@@ -362,7 +362,7 @@ The saved Portuguese Panoramax metadata contains **710 images in 58 collections*
 
 Use different splits for different tasks. Region generalisation tests need sequence/spatial separation. Place-recognition tests need nearby gallery imagery from different captures: exclude the query and its capture sequence, but do not remove every reference within 1 km and then expect a 100 m image match.
 
-**Canonical warm-up baseline.** Use [Data/warmup_locations.json](Data/warmup_locations.json) for the coordinate baseline, replacing the older location-report pins in validation. The file has 20 records: **19 high-confidence references with reported radii of 5–12 m**, and one low-confidence, unidentified-location reference with a **60,000 m radius**. Use the 19 for primary precise localisation metrics. Keep the coarse record in operational tests and region-level diagnostics, but exclude it from precise distance, street-level hit-rate and primary mean-score comparisons.
+**Canonical warm-up baseline.** Use [Data/warmup_locations.json](../Data/warmup_locations.json) for the coordinate baseline, replacing the older location-report pins in validation. The file has 20 records: **19 high-confidence references with reported radii of 5–12 m**, and one low-confidence, unidentified-location reference with a **60,000 m radius**. Use the 19 for primary precise localisation metrics. Keep the coarse record in operational tests and region-level diagnostics, but exclude it from precise distance, street-level hit-rate and primary mean-score comparisons.
 
 Match records by exact panorama filename. Use `lat`, `lon`, `error_radius_m`, `confidence`, `place` and the baseline's estimated `urban` category. Preserve `country`, `method`, `evidence`, `alternatives`, `heading_yaw0_deg` and `used_other_panoramas` as evaluation provenance; do not expose these annotations to the runtime agent. `used_other_panoramas` is descriptive text, so do not convert any nonempty string into a Boolean claim of assistance.
 

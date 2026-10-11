@@ -186,6 +186,16 @@ export function App() {
     try { await work(); return true; } catch (e) { setError(messageOf(e)); return false; } finally { busy.current = false; setPending(false); }
   };
   const answer = (optionId: string) => { if (item?.runId && item.source && c.question && !isReplay) void action(() => item.source!.answer(item.runId!, c.question!.id, optionId)); };
+  const reviewAnswer = () => {
+    if (!item?.runId || !item.source || !c.answer || isReplay) return;
+    const entry = item, outputId = c.answer.id, after = item.events.at(-1)?.seq ?? 0;
+    void action(async () => {
+      await entry.source!.review(entry.runId!, outputId);
+      subscriptions.current.get(entry.key)?.();
+      subscriptions.current.set(entry.key, entry.source!.subscribe(entry.runId!, e => onEvent(entry.key, e), setConnected, after));
+      await checkStatus();
+    });
+  };
   const skip = () => { if (item?.runId && item.source && c.question && !isReplay) void action(() => item.source!.skip(item.runId!, c.question!.id)); };
   // Skip the open question and every later one of a live run: free, neutral skips; the run finishes with its current output.
   const skipRemaining = (runId: string) => { source.current ??= new LiveSource(); const live = source.current; void action(async () => { await live.skipRemaining(runId); setSkipAll(undefined); setNotice('Remaining questions will be skipped: free, and the run finishes with its current output.'); await checkStatus(); }); };
@@ -317,12 +327,22 @@ export function App() {
     <p className="console-micro aq-ink3">Estimate uses the logged radius as a distance proxy; the true location is never available.</p>
     <Button variant="quiet" icon="copy" onClick={() => copy(true)}>Copy coordinate as JSON</Button>
   </>;
+  const reviewStarted = [...c.events].reverse().find(e => e.type === 'run.reopened')?.seq ?? 0;
+  const reviewingAnswer = reviewStarted > 0 && !c.finished;
+  const reviewDecision = [...c.evidence].reverse().find(e => e.kind === 'answer_review' || e.kind === 'review_failed' || e.kind === 'review_conflict');
+  const reviewSummary = runs.find(r => r.run_id === item?.runId);
+  const reviewContent = !stageMode && !isReplay && c.answer && (reviewSummary?.can_review !== undefined || reviewStarted > 0) ? <section className="answer-review" aria-label="Answer review">
+    <Button variant="secondary" icon="question" disabled={pending || reviewingAnswer || !reviewSummary?.can_review || c.submitted} onClick={reviewAnswer}>{reviewingAnswer ? 'Thinking' : 'Investigate further'}</Button>
+    <p className="console-micro aq-ink2">{reviewingAnswer ? 'The agent is reviewing this answer. Your current coordinates remain available.' : reviewSummary?.can_review ? 'Not convinced? Let the agent check the photo or ask you a question. A human answer costs ×0.95; skipping is free.' : 'Review limit reached for this answer.'}</p>
+    {reviewDecision && reviewDecision.seq > reviewStarted && <p className="console-micro aq-ink3" role="status">{str(reviewDecision.payload.observation)}</p>}
+  </section> : null;
   const finalContent = c.answer ? <div className="app-final app-stack">
     <h1 className="narrative-title">Best estimate</h1><Coordinate a={c.answer} onCopy={copy} showCopy={false} size={stageMode ? 'md' : 'lg'} />
     <p className="console-body aq-ink2">{c.answer.coordinates.length === 10 && c.answer.coordinates.every(p => p.lat === c.answer!.lat && p.lng === c.answer!.lng) ? 'Same coordinate in all 10 slots.' : `${c.answer.coordinates.length} logged answer slots.`}</p>
     {c.answer.expected !== null || c.answer.split ? <EstimatedScore expected={c.answer.expected} urbanUnknown={c.answer.split} special={c.answer.special} /> : <p className="console-body aq-ink3">Score estimate unavailable: position uncertainty is unknown.</p>}
     {c.answer.mostLikely === false && <ChoiceNote a={{ ...c.answer, mostLikely: false }} mostLikelyName={c.candidates[0]?.name} />}
     <Exports onCopy={() => copy()} onExport={exportLog} onSubmit={() => setSubmit(true)} canSubmit={!isReplay && !c.submitted && !pending} />
+    {reviewContent}
     {stageMode ? answerDetails : <Disclosure title="Score curve and answer slots">{answerDetails}</Disclosure>}
     {c.outputs.length > 1 && <Disclosure title="Earlier outputs" aside={c.outputs.length - 1}>{c.outputs.slice(0, -1).map(a => <div className="app-history" key={a.id}><Coordinate a={a} onCopy={() => void copyText(coordinates(a.lat, a.lng))} /><span className="console-micro aq-ink3">Produced at {time(a.t)} · snapshot ×{a.multiplier.toFixed(2)}</span></div>)}</Disclosure>}
   </div> : <EmptyState icon="pin" title="No answer has been produced" body="The coordinate appears when output.produced arrives." />;
@@ -398,7 +418,7 @@ export function App() {
           {atSetup || !item ? setupContent : <>
             {isReplay && <FocusReplay events={events} t={cursor} speed={speed} playing={playing} onSeek={seek} onPlay={play} onSpeed={setSpeed} />}
             <main className={`focus-layout is-${focusState} ${focusState === 'answer' && locationView === 'compare' ? 'has-compare' : ''}`} data-focus-state={focusState}>
-              <div className="focus-main">{focusState === 'answer' && c.answer ? <><FocusAnswer a={c.answer} onCopy={() => copy()} onSubmit={() => setSubmit(true)} canSubmit={!isReplay && !c.submitted && !pending} onDetails={() => openDetails('run')} /><div className="focus-answer-photo"><FocusPhoto c={c} image={image} yaw={yaw} setYaw={setYaw} selected={selected} onSelect={chooseEvidence} layers={layers} view={photoView} setView={setPhotoView} /><Button variant="quiet" icon="camera" onClick={() => setLocationView('compare')}>Compare with street view</Button><DetectionFeed c={c} selected={selected} onSelect={chooseEvidence} /></div></> : <><FocusPhoto c={c} image={image} yaw={yaw} setYaw={setYaw} selected={selected} onSelect={chooseEvidence} layers={layers} view={photoView} setView={setPhotoView} busy={focusState === 'working' && (c.stages.some(stage => stage.status === 'running') || !isReplay && !!item.runId && !c.finished)} />{c.question ? <FocusQuestion c={c} disabled={isReplay || pending} readOnly={isReplay} onAnswer={answer} onSkip={skip} onSkipAll={!isReplay && item.runId ? () => setSkipAll(item.runId) : undefined} skippingAll={runs.find(r => r.run_id === item.runId)?.skip_remaining} onHighlight={setOptionSelection} onError={setError} onDetails={() => openDetails('questions')} /> : <FocusWorking c={c} event={currentEvent} image={image} selected={selected} onSelect={chooseEvidence} onDetails={() => openDetails()} />}</>}</div>
+              <div className="focus-main">{focusState === 'answer' && c.answer ? <><FocusAnswer a={c.answer} onCopy={() => copy()} onSubmit={() => setSubmit(true)} canSubmit={!isReplay && !c.submitted && !pending} onDetails={() => openDetails('run')} review={reviewContent} /><div className="focus-answer-photo"><FocusPhoto c={c} image={image} yaw={yaw} setYaw={setYaw} selected={selected} onSelect={chooseEvidence} layers={layers} view={photoView} setView={setPhotoView} /><Button variant="quiet" icon="camera" onClick={() => setLocationView('compare')}>Compare with street view</Button><DetectionFeed c={c} selected={selected} onSelect={chooseEvidence} /></div></> : <><FocusPhoto c={c} image={image} yaw={yaw} setYaw={setYaw} selected={selected} onSelect={chooseEvidence} layers={layers} view={photoView} setView={setPhotoView} busy={focusState === 'working' && (c.stages.some(stage => stage.status === 'running') || !isReplay && !!item.runId && !c.finished)} />{c.question ? <FocusQuestion c={c} disabled={isReplay || pending} readOnly={isReplay} onAnswer={answer} onSkip={skip} onSkipAll={!isReplay && item.runId ? () => setSkipAll(item.runId) : undefined} skippingAll={runs.find(r => r.run_id === item.runId)?.skip_remaining} onHighlight={setOptionSelection} onError={setError} onDetails={() => openDetails('questions')} /> : <FocusWorking c={c} event={currentEvent} image={image} selected={selected} onSelect={chooseEvidence} onDetails={() => openDetails()} />}</>}</div>
               <aside className="focus-map-column" aria-label={c.question ? 'Question options map' : 'Location view'}>{focusState !== 'question' && <FocusCandidates c={c} selected={compare} onSelect={chooseCandidate} onAll={() => openDetails('candidates')} />}{focusState === 'answer' && locationTabs}{focusState === 'answer' && locationView !== 'map' ? streetContent : <EvidenceMap c={focusRecord} selected={focusState === 'working' ? mapSelection : undefined} evidenceSelection={selected} onSelect={chooseCandidate} tileSource={status?.tile_source} q={c.question} optionSelection={optionSelection} final={focusState === 'answer'} animate={animate} focusRevision={focusRevision} compact focus aspect={c.candidates.length && focusState !== 'question' ? 0.5 : undefined} />}<AnalysisFeed c={c} selected={selected} onSelect={chooseEvidence} /></aside>
             </main>
           </>}

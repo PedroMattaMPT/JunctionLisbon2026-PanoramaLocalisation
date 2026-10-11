@@ -109,12 +109,13 @@ VLM_PLUGIN = "panoloc.local_vlm"  # optional, untracked: a module with make_clie
 # 100 m. First 30 of val: 21.8% -> 43.1%, all 30 answered, median 16.5 s per panorama with perception cached. The
 # reply carries answers only, never the model's reasoning. REASON_LOCAL (the local VLM) has not been measured.
 REASON = True
-REASON_LOCAL = False
+REASON_LOCAL = True  # Sun 10:50: val first 30 1.7% -> 13.9%, warm-up 29.1% -> 30.8% (reason.RELIABILITY_SCALE_LOCAL)
 # Refine (T83): the VLM plugin's optional refine(models, pano, fused, reasoned, log), a tool-using step that looks
 # for the exact camera position around the first output (map features, imagery, bearing resection in code). Its
 # answer becomes a second output; a timeout, failure or no answer keeps the first. Measured Sun 10:05 with no
 # questions: val first 30 39.3% -> 58.9% (urban within 100 m 14 -> 20 of 29), warm-up 61.7% -> 79.3%.
 REFINE = True
+REFINE_LOCAL = False  # the same step on the local VLM (panoloc.locate); not measured as a gain yet
 REFINE_DEADLINE_S = 200.0
 REFINE_UNCERTAINTY_M = {"high": 10.0, "medium": 25.0, "low": 100.0}
 KNN_RELIABILITY = 0.3
@@ -278,6 +279,7 @@ class PanoramaResult:
     fused: object
     outputs: list = field(default_factory=list)
     timings: dict = field(default_factory=dict)
+    review_state: dict | None = None
 
 
 def _write_json(path, document):
@@ -417,10 +419,11 @@ def _reason(models, path, pano, ocr, vlm, clues, hints, run):
     from panoloc.vlm import VLMError
     name = models.vlm_name()  # without building the client: a cached answer loads no model
     plugin = vlm_plugin()
-    if not (plugin and plugin.claims(name)) and not REASON_LOCAL:
+    local = not (plugin and plugin.claims(name))
+    if local and not REASON_LOCAL:
         run.skip_stage("reason", "place reasoning is off for the local VLM (pipeline.REASON_LOCAL)")
         return None
-    file = _cache_file(models, path, reason.cache_name(name))
+    file = _cache_file(models, path, reason.cache_name(name, local))
     doc = _cached(run, "reason", file, name, lambda d, m: _log_reasoning(run, d, m))
     if doc is not None:
         return doc
@@ -465,7 +468,16 @@ def _refine(models, pano, fused, reasoned, run):
     from panoloc.scoring import haversine_m
     plugin = vlm_plugin()
     name = models.vlm_name()
-    if not (REFINE and models.use["vlm"] and plugin is not None and hasattr(plugin, "refine") and plugin.claims(name)):
+    if not (REFINE and models.use["vlm"]):
+        return None
+    if plugin is not None and plugin.claims(name):
+        if not hasattr(plugin, "refine"):
+            return None
+        step = plugin.refine
+    elif REFINE_LOCAL:
+        from panoloc import locate
+        step = locate.refine_run
+    else:
         return None
     stop, box = threading.Event(), {}
 
@@ -475,7 +487,7 @@ def _refine(models, pano, fused, reasoned, run):
 
     def work():
         try:
-            box["result"] = plugin.refine(models, pano, fused, reasoned, log)
+            box["result"] = step(models, pano, fused, reasoned, log)
         except Exception as exc:  # reported below; the first output stands
             box["error"] = exc
 
@@ -926,7 +938,7 @@ def _cell_questions(run, route, operator, *, budget, min_gain, print_fn, outputs
 
 def _ask_loop(run, hypotheses, operator, *, category, urban_probability, max_questions, ask_anyway, print_fn,
               zones=None, min_gain=questions.BREAK_EVEN, max_cell_questions=MAX_CELL_QUESTIONS, urban_auto=False,
-              outputs=None):
+              outputs=None, state=None):
     """Ask while a question is worth its cost; appends each new output to `outputs` as it is logged and returns
     (hypotheses, outputs). urban_auto: re-estimate P(urban) from the current hypotheses when a cell route starts."""
     hypotheses = readable_labels(hypotheses, zones)
@@ -934,6 +946,8 @@ def _ask_loop(run, hypotheses, operator, *, category, urban_probability, max_que
     asked, schedule = 0, list(QUESTION_SCHEDULE)
     answers = []  # (question, option_id) of every answered place, zone or cell question: outputs must fit them all
     posed = set()  # signatures of the place and zone questions already put to the team
+    if state is not None:
+        state.update(answers=answers, posed=posed)
     place_misses = 0  # consecutive place questions answered "None of these"
     main_retries = MAIN_SKIP_RETRIES
     zone_scope, zone_exclude = None, []  # chained zone questions: the zone answered so far, zones ruled out
@@ -1054,6 +1068,8 @@ def _ask_loop(run, hypotheses, operator, *, category, urban_probability, max_que
         schedule = list(QUESTION_SCHEDULE)  # an answer changed the beliefs: the schedule starts again
         if q.option(option_id).complement:
             schedule = ["zone", "place"]  # the options missed: the zone fallback comes first (PLAN.md 3.4)
+    if state is not None:
+        state.update(zone_scope=zone_scope, zone_exclude=zone_exclude)
     return hypotheses, outputs
 
 
@@ -1114,6 +1130,7 @@ def run_panorama(path, models=None, *, runs_dir="runs", operator="never", catego
                 run.skip_stage(stage, "disabled for this run")
         name_clues, hints = _clues(ocr, vlm, run)
         clues += name_clues
+        review_clues = list(clues)  # replace a self-check's VLM clue group, never count repeated reasoning twice
         reasoned = None
         if models.use["vlm"]:
             reasoned = _reason(models, path, pano, ocr, vlm, clues, hints, run)
@@ -1150,6 +1167,8 @@ def run_panorama(path, models=None, *, runs_dir="runs", operator="never", catego
         fused.output.log(run)  # the initial answer, before any question
         timings["first_output_s"] = round(time.perf_counter() - t0, 2)
         outputs = [fused.output]
+        ask_state = {}
+        hypotheses = fused.hypotheses
         refined = _refine(models, pano, fused, reasoned, run)
         if refined is not None:
             refined.log(run)
@@ -1160,16 +1179,19 @@ def run_panorama(path, models=None, *, runs_dir="runs", operator="never", catego
             run.skip_stage("ask", "questions are off by default (pipeline.ASK_QUESTIONS): the first output stands")
         elif operator != "never":
             with run.stage("ask", optional=True):  # a failure here is logged; the outputs so far stand
-                _ask_loop(run, fused.hypotheses, operator, category=cat, urban_probability=urban_probability,
+                hypotheses, _ = _ask_loop(run, fused.hypotheses, operator, category=cat, urban_probability=urban_probability,
                           max_questions=MAX_QUESTIONS if max_questions is None else max_questions,
                           ask_anyway=ask_anyway, print_fn=print_fn, zones=models.zones(),
                           min_gain=MIN_GAIN if min_gain is None else min_gain, urban_auto=urban_auto,
-                          outputs=outputs,
+                          outputs=outputs, state=ask_state,
                           max_cell_questions=MAX_CELL_QUESTIONS if max_cell_questions is None else max_cell_questions)
         timings["total_s"] = round(time.perf_counter() - t0, 2)
     finally:
         log_path = run.finish()
-    return PanoramaResult(run.run_id, run.dir, log_path, outputs[-1], fused, outputs, timings)
+    review_state = {"run": run, "path": path, "category": cat, "urban_probability": urban_probability,
+                    "hypotheses": hypotheses, "base_clues": review_clues, "hints": hints, "ocr": ocr,
+                    "vlm": vlm, "reasoned": reasoned, **ask_state}
+    return PanoramaResult(run.run_id, run.dir, log_path, outputs[-1], fused, outputs, timings, review_state)
 
 
 EVAL_CACHE = Path(__file__).resolve().parent.parent / "runs" / "perception"

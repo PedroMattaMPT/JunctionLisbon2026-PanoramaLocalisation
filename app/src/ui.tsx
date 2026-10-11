@@ -60,9 +60,13 @@ export function QueueCard(props: ElementProps) {
 export function UploadDropZone({ onChoose }: { onChoose(): void }) {
   return <>{mapTree(DropZone({ count: 6 }), node => node.type === Button ? React.cloneElement(node, { onClick: onChoose }) : node)}</>;
 }
+// The two VLM rows are named by where they run, never by model, whatever name the server reports.
+const vlmLabel: Record<string, string> = { 'vlm-plugin': 'VLM (API)', qwen: 'VLM (Local)' };
 export function LoggedRoster({ status, models }: { status?: WorkerStatus; models: ElementProps[] }) {
-  const displayModels = (status?.models.length ? status.models : models).map(model => ({ ...model, name: modelName(str(model.name)) }));
-  return <>{mapTree(ModelRoster({ models: displayModels, compact: true, title: status?.mock ? 'Mock pipeline · no models running' : 'Local model roles' }), node => !status?.models.length && typeof node.props.children === 'string' && node.props.children.startsWith('all open weights') ? React.cloneElement(node, {}, status?.mock ? 'Scripted evidence · no inference package' : 'Residency and memory not reported') : node)}</>;
+  const reported = status?.models.length ? status.models : null;
+  const displayModels = (reported ?? models).map(model => ({ ...model, name: (reported && vlmLabel[str(model.id)]) || modelName(str(model.name)) }));
+  const hosted = !!reported?.some(model => str(model.id) === 'vlm-plugin' && model.state !== 'disabled');
+  return <>{mapTree(ModelRoster({ models: displayModels, compact: true, title: status?.mock ? 'Mock pipeline · no models running' : hosted ? 'Model roles' : 'Local model roles' }), node => typeof node.props.children === 'string' && node.props.children.startsWith('all open weights') ? (!reported ? React.cloneElement(node, {}, status?.mock ? 'Scripted evidence · no inference package' : 'Residency and memory not reported') : hosted ? React.cloneElement(node, {}, node.props.children.replace('all open weights', 'open weights + hosted VLM')) : node) : node)}</>;
 }
 export function Filename(props: ElementProps) {
   const parsed = parseFilename(props.file);

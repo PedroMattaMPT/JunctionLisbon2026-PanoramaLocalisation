@@ -348,6 +348,20 @@ class Run:
 
     # -- end of run ---------------------------------------------------------------------------------
 
+    def reopen(self, output_id):
+        """Resume this panorama for an explicit answer review, keeping counters and all receipts."""
+        with self._lock:
+            if self.finished_at is None or not self.outputs or self.outputs[-1]["output_id"] != output_id:
+                raise ValueError("Only the latest answer of a finished run can be reviewed.")
+            finished = self.finished_at
+            self.finished_at = None
+            try:
+                self._emit("run.reopened", {"output_id": output_id, "reason": "answer_review",
+                                             "penalty": self.penalties.snapshot()}, actor="team")
+            except BaseException:
+                self.finished_at = finished
+                raise
+
     def finish(self):
         """Close the run (no event can follow) and write log.json; returns its path."""
         with self._lock:

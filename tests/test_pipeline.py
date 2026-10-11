@@ -100,6 +100,9 @@ class PipelineTest(unittest.TestCase):
         scene = PanoramaResult("test", "single", [view]).summarise().to_dict(raw=False)
         (entry / "vlm.json").write_text(json.dumps(scene))
         models = Models(ocr=True, vlm=True, retrieval=False, perception_cache=cache)
+        from panoloc.reason import cache_name
+        (entry / cache_name(models.vlm_name(), local=True)).write_text(json.dumps(
+            {"places": [], "misleading_texts": [], "model": models.vlm_name(), "local": True}))
         result = run_panorama(self.path, models, runs_dir=Path(self.tmp.name) / "runs", print_fn=lambda *a: None)
         observed = [e["payload"] for e in events(result) if e["type"] == "evidence.added"]
         reading = next(p for p in observed if p.get("kind") == "ocr_text")

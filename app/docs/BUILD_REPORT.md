@@ -1,5 +1,17 @@
 # Aqui frontend build report
 
+2026-10-11 · Model-directed answer review and question probabilities (T84).
+
+Completed live answers now offer **Investigate further** in Focus and Full console. The VLM reviews the current output, original panorama, candidate evidence and earlier responses, then chooses to keep the answer, ask itself a specific photo question, or ask a human question. **Thinking** keeps the current coordinates visible. Review resumes the same Run, sequence, question constraints, answer history and penalty counters. A human confirmation retains a refined camera coordinate when it fits the chosen area. All question options now show **Agent probability**, including none/outside options; review uses a validated model distribution, and ordinary questions use their logged candidate support. Missing estimates remain unavailable.
+
+Each request permits three decisions, one free self-check and two human questions. Three review requests are accepted per run; model calls have a 45-second timeout and share a 180-second budget. Self-checks resolve place names through the existing index and replace the VLM clue group. Human answers retain the ×0.95 receipt, skips are neutral and end the request, and failures preserve the latest coordinate with the current penalty. Replay stays read-only. Review is available for new completed runs in the current live backend session.
+
+Validation: strict TypeScript/Vite build, **65 frontend tests**, **420 repository tests** (one existing skip), **27 backend tests**, and seven browser checks passed. The browser used an isolated real HTTP worker/controller/SSE with deterministic VLM replies and a procedural image; it covered self → human → answer, keyboard answer/skip, receipt preservation, repeated review limits, Focus/Full probabilities and 390 px layout. No JavaScript errors occurred, and no active or evaluation run was modified. These checks verify the mechanism and presentation; localisation accuracy has not been measured for this review policy.
+
+Evidence: [browser verification](answer-review-verification.json), [Thinking](screenshots/answer-review-thinking.png), [question probabilities](screenshots/answer-review-question.png), [mobile](screenshots/answer-review-mobile.png). The frontend is published; the backend was restarted only after the live queue finished, with its saved settings preserved. `/api/status` confirms answer review enabled and all nine models resident. The isolated test server and browsers are closed.
+
+---
+
 2026-10-11 · Candidate answers and coordinates (T50 follow-up).
 
 The toolbar now has **Candidate answers (N)**, a direct link to the full list during Working, questions and completed answers. Working and Answer show the leading three candidates above the map, with numbered cards, relative support, latitude/longitude and individual Google Maps links. **View all N** opens the complete list. Coordinates are also visible in that list and in Compare; absent positions stay explicitly unavailable. Area centres and landmark points retain their distinct roles. Inspecting candidates leaves the final prediction, question and penalty receipts intact. Focus stays inside Details when a candidate row is replaced by its comparison, and the tile canvas resizes when the map height changes.

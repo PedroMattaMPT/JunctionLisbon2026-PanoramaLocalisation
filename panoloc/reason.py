@@ -28,10 +28,17 @@ FULL_CONTEXT = False
 VERSION = "v4"  # FULL_CONTEXT's perception-cache name: a new context or prompt must not reuse older answers
 
 
-def cache_name(model):
-    tag = (f"{VERSION}-" if FULL_CONTEXT else "") + (f"s{SAMPLES}-" if SAMPLES > 1 else "")
+def cache_name(model, local=False):
+    samples = SAMPLES_LOCAL if local else SAMPLES
+    tag = (f"{VERSION}-" if FULL_CONTEXT else "") + (f"s{samples}-" if samples > 1 else "")
     return f"reason-{tag}{model}.json"
 MAX_PLACES = 5
+# The local VLM runs with an 8k context (vlm.DEFAULT_NUM_CTX) at about 1,000 tokens per megapixel: a smaller
+# overview and views keep the request near 6k tokens; one answer, since its calls share one GPU.
+LOCAL_OVERVIEW_SIZE = (1536, 768)
+LOCAL_VIEW_SIZE = 512
+LOCAL_MAX_TOKENS = 1500
+SAMPLES_LOCAL = 1
 MAX_SIGN_CROPS = 8
 SIGN_CROP_SIZE = 768
 OVERVIEW_SIZE = (2048, 1024)
@@ -44,6 +51,9 @@ KINDS = ("building", "monument", "church", "castle", "bridge", "square", "street
          "park", "beach", "natural_feature", "other")
 CONFIDENCE = {"high": 0.6, "medium": 0.3}  # probability at or above -> fusion's VLM landmark confidence label
 RELIABILITY_SCALE = 1.0  # times fusion's VLM landmark reliability for that label (capped at 1)
+# The same for the local VLM, whose stated probabilities run high (0.95 on wrong places). Fitted on val first 30
+# (Sun 10:50, scale 0 / 0.1 / 0.25 / 0.5 / 1: 1.7 / 6.3 / 8.8 / 13.9 / 12.7%); warm-up 29.1% -> 30.8% at 0.5.
+RELIABILITY_SCALE_LOCAL = 0.5
 # Independent answers asked in parallel and averaged (probability per place name, absent = 0). 3 (Sun 09:26): one
 # answer moves +-3 points run to run (val 43.1/40.3/40.1%, warm-up 56.0/53.6/59.9%); 3 averaged gave warm-up 61.7%
 # (095 Moustey found at 17 m) and val 39.3%, within that noise. Higher effort (59.0/41.4%) did not stand out.
@@ -187,14 +197,15 @@ def _sign_box(s):
     return box if isinstance(box, dict) else {}
 
 
-def _images(pano, signs=()):
+def _images(pano, signs=(), local=False):
     """(images, captions): the overview, the 8 horizontal views, sky and ground, then close-ups of the most
-    confident OCR signs (a box a little larger than the sign, at SIGN_CROP_SIZE)."""
+    confident OCR signs (a box a little larger than the sign, at SIGN_CROP_SIZE). local: the smaller sizes."""
     from panoloc.views import cut_view, cut_views
     import numpy as np
     from PIL import Image
-    overview = np.asarray(Image.fromarray(pano).resize(OVERVIEW_SIZE, Image.Resampling.BICUBIC))
-    views = cut_views(pano, size=VIEW_SIZE)
+    size = LOCAL_OVERVIEW_SIZE if local else OVERVIEW_SIZE
+    overview = np.asarray(Image.fromarray(pano).resize(size, Image.Resampling.BICUBIC))
+    views = cut_views(pano, size=LOCAL_VIEW_SIZE if local else VIEW_SIZE)
     images = [encode_image(overview)] + [encode_image(v) for v in views]
     captions = ["the equirectangular overview (yaw 0 at the centre, increasing to the right)"] + [
         f"view {v.name} (yaw {v.yaw_deg:.0f}, pitch {v.pitch_deg:.0f})" for v in views]
@@ -214,16 +225,23 @@ def _images(pano, signs=()):
 
 def _chat_kwargs(client):
     params = inspect.signature(client.chat).parameters
-    return {k: v for k, v in (("effort", EFFORT), ("max_tokens", MAX_TOKENS)) if k in params}
+    return {k: v for k, v in (("effort", EFFORT), ("max_tokens", MAX_TOKENS), ("num_predict", LOCAL_MAX_TOKENS))
+            if k in params}
+
+
+def is_local(client):
+    """The local (Ollama) VLM: its chat takes num_predict, not an effort."""
+    return "num_predict" in inspect.signature(client.chat).parameters
 
 
 def reason_place(client, pano, context, signs=()):
     """One reasoning request; returns the parsed reply plus timing. Raises panoloc.vlm.VLMError."""
+    local = is_local(client)
     if FULL_CONTEXT:
-        images, captions = _images(pano, signs)
+        images, captions = _images(pano, signs, local)
         listing = "\n".join(f"Image {i}: {c}" for i, c in enumerate(captions, 1))
     else:
-        images, captions = _images(pano)
+        images, captions = _images(pano, local=local)
         images, names = images[:9], [c.split()[1] for c in captions[1:9]]
         listing = ("Image 1 is the equirectangular overview (yaw 0 at the centre, increasing to the right). Images 2-9 "
                    f"are the views {', '.join(names)} (yaw in degrees).")
@@ -238,12 +256,13 @@ def reason_place(client, pano, context, signs=()):
         except (TypeError, ValueError) as exc:
             raise VLMInvalidResponse(f"place reasoning: no JSON in the reply: {exc}", model=client.model) from exc
 
-    if SAMPLES <= 1:
+    samples = SAMPLES_LOCAL if local else SAMPLES
+    if samples <= 1:
         doc, timing = ask(0)
     else:
         from concurrent.futures import ThreadPoolExecutor
-        with ThreadPoolExecutor(SAMPLES) as pool:
-            futures = [pool.submit(ask, i) for i in range(SAMPLES)]
+        with ThreadPoolExecutor(samples) as pool:
+            futures = [pool.submit(ask, i) for i in range(samples)]
         replies = [f.result() for f in futures if f.exception() is None]
         if not replies:
             futures[0].result()  # raises the first failure
@@ -258,6 +277,7 @@ def reason_place(client, pano, context, signs=()):
     doc["places"] = places[:MAX_PLACES]
     doc["misleading_texts"] = [t for t in doc.get("misleading_texts") or [] if isinstance(t, str) and t.strip()]
     doc["model"] = client.model
+    doc["local"] = local
     doc["timing"] = {**(timing or {}), "total_s": round(time.perf_counter() - t0, 2)}
     doc["context"] = context
     return doc
@@ -314,7 +334,9 @@ def clues_from_reasoning(doc, names):
     for i, p in enumerate((doc or {}).get("places") or [], 1):
         prob = p["probability"]
         label = next((k for k, v in CONFIDENCE.items() if prob >= v), "low")
-        reliability = min(1.0, fusion.VLM_LANDMARK_RELIABILITY.get(label, 0.15) * RELIABILITY_SCALE)
+        local = doc.get("local", ":" in str(doc.get("model", "")))  # Ollama names carry a tag (qwen3.5:9b)
+        scale = RELIABILITY_SCALE_LOCAL if local else RELIABILITY_SCALE
+        reliability = min(1.0, fusion.VLM_LANDMARK_RELIABILITY.get(label, 0.15) * scale)
         country = p["country"]
         point = _context_point(names, p.get("municipality"), country)
         found = []
