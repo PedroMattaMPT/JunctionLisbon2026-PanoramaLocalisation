@@ -11,7 +11,7 @@ each top place's coordinates. Each panorama is cut into 8 horizontal
 perspective views (90 deg FOV); per-view log-probabilities are averaged.
 
 Usage:
-    python streetclip/geolocate.py Data/ -o outputs/streetclip_predictions.json
+    python streetclip/geolocate.py "Data/Panorama Warm-Up" -o streetclip/results/streetclip_predictions.json
 """
 
 import argparse

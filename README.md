@@ -252,6 +252,7 @@ app/              Aqui, the operator console (React + Vite), and its live and mo
 design_system/    tokens, components and design rules behind the console
 knowledge_base/   country clues as machine-readable rules and lookup tables
 tools/            environment setup, downloads, index builds, evaluation, calibration and a 360° viewer
+streetclip/       a separate zero-shot StreetCLIP baseline (image to place names to coordinates) and its results
 tests/            unittest suite for panoloc/
 Data/             the warm-up panoramas (downloaded data and indexes are gitignored)
 ```
@@ -273,7 +274,7 @@ Data/             the warm-up panoramas (downloaded data and indexes are gitigno
 
 ## Credits
 
-**Models:** [PP-OCRv6](https://github.com/PaddlePaddle/PaddleOCR) through [RapidOCR](https://github.com/RapidAI/RapidOCR) and OpenVINO · [Qwen3.5](https://github.com/QwenLM) through Ollama · [Perception Encoder (PE-Core)](https://github.com/facebookresearch/perception_models) · [GeoCLIP](https://github.com/VicenteVivan/geo-clip) · [ALIKED](https://github.com/Shiaoming/ALIKED) + [LightGlue](https://github.com/cvg/LightGlue) · [MegaLoc](https://github.com/gmberton/MegaLoc)
+**Models:** [PP-OCRv6](https://github.com/PaddlePaddle/PaddleOCR) through [RapidOCR](https://github.com/RapidAI/RapidOCR) and OpenVINO · [Qwen3.5](https://github.com/QwenLM) through Ollama · [Perception Encoder (PE-Core)](https://github.com/facebookresearch/perception_models) · [GeoCLIP](https://github.com/VicenteVivan/geo-clip) · [ALIKED](https://github.com/Shiaoming/ALIKED) + [LightGlue](https://github.com/cvg/LightGlue) · [MegaLoc](https://github.com/gmberton/MegaLoc) · [StreetCLIP](https://huggingface.co/geolocal/StreetCLIP) (the `streetclip/` baseline)
 
 **Data:** [OSV-5M](https://huggingface.co/datasets/osv5m/osv5m) · [Panoramax](https://panoramax.fr/) · [Wikidata](https://www.wikidata.org/) · [Wikimedia Commons](https://commons.wikimedia.org/) · [GeoNames](https://www.geonames.org/) · [OpenStreetMap](https://www.openstreetmap.org/copyright) (© OpenStreetMap contributors, ODbL) · [CAOP 2025](https://www.dgterritorio.gov.pt/) · [geoBoundaries](https://www.geoboundaries.org/) · [GHSL](https://human-settlement.emergency.copernicus.eu/) · [Copernicus GLO-90](https://spacedata.copernicus.eu/)
 
