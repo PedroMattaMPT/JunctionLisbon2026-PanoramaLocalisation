@@ -279,9 +279,9 @@ class LiveWorker:
         plugin = m.vlm() if vlm and m.vlm() is not m.vlm_local() else None  # the optional VLM plugin is active
         self.roster = [  # id, name, role, loader (None: disabled), on the CPU
             ("ocr", "PP-OCRv6 medium", "Reads signs on the CPU", m.ocr if ocr else None, True),
-            ("vlm-plugin", f"{plugin.model if plugin else 'VLM plugin'} (API)", "Answers the scene checklist",
+            ("vlm-plugin", "VLM (API)", "Answers the scene checklist",  # by role: the hosted model is not named
              plugin.load if plugin else None, True),
-            ("qwen", "Qwen3.5-9B (Ollama)", "Checklist fallback if the plugin fails" if plugin else "Answers the scene checklist",
+            ("qwen", "VLM (Local)", "Checklist fallback if the API fails" if plugin else "Answers the scene checklist",
              (lambda: m.vlm_local().load()) if vlm else None, False),
             ("pe", "PE-Core + photo bank", "Retrieves similar reference photos", m.retrieval if retrieval else None, False),
             ("geo", "GeoCLIP", "Samples candidate coordinates", m.geoclip if retrieval else None, False),
