@@ -75,3 +75,6 @@ presentations/
 
 # Zipped demo runs (demo_runs/ above): they carry the warm-up references
 demo_runs.zip
+
+# StreetCLIP downloads and prompt-embedding cache (streetclip/geolocate.py)
+cache/
