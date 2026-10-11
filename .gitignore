@@ -21,9 +21,46 @@ Data/panoramax/
 # Run logs written by panoloc/runlog.py, one folder per panorama run (tools/sample_log.py writes runs/sample/)
 runs/
 
+# Demo runs carrying the warm-up reference locations (tools/demo_runs.py): evaluation data, kept apart from runs/
+demo_runs/
+
 # Name index built by tools/build_name_index.py from Data/wikidata and Data/geo/geonames
 Data/index/
 
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Aqui operator console
+app/node_modules/
+app/dist/
+
+# Coding-agent files (Claude Code, Codex) live in .llm/: context files, skills, settings, prompts and
+# agent tool output. CLAUDE.md, .claude and .playwright-mcp at the root are symlinks into it, where the
+# tools look for them. No trailing slash on the folder names, so the symlinks match too.
+.llm/
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+AGENTS.override.md
+.claude
+.codex
+.agents
+.mcp.json
+.playwright-mcp
+*prompt*.md
+
+# External reference sets, road cache, challenge-format image copies and the final-set ledger
+# (tools/build_splits.py rebuilds everything here from Data/panoramax/, Data/geo/ and Data/wikidata/)
+Data/splits/
+
+# GeoCLIP galleries and evaluation features built from the OSV-5M bank (panoloc/geoclip_gen.py)
+Data/geoclip/
+
+# Local-only notes and secrets, never committed. API keys belong outside the repo entirely
+# (~/.config/...); these patterns are a second line of defence.
+local/
+.env
+.env.*
+*api_key*
+*.key

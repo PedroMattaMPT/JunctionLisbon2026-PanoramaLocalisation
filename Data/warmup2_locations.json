@@ -1,0 +1,404 @@
+[
+  {
+    "file": "IMG_20250901_130810_00_627.jpg",
+    "lat": 43.020564,
+    "lon": -1.323456,
+    "error_radius_m": 5,
+    "confidence": "high",
+    "place": "Puerto de Ibañeta (Alto de Ibañeta, Navarra): beside the Roland monolith (Errolanen monumentua), east of the San Salvador de Ibañeta chapel",
+    "urban": false,
+    "country": "ES",
+    "heading_yaw0_deg": 262,
+    "evidence": [
+      "Granite monolith on a stepped stone base 2-3 m from the camera at yaw -168, carved 'ROLDAN'",
+      "Modern San Salvador de Ibañeta chapel with its steep slate roof and a stone cross in front at yaw -32..-21, a yellow Camino de Santiago post beside it",
+      "Long car park with camper vans at yaw 43-52 (north end of the parking strip north of the chapel); white house with a dark roof down the valley at yaw -95",
+      "OSM node 269235200 'Errolanen monumentua' (historic=memorial) at 43.020563,-1.323428; Esri zoom-20 imagery shows the monolith and its north-pointing noon shadow within ~1 m of the node",
+      "Bearings from the monolith: chapel 237 deg, house 165 deg; pano yaw difference house-chapel -68.5 deg vs -71.4 deg on the map; both give yaw0 = 260-264 deg",
+      "Monolith subtends ~22 deg (about 0.9 m wide) -> camera ~2.3 m west of it on the rock base",
+      "Sun (az 206, el 52 at 13:08 UTC) is behind a cumulus at the predicted yaw -56; findsun locked onto bright cloud and was not used"
+    ],
+    "method": "Read the monolith inscription and matched the chapel/parking layout to OSM and Esri imagery (zoom 19-20); heading from the chapel and house bearings; camera offset from the monolith's angular width.",
+    "alternatives": [],
+    "used_other_panoramas": false
+  },
+  {
+    "file": "IMG_20260707_111431_00_139.jpg",
+    "lat": 39.21952,
+    "lon": -8.84027,
+    "error_radius_m": 25,
+    "confidence": "medium",
+    "place": "Castro de Vila Nova de São Pedro (Chalcolithic fortified settlement, Azambuja), hilltop clearing ~25-30 m SSE of the 'Reduto Central' citadel",
+    "urban": false,
+    "country": "PT",
+    "heading_yaw0_deg": 234.4,
+    "evidence": [
+      "Timber crib retaining structure (planks + diagonal struts, rubble fill behind) against a wall face at yaw 104-122: the 2023 VNSP3000 report (Arqueologia & História 74-75, museuarqueologicodocarmo.pt R6_VNSP23) describes exactly this, a 'estrutura de madeira de contenção da parede' with 'rachão' fill installed Nov-Dec 2023 on the walls W, N and E of the Reduto Central",
+      "Excavated Chalcolithic-type limestone rubble walls, curvilinear structures and collapsed rampart banks on a hilltop; wild olive and lentisk scrub, dry July grass; VNSP digs run in July (3-21 July 2023 campaign)",
+      "Distant ridge at bearing ~253-275 deg, ~+1.9 deg after tilt correction, matches Serra de Montejunto in the GLO-90 DEM (bearing ~255 deg, 19-20 km, +1.6 deg); the northern lowland horizon also matches the DEM",
+      "Sun at yaw -111.7, pitch 63.5 vs predicted az 126.1 / el 65.3: camera tilted ~2.4 deg (world-up toward yaw -152); tilt-corrected heading of yaw 0 = 234.4 deg (naive 237.8)",
+      "PE-Core search of the Commons landmark gallery (hypothesis only) ranked VNSP's photo Q1792866 (cos 0.72-0.75) among the top hits in several views",
+      "Esri imagery: hilltop clearing with scattered trees around the polygonal citadel; citadel interior and the far (N) wall with the timber at bearings ~325-356 put the camera ~27 m SSE of the citadel centre (39.219745, -8.840397), with olive trees within 3-8 m to the S/SW/E and the access track below to the ESE"
+    ],
+    "method": "Ruled out mapped PT/W-Spain archaeological sites by DEM skyline matching (GLO-90 horizons vs extracted skyline, camera tilt solved from the sun); compared Commons gallery photos (contact sheets + PE-Core retrieval); the VNSP report's timber 'contenção' at the Reduto Central confirmed the site; camera placed from bearings to the citadel and nearby trees on Esri z19 imagery (pre-2023 imagery, so the timber itself is not visible on it). Residual: SSE horizon ~1 deg lower than the DEM predicts.",
+    "alternatives": [
+      {
+        "lat": 39.2199,
+        "lon": -8.8406,
+        "place": "VNSP, W/NW side of the Reduto Central",
+        "why": "same site; camera side uncertain if the heading or tilt is off"
+      },
+      {
+        "lat": 39.03552,
+        "lon": -9.0354,
+        "place": "Povoado calcolítico da Pedra do Ouro (Alenquer)",
+        "why": "second-best skyline fit, but no known timber retaining works"
+      },
+      {
+        "lat": 38.56408,
+        "lon": -8.91869,
+        "place": "Castro de Chibanes (Palmela)",
+        "why": "similar limestone Chalcolithic/Iron Age hilltop with Arrábida flora; skyline fit poor to the W"
+      }
+    ],
+    "used_other_panoramas": false
+  },
+  {
+    "file": "IMG_20260812_184311_00_417.jpg",
+    "lat": 39.6,
+    "lon": -8.8,
+    "error_radius_m": 60000,
+    "confidence": "low",
+    "place": "Unidentified rural plateau edge, probably west-central Portugal (limestone massifs of Serras de Aire e Candeeiros / Sico, Leiria-Santarem-Coimbra); regional estimate only",
+    "urban": false,
+    "country": "PT",
+    "heading_yaw0_deg": 55.3,
+    "evidence": [
+      "2026-08-12 18:43 UTC is about 14 min after the maximum of the 12 August 2026 total solar eclipse (totality in N Spain and NE Portugal, ~18:28-18:31 UTC; deep partial elsewhere in Iberia). A small group sits in camping chairs facing the low western sun with a camera on a tripod: almost certainly eclipse watchers (not Perseids, which need darkness)",
+      "Shot from a car roof on a stick: the camera's own shadow (end of the stick shadow, yaw 47.0, pitch -8.84) gives the exact anti-solar direction -> sun at yaw -133.0, camera-frame elevation 8.84 deg; the saturated bloom centre agrees in yaw",
+      "Camera levelling checked on other shots from the same camera: the Leiria keep in IMG_20260813_122023_00_707 (residual rotation ~0.3 deg) and the flat field horizon in IMG_20260922_172452_00_779 are level. Taking 417 as level, the true sun elevation is 8.8 +- ~0.5 deg (clock good to ~5 min per the first-set Leiria/Cobrao checks). That band runs through western Portugal (e.g. ~-8.3..-9.3 deg lon at 38-40 N) and western Galicia",
+      "Conflicting evidence: the 360 deg skyline is a near-perfect 2.6 deg sinusoid (W low, E high) and the telecom mast at yaw 114 leans ~2.9 deg as a 2.6 deg tilt toward the sun would predict. Taken literally, that puts the true sun at ~11.4 deg, which is impossible anywhere in Iberia at 18:43 UTC, so the skyline is read as terrain (camera on a west-facing slope with an open, low western horizon, typical of an eclipse viewing spot)",
+      "Tilt-free check: the sun stands 11.1 deg above the skyline directly beneath it (skyline at about -2.3 deg in the camera frame)",
+      "Scene: gravel (limestone-grey) service road with a metal guardrail and a chain-link fence with angled-top posts; beyond the fence a grey crushed-stone/rockfill slope with a berm, a track at its toe and a flat pale floor (quarry benches, dump or embankment, seen against the sun); plain white tapered concrete boundary markers east of the road; red-orange gravelly soil in the road cut; dry grass with scattered oaks; plateau with cereal stubble and a green vineyard-like plot to the E; dense green hedge/plantation to the SW; lattice telecom mast with an equipment shelter ~0.4-0.6 km to the S (bearing ~170); HV pylons on a forested ridge to the NW (bearings ~334-340); no wind turbines anywhere on the skyline",
+      "DEM (Copernicus GLO-90) skyline matching: a brute-force search over the sun band (566k points), a tilt-aware NW-Iberia search (279k), searches around 483 solar plants, 114 dams and 800 OSM quarries/landfills. Best level-camera fits around quarries: Serra dos Candeeiros west-scarp limestone quarries (RMS 0.56 deg, predicted sun 8.95 deg) and Sico quarries near Pombal/Ansiao (RMS 0.79-0.75, sun 8.80). The specific Candeeiros quarries were rejected because wind turbines stand next to them and none appear in the panorama; the Sico ones because their road/pit layout does not match"
+    ],
+    "method": "Camera-shadow anti-solar point for sun yaw and elevation; NOAA solar model validated against the published eclipse figures (Lugo 11.2 deg at maximum, Guadramil 10.0 deg). Camera levelling calibrated on other shots from the same camera. Sun-band and tilt-free sun-minus-skyline constraints. Copernicus GLO-90 horizon profiles compared with the extracted 360 deg skyline over grid searches (level and tilt-aware) and targeted searches around OSM solar plants, dams, quarries and landfills (local PT/ES pbf extracts). Esri imagery checks of the best candidates: Alamos reservoir, Cabeco Santo PV plant, Caveira and Lousal mines, Montargil, Magos and Venda Velha dams, Candeeiros quarries A-D, Sico quarries, Maceira. None matched in detail. Estimate placed at the centre of the karst belt the evidence favours (between the Candeeiros best fits, Sico and Leiria)",
+    "alternatives": [
+      {
+        "lat": 39.4666,
+        "lon": -8.9038,
+        "place": "Serra dos Candeeiros west-scarp limestone quarries above Rio Maior (Leiria/Santarem)",
+        "why": "Best DEM skyline fit among all in-band quarries (RMS 0.56 deg, offset -0.11), predicted sun 8.95 vs 8.84 measured, karst/terra-rossa landscape; but nearby wind turbines are not seen in the panorama"
+      },
+      {
+        "lat": 39.93,
+        "lon": -8.582,
+        "place": "Sico limestone massif quarries between Pombal and Ansiao (Leiria)",
+        "why": "Next-best karst quarry skyline fits (RMS ~0.75-0.79) with predicted sun 8.80 deg; pit/road layout not matched"
+      },
+      {
+        "lat": 43.01,
+        "lon": -7.56,
+        "place": "Lugo province, Galicia (eclipse totality zone)",
+        "why": "Eclipse totality, predicted sun 8.6 deg fits a level camera; no DEM skyline match found and the landscape is usually greener"
+      },
+      {
+        "lat": 41.93,
+        "lon": -6.6,
+        "place": "Montesinho / Braganca, NE Portugal (Portugal's only totality strip)",
+        "why": "Natural target for Portuguese eclipse chasers; plateau, oak and cereal landscape fits; predicted sun 7.6-7.9 needs ~1 deg tilt or clock offset, and no DEM match"
+      },
+      {
+        "lat": 40.501,
+        "lon": -8.304,
+        "place": "Cabeco Santo hill, Agueda (PV plant)",
+        "why": "Best overall level-camera skyline fit (RMS 0.40 deg) with sun 8.69; rejected on imagery (panel rows right next to the road, dense eucalyptus)"
+      }
+    ],
+    "used_other_panoramas": true
+  },
+  {
+    "file": "IMG_20260813_122023_00_707.jpg",
+    "lat": 39.74722,
+    "lon": -8.80959,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Castelo de Leiria, Leiria (PT): sandy terrace north of the Torre de Menagem (keep), at its north parapet above the castle path",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 245,
+    "evidence": [
+      "Torre de Menagem (keep) north face at yaw -72.9 (NE corner) to -34.6 (NW corner), with the stepped entrance at its base and a gravel strip in front",
+      "Gothic west gable of Igreja de Santa Maria da Pena at yaw -103.5..-95.7 and the arcaded loggia of the Paços Novos behind it at yaw ~-89",
+      "Estádio Dr. Magalhães Pessoa (yellow-roofed curved stand, white masts) below to the NW at yaw 32.6..69.6, the castle's outer wall with stepped merlons descending in front of it",
+      "Camera stands at a low stone parapet on a sandy terrace; a white stone bench 4 m away at yaw -40; 3-5 m below the parapet a path with a wooden fence",
+      "OSM keep outline (relation 10471506, 16 x 11 m): both north corners match within 0.6 deg from 39.74722,-8.80959, i.e. ~21 m north and 3 m west of the keep's NE corner",
+      "Check: OSM Pena church west corners predicted at yaw -103.0/-94.0 (observed -103.5/-95.7); stadium outline's south tip predicted at yaw 36.6 (observed roof tip 32.6, roof overhang)",
+      "Heading: sun glare through leaves at yaw -73..-79, pitch 63-66 (NOAA: az 168.9, el 64.5 at 12:20 UTC) -> yaw0 242-248; stadium outline -> 245-249; adopted 245",
+      "Esri imagery shows the sandy terrace north of the keep at about 39.74714-39.74720, -8.80961..-8.80951, 1-2 m from the fix"
+    ],
+    "method": "Identified Leiria castle from the keep, the Pena church and the stadium below; resected the camera from the keep's two north corners (OSM outline) with the sun and stadium for heading; checked against the Pena church corners and the terrace on Esri imagery.",
+    "alternatives": [
+      {
+        "lat": 39.7472,
+        "lon": -8.8096,
+        "place": "north-west corner of the same terrace as seen on Esri imagery",
+        "why": "imagery-based terrace edge is 2-3 m south of the keep-based fix"
+      }
+    ],
+    "used_other_panoramas": false
+  },
+  {
+    "file": "IMG_20260925_132105_00_826.jpg",
+    "lat": 39.103638,
+    "lon": -8.730923,
+    "error_radius_m": 20,
+    "confidence": "high",
+    "place": "Muge (Salvaterra de Magos, PT): SW service walkway of the Nova Ponte Rainha D. Amélia railway bridge (Linha de Vendas Novas) over the Tagus, at its south-east end above the left bank, beside the old Ponte Rainha D. Amélia truss",
+    "urban": false,
+    "country": "PT",
+    "heading_yaw0_deg": 351,
+    "evidence": [
+      "Electrified railway on a concrete bridge with a service walkway, white railing and red cable duct; an old riveted red steel lattice truss bridge on cylindrical masonry piers runs parallel about 12 m to the SW",
+      "OSM way 97674007 (bridge:name 'Nova Ponte Rainha Dona Amélia', Linha de Vendas Novas, electrified, 875 m, axis 122.7/302.7 deg) lies beside way 37039974 'Ponte Rainha Dona Amélia' (now a road bridge)",
+      "Track vanishing point at yaw -48.2 gives yaw0 = 350.9 deg from the OSM axis; the sun at yaw -152 at 13:21 UTC gives 352.8 deg: consistent",
+      "Long water span to the NW and land to the E/S (vineyard and a bank track to the NE, harvested fields and a dirt road seen through the truss to the SW): camera at the SE (Muge) end; an old-bridge pier stands on dry land directly SW and willows of the NE bank lie directly below the NE railing",
+      "Esri imagery z19 matches the two parallel decks, the bank trees and the dirt-road junction at the SE abutment",
+      "Commons geosearch: 'Muge - Portugal' and 'Ponte de Muge - Portugal' photos 13 m and 31 m from the fix"
+    ],
+    "method": "Triage hypothesis (Muge) checked against OSM railway bridges; heading from the track axis and the sun; end of the bridge from the water/land layout; along-bridge position from the bank vegetation below the walkway and the land pier opposite, read on Esri z19 imagery",
+    "alternatives": [
+      {
+        "lat": 39.104,
+        "lon": -8.7316,
+        "place": "same railway bridge about 70 m further NW, over the water",
+        "why": "along-bridge position is read from the vegetation below; the deck height is unknown"
+      }
+    ],
+    "used_other_panoramas": false
+  },
+  {
+    "file": "IMG_20260925_134915_00_846.jpg",
+    "lat": 39.101381,
+    "lon": -8.725733,
+    "error_radius_m": 30,
+    "confidence": "medium",
+    "place": "Muge (Salvaterra de Magos, PT): narrow paved road from the Ponte Rainha D. Amélia to Muge (OSM way 37014187), on the north side of the Ribeira/Vala de Muge, about 200 m east of the railway crossing",
+    "urban": false,
+    "country": "PT",
+    "heading_yaw0_deg": 186,
+    "evidence": [
+      "Single-lane paved road with a continuous concrete parapet on the south side above a tree-lined ditch/stream, small delineator posts on the north edge, wooden power poles in the dry field to the north",
+      "Road axis about 80/260 deg: matching both road arms to OSM gives yaw0 = 183-190 deg; tree shadows falling across the road from the parapet side give about 185-200 deg (findsun gave 163 deg because the sun is hidden behind the big tree)",
+      "Esri z19: asphalt road with a light parapet line along its S edge, a large tree overhanging the S edge at the fix, the Ribeira de Muge 25-40 m south, pole shadows along the N edge",
+      "West: the road rises toward the railway embankment / Vala de Muge rail bridge with a catenary-like mast; NNW: white farm buildings among the Tagus riparian woodland (Quinta da Burra / Quinta das Palmeiras direction, 1.4-1.9 km)",
+      "Possible mismatch: imagery shows a vineyard north of the road where the panorama shows dry grass and a dry crop (imagery may be older)"
+    ],
+    "method": "Heading from road arms + tree-shadow direction; search for paved roads running E-W beside a waterway with the stream on their south side, near the 826 bridge (28 min earlier) and on the way to Marinhais (857, 20 min later); position at the big roadside tree on Esri z19",
+    "alternatives": [
+      {
+        "lat": 39.1016,
+        "lon": -8.724,
+        "place": "same road, about 150 m further east before the bend to the north",
+        "why": "the big-tree identification is not unique"
+      },
+      {
+        "lat": 39.108,
+        "lon": -8.699,
+        "place": "farm road along the canalised Ribeira de Muge east of Muge village",
+        "why": "also an E-W road with the stream to the south, valley slopes N and Muge's mast to the W; imagery shows an unpaved road beside an open canal, so less likely"
+      }
+    ],
+    "used_other_panoramas": true
+  },
+  {
+    "file": "IMG_20260925_140946_00_857.jpg",
+    "lat": 39.046927,
+    "lon": -8.701142,
+    "error_radius_m": 15,
+    "confidence": "medium",
+    "place": "Marinhais (Salvaterra de Magos, PT): EN 367 main street, south pavement about 10 m WNW of the traffic light, by house no. 83",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 272,
+    "evidence": [
+      "Village main road with a centre line, a traffic light with a blue pedestrian-crossing sign about 10 m ESE on the camera's side; single-storey whitewashed Ribatejo houses with tile roofs; house numbers 83 (camera side) and 32 (opposite)",
+      "RE/MAX 'VENDE' sign whose agency landline has the 243 (Santarém district) prefix [phone numbers and agent name redacted]",
+      "Street axis about 110/290 deg: the pole shadow (sun azimuth 217 deg at 14:09 UTC) gives yaw0 = 278 deg and the street arms 266-276 deg; Muge's mapped signals are on the N-S EN 118, so they don't fit",
+      "OSM traffic_signals node 8418550159 on EN 367; layout around the fix matches: crossroads 40-55 m ESE with side streets N and S, a fork about 85 m WNW where a parallel street branches south (small white monument with azulejo panel and animal statues at the apex), EN 367 bending slightly right beyond",
+      "Barber shop with hairstyle posters next door to the W; beauty-salon poster at no. 32"
+    ],
+    "method": "Village-street triage; region chosen from the 826/846 sequence; OSM traffic signals within ~10 km checked for the street bearing (only EN 367 in Marinhais fits); shadow heading; position from the light-pole distance and the house frontage on Esri z19",
+    "alternatives": [
+      {
+        "lat": 39.0472,
+        "lon": -8.702,
+        "place": "same street about 75 m further WNW",
+        "why": "distance to the light from its pitch only; house frontage alignment uncertain"
+      },
+      {
+        "lat": 39.05063,
+        "lon": -8.7171,
+        "place": "second EN 367 traffic light at the west edge of Marinhais",
+        "why": "same road orientation; rejected because the surroundings there are modern blocks and a supermarket"
+      }
+    ],
+    "used_other_panoramas": true
+  },
+  {
+    "file": "IMG_20261005_160718_00_121.jpg",
+    "lat": 38.781316,
+    "lon": -9.139447,
+    "error_radius_m": 6,
+    "confidence": "high",
+    "place": "Lisbon (Santa Clara), SE end of the warehouse lane off Estrada do Manique, on the yard edge beside the José Ruela rental warehouse, above Avenida Santos e Castro on the west edge of Humberto Delgado Airport",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 166,
+    "evidence": [
+      "'Ruela ALUGUER / www.joseruela.pt' sign on the white-and-blue warehouse at yaw 40-65; 'PERIGO DE QUEDA' sign at the parapet at yaw -175",
+      "Airfield of Lisbon Humberto Delgado airport beyond a dual carriageway in a cutting below the yard (OSM: Avenida Santos e Castro, the airport's western boundary road)",
+      "Sun at yaw +77.3 vs NOAA azimuth 243.0 deg at 16:07:18 UTC -> yaw 0 = 165.7 deg",
+      "Large grey hangar at yaw -62..-49 -> bearings 104-117 deg, matching the OSM TAP M&E hangars (99-117 deg, 0.7-0.9 km away)",
+      "Road's NNE vanishing direction (about 21 deg) and the lane/facade vanishing direction (314-319 deg) match Esri imagery (road about 16 deg, facade 324 deg) within the sun-compass uncertainty",
+      "Lane with parked vans and a bus on its NE side and the long warehouse facade on its SW side, as on Esri z19 imagery",
+      "Camera about 9 m from the facade (base depression angle -10.8 deg at about 1.7 m height) and about 5 m NW of the building's east corner (corner at yaw 33-35)",
+      "OSM 'Miradouro de Aviões' (plane-spotting viewpoint) 140 m north; people at the parapet are watching the airfield"
+    ],
+    "method": "Read the Ruela sign and the airport view, which leaves the industrial strip on the airport's west edge. Heading from the sun, checked against OSM hangar bearings. Lane and facade orientation matched on Esri z18/z19 imagery. Camera placed from the facade distance and the bearing to the building corner.",
+    "alternatives": [
+      {
+        "lat": 38.78256,
+        "lon": -9.13922,
+        "place": "OSM 'Miradouro de Aviões' dirt lay-by 140 m north",
+        "why": "Nearby plane-spotting spot, rejected because the Ruela facade stands within about 10 m of the camera and the lane geometry fits the SE end of the warehouse lane"
+      }
+    ],
+    "used_other_panoramas": false
+  },
+  {
+    "file": "IMG_20261005_171832_00_168.jpg",
+    "lat": 38.7,
+    "lon": -9.15,
+    "error_radius_m": 35000,
+    "confidence": "low",
+    "place": "Unidentified municipal umbrella-pine park with a modernist ribbed-vault chapel, probably in the Lisbon metropolitan area (sandy ground suggests the south bank or the coastal pine belts)",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 287,
+    "evidence": [
+      "Modernist chapel at yaw -130..-108, about 40-60 m away: tall parabolic ribbed vault (white concrete ribs, dark brick/stone infill), lower front vault with a concrete-lattice rosette and a cross, a side porch vault, a glazed slatted end wall, an info panel in front, white plinth walls with a hedge and steps to a paved terrace",
+      "Fenced gravel compound at yaw 30-60 and -50 with low barrel-vault buildings with cream pointed-arch ends (huts or shelters), picnic tables and a small wooden hut under the pines; a fenced sports court at yaw -40",
+      "Umbrella pines on sandy soil, Portuguese calçada kerbs and paths, a curving two-lane road with a small planted traffic island, EDP cabinet and green bins: Portugal",
+      "Sun hidden by foliage; bright glow plus a lens-flare arc at yaw about -31, pitch 10-13 vs NOAA azimuth 255.6 deg and elevation 9.7 deg at 17:18:32 UTC -> yaw 0 is about 287 deg (+/-6)",
+      "Same photographer as IMG_20261005_160718_00_121 (Lisbon airport, 71 minutes earlier): bounds the area to about an hour's drive of Lisbon",
+      "Not found: OSM chapels near campsites, picnic sites and pitches, and chapels with curved footprints (793 checked); Wikidata chapels within 80 km; CLIP ranking of 2,717 Commons gallery photos within 80 km and of 1,214 geotagged chapel/church photos from a Commons sweep of 38.40-39.10 N, 9.50-8.60 W; PE-Core kNN over the 106k OSV-5M bank (best similarity 0.75, all generic pine parks)"
+    ],
+    "method": "Triage of the chapel, compound and park. Sun-glow heading. Searched OSM (place_of_worship by context and footprint shape), Wikidata (chapels, and churches built 1940-1990 via QLever) and Commons (text search, geosearch grid, then a thumbnail CLIP ranking), plus an OSV-5M PE-Core kNN. No match, so this is a regional estimate.",
+    "alternatives": [
+      {
+        "lat": 38.62,
+        "lon": -9.12,
+        "place": "Setúbal peninsula pine belt (Almada/Seixal/Sesimbra/Barreiro)",
+        "why": "sandy soil with umbrella pines is typical there, and it is about 20-40 min from the airport"
+      },
+      {
+        "lat": 38.72,
+        "lon": -9.38,
+        "place": "Cascais/Oeiras/Sintra coastal pine areas",
+        "why": "also sandy pine parks with municipal calçada; same drive time"
+      }
+    ],
+    "used_other_panoramas": true
+  },
+  {
+    "file": "IMG_20261007_134319_00_702.jpg",
+    "lat": 38.716,
+    "lon": -9.14,
+    "error_radius_m": 3000,
+    "confidence": "low",
+    "place": "Probably central Lisbon: unidentified villa street lined with plane trees (exact street not found)",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 325.7,
+    "evidence": [
+      "Junction on a street lined with plane trees: detached early-20th-century villas behind low walls with cast-iron railings, Lisbon-style limestone calcada, green cast-iron lamp posts with pear-shaped lanterns, red fire hydrant, blue P sign with a resident-only sub-plate (EMEL-style)",
+      "Pink-and-white palacete with an octagonal open belvedere capped by a blue tiled dome at bearing ~202 deg, ~30 m away; garden cafe terrace in front with white umbrellas/tents behind an ornate railing",
+      "Grey-white neoclassical villa with a garage pavilion (two wooden doors) to the W-NW; pink Art Nouveau tower villa with a painted tile frieze to the E-ESE",
+      "Sun at levelled yaw -118.8 (apparent yaw -124.8, pitch 39.7; camera tilt 7.7 deg levelled from 4 vertical edges); NOAA azimuth 206.9 deg at 13:43:19 UTC gives yaw 0 = 325.7 deg; levelled sun elevation 43.3 vs 42.0 predicted for Lisbon, which is consistent with Lisbon's latitude to about 1.5 deg",
+      "Street leaves the camera towards ~158 deg (level) and ~36 deg (descending)",
+      "No legible text: street plaques, house numbers and the parking sub-plate are too small at this resolution",
+      "Camera tilted about 7.7 deg; heading and elevations come from levelling with vertical edges"
+    ],
+    "method": "Visual triage, then levelling from vertical edges plus a sun compass. Searched local Wikidata palacetes, Commons geosearch and category thumbnails (Lapa, Estrela, Principe Real, Avenida da Liberdade, Campo dos Martires, Anjos, Lumiar, Belem, Junqueira and others), plus web search for a pink palacete with a domed belvedere. No match found. The position is a coarse prior shared with 739, taken 13 min later and probably within ~1 km. Second attempt: levelled query crops ranked against the 1,943 local Commons gallery photos in the Lisbon-Sintra-Cascais-Almada-Setubal bbox with MegaLoc (peak 1.3 GB) and SigLIP 2 (1.6 GB). No instance match: best MegaLoc similarity 0.13 for the palacete and 0.18-0.20 for the crest. Top crest hits were Lisbon castle-hill views, but those show prominent crenellated walls that 739 lacks. Skyline searches for Sintra, Cascais/Estoril, Setubal/Palmela and Almada, plus an OSM filter (>=10-level tower 130-280 m WSW, car park 20-140 m SW, street descending ENE, 4.9 deg crest), found only spurious or visually rejected spots (Areeiro, Amadora, Lumiar/Ameixoeira, upper Avenida da Liberdade).",
+    "alternatives": [
+      {
+        "lat": 38.7105,
+        "lon": -9.144,
+        "place": "Chiado / Principe Real side (Lisbon)",
+        "why": "If 739's wooded crest is the Castelo de Sao Jorge, the castle-view geometry puts 739 around Chiado/Carmo, so 702 would be within ~1 km"
+      },
+      {
+        "lat": 38.7175,
+        "lon": -9.1395,
+        "place": "Colina de Sant'Ana / Campo dos Martires da Patria (Lisbon)",
+        "why": "If 739's crest is the Senhora do Monte hill, 739 sits on the Sant'Ana east slope; that area has palacetes and tree-lined streets"
+      },
+      {
+        "lat": 38.728,
+        "lon": -9.138,
+        "place": "Arroios / Estefania (Lisbon)",
+        "why": "DSM skyline match for 739 if its crest is the Penha de Franca hill; Estefania has palacetes"
+      }
+    ],
+    "used_other_panoramas": true
+  },
+  {
+    "file": "IMG_20261007_135652_00_739.jpg",
+    "lat": 38.714,
+    "lon": -9.14,
+    "error_radius_m": 2500,
+    "confidence": "low",
+    "place": "Probably central Lisbon: street corner with a view ENE down a descending street to a wooded crest with walls and flagpoles (likely the Castelo de Sao Jorge, possibly Graca or the Senhora do Monte); exact spot not found",
+    "urban": true,
+    "country": "PT",
+    "heading_yaw0_deg": 351.3,
+    "evidence": [
+      "Camera tilted 13.45 deg, levelled from 6 vertical edges (window frames, door jambs, a drain pipe, a building corner); after levelling the sun's elevation is 40.4 vs 40.7 predicted for Lisbon at 13:56:52 UTC, which confirms the levelling and the UTC clock",
+      "Sun at levelled yaw -140.3 (apparent -151.5, 47.0); NOAA azimuth 211.0 deg gives yaw 0 = 351.3 deg; the photographer's shadow direction agrees",
+      "Wooded crest of umbrella pines with grey walls, two thin flagpole-like masts and a red-roofed long building at its left (north) end, at bearings 62-74 deg and true elevation +4.9 deg (~13 deg wide, partly occluded); houses climb the slope below it (true elevation +1 to +3 deg)",
+      "Street descending towards ~55 deg; corner with a pink 3-storey building (wrought-iron balconies, green doors); yellow derelict 2-storey building with a corbelled bay to the E-SE; old white house with a tall chimney and a red-brick planter to the S",
+      "Car park on an empty lot to the SW in front of a long maroon/red building and red wall (shaded, sun behind); 1950s modernist block with rounded balconies to the W; 10+-storey modern block with glass balconies at bearing ~249 deg, top +13 deg (~200 m away)",
+      "If the crest is the Castelo de Sao Jorge (~120 m with trees), the bearing and +4.9 deg elevation require a camera 0.7-0.95 km WSW at 50-65 m ASL (Chiado/Carmo/Trindade, DSM-checked), but the street fabric there does not match. If it is Graca, the camera would be near Rossio west/Carmo; if the Senhora do Monte, on the east slope of the Sant'Ana hill",
+      "Portuguese plates and calcada; licence plates deliberately not recorded"
+    ],
+    "method": "Levelled from vertical edges, sun-compass heading, true bearing and elevation of the crest, then a skyline search on the Copernicus GLO-90 DSM across Lisbon (and Leiria and other castle towns) for spots seeing a 5 deg crest at ENE above a street descending ENE. Several clusters matched (Chiado/Carmo, Sant'Ana east slope, Arroios, Alcantara, Campolide, Lumiar), but none was confirmed on imagery or Commons. The reported point is a coarse central-Lisbon prior. Second attempt: levelled query crops ranked against the 1,943 local Commons gallery photos in the Lisbon-Sintra-Cascais-Almada-Setubal bbox with MegaLoc (peak 1.3 GB) and SigLIP 2 (1.6 GB). No instance match: best MegaLoc similarity 0.13 for the palacete and 0.18-0.20 for the crest. Top crest hits were Lisbon castle-hill views, but those show prominent crenellated walls that 739 lacks. Skyline searches for Sintra, Cascais/Estoril, Setubal/Palmela and Almada, plus an OSM filter (>=10-level tower 130-280 m WSW, car park 20-140 m SW, street descending ENE, 4.9 deg crest), found only spurious or visually rejected spots (Areeiro, Amadora, Lumiar/Ameixoeira, upper Avenida da Liberdade).",
+    "alternatives": [
+      {
+        "lat": 38.7108,
+        "lon": -9.1418,
+        "place": "Chiado / Largo do Chiado - Rua Garrett (Lisbon)",
+        "why": "Exact castle geometry fit (castle at ~65 deg, +4-5 deg), but the urban fabric mismatches"
+      },
+      {
+        "lat": 38.7168,
+        "lon": -9.1393,
+        "place": "Sant'Ana hill east slope near Hospital de Sao Jose (Lisbon)",
+        "why": "Fits if the crest is the Senhora do Monte (pines, chapel at the north end); DSM cluster; old hospital complexes and car parks nearby"
+      },
+      {
+        "lat": 38.728,
+        "lon": -9.138,
+        "place": "Arroios (Lisbon)",
+        "why": "DSM skyline cluster looking at the Penha de Franca convent hill at ~64 deg, 620 m"
+      },
+      {
+        "lat": 38.78,
+        "lon": -9.167,
+        "place": "Lumiar (Lisbon)",
+        "why": "DSM cluster looking ENE at Ameixoeira / Quinta de Santa Clara; area has red quintas and new towers"
+      }
+    ],
+    "used_other_panoramas": true
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "run_id": "r-20261011-051203-0f2581",
+  "answered": {
+    "question_id": "q1",
+    "option_id": "b",
+    "label": "South half",
+    "penalty": {
+      "answered_questions": 1,
+      "cues": 0,
+      "conversions": 0,
+      "multiplier": 0.95
+    }
+  },
+  "skipped": {
+    "question_id": "q2"
+  },
+  "multiplier": 0.95,
+  "checks": [
+    "Unknown label default; Special One radio; Start",
+    "Hidden intake cannot send a paid answer; O is neutral without links; C opens the existing cue dialog",
+    "2 answers option b",
+    "No optimistic multiplier before backend receipt",
+    "S skips; multiplier stays 0.95",
+    "Final automatically opens Answer",
+    "Shift+Enter confirmation and Escape",
+    "Report and print remain available",
+    "Completed case pill opens Answer"
+  ],
+  "errors": []
+}

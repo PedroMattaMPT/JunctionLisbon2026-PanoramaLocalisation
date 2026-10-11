@@ -1,6 +1,6 @@
 # Motion
 
-Defined now, built later. Every animation corresponds to a real event in the log; replay plays the log again. Design each state so it can animate into the next.
+Every animation follows a real state change in the component's props, so a replay animates exactly like the live run. Design each state so it can animate into the next.
 
 ## Tokens
 
@@ -16,35 +16,32 @@ Defined now, built later. Every animation corresponds to a real event in the log
 | `ease-enter` | cubic-bezier(0.16, 1, 0.3, 1) | entrances |
 | `ease-exit` | cubic-bezier(0.7, 0, 0.84, 0) | exits, ghosting |
 | `ease-move` | cubic-bezier(0.65, 0, 0.35, 1) | in-place change: bars, rings, flights, ruler turning |
-| `ease-spring` | linear(…) gentle overshoot | the final surveyor's mark only |
+| `ease-spring` | linear(…) gentle overshoot | `SurveyMark` only |
 
-Replay runs at 1×, 2× or 5×: the waits between events compress, the durations above do not. The replay badge is always visible and timestamps stay real.
+At replay speeds of 2× or 5× the waits between changes shrink; the durations above do not.
 
-**Reduced motion:** every beat becomes a `dur-quick` cross-fade; counts jump to their final value; map flights cut. Motion never carries information on its own — every moving thing also changes a number, a word or a mark.
+**Reduced motion:** every animation becomes a `dur-quick` cross-fade, counts jump to their final value, map flights cut, and the ambient loops play once. Motion never carries information on its own: every moving thing also changes a number, a word or a mark.
 
-## Storyboard (one beat per event type)
+## Component motion
 
-| # | Beat | Log events | What moves |
-|---|---|---|---|
-| 1 | Intake | `run.started`, `stage.finished` (intake) | The panorama lands as the strip; the filename splits into date, UTC time and shot |
-| 2 | Views | `stage.finished` (views) | Eight sectors, sky and ground light up; the photographer area hatches out |
-| 3 | Detect | `evidence.added` (detect) | Boxes appear; boxes SAM 3 rejects go dashed, struck and ghosted — **key frames** |
-| 4 | Read | `evidence.added` (read) | Text lifts into cards; postcodes and prefixes snap to their country; the language bar fills |
-| 5 | Describe | `evidence.added` (describe) | Checklist items tick in; `not_visible` reads "can't tell" |
-| 6 | Measure | `evidence.added` (measure) | Segmentation tint sweeps across; the sun is found; the ruler turns to true north |
-| 7 | Pixel geolocation | `evidence.added` (geo) | Heat appears; reference photos fly to their GPS; sampled points settle |
-| 8 | Fusion | `candidates.updated` | Evidence sends weight; correlated sources merge; a contradiction pulses; ruled-out ghosts — **key frames** |
-| 9 | Narrowing | `candidates.updated` | Map zooms country → region → town, never tighter than the uncertainty |
-| 10 | Ask | `question.asked`, `.answered`, `.skipped` | Zones draw; on answer the multiplier ticks; on skip nothing moves — **key frames** |
-| 11 | Exact spot | `stage.started` (spot), `evidence.added` | Reference slides in; matches draw; inliers count up; the ring contracts — **key frames** |
-| 12 | Pinpoint | `output.produced` | Mark lands; ring settles; slots fill; expected score counts up — **key frames** |
-
-## Key frames with timing
-
-The five Motion pages render each frame with the real components at that moment of Case A (and Case B for the skip). Timing notes are on each frame; in short:
-
-- **Beat 3 · Detect.** F1 27.3 s first boxes: brackets scale 0.92 → 1 + fade, `dur-quick`, `ease-enter`, stagger 40 ms capped at 480 ms. F2 all 20 in view; labels after the box settles. F3 33.5 s SAM 3 verdicts: dashed + strike (`dur-quick`), fade to `opacity-ghost` (`dur-standard`, `ease-exit`). F4 the "17 kept, 3 rejected" card lifts into the feed.
-- **Beat 8 · Fusion.** F1 ▲ chips tick in sequence while bars grow (`dur-deliberate`, `ease-move`). F2 PE-Core sources slide under one bracket; cap badge last. F3 the contradiction outlines its two sources twice (2 × `dur-quick`, no loop) and Alfama's range widens. F4 Galicia strikes, then ghosts with its reason; it never leaves the list.
-- **Beat 10 · Ask.** F1 zone outlines draw A → D (`dur-standard` each, stagger 40 ms), hatch fades in after, heat dims. F2 the card rises; the gain bar fills once. F3 answered: chosen zone thickens, others dim, ×1.00 → ×0.95 ticks in place (`dur-deliberate`). F4 skipped: the card collapses to a dashed receipt; no tick, no bar motion.
-- **Beat 11 · Exact spot.** F1 the reference slides in from the right (`dur-standard`). F2 matches draw in batches as LightGlue reports them; rejected ones dashed, then fade. F3 inliers count up to 412 (`dur-deliberate`) — a count of a known number, not a progress bar. F4 the ring contracts ± 180 m → ± 22 m and stops at the remaining offset.
-- **Beat 12 · Pinpoint.** F1 the mark drops 12 px with `ease-spring` — the only spring. F2 the ring settles; "± 22 m" fades in. F3 the ten weight bars fill left to right, 40 ms apart. F4 the expected score counts 0 → ≈ 12,500 over `dur-cinematic`, labelled "estimate" throughout.
+| Component | Change | Motion |
+|---|---|---|
+| `PanoramaStrip` boxes | boxes arrive | corner brackets scale 0.92 → 1 and fade in, `dur-quick`, `ease-enter`, staggered `dur-stagger` up to `dur-stagger-cap`; labels follow once the box settles |
+| `PanoramaStrip` boxes | a box is rejected | dashed and struck (`dur-quick`), then fades to `opacity-ghost` (`dur-standard`, `ease-exit`); it stays visible |
+| `EvidenceCard` | a card arrives | lifts into the feed, `dur-standard`, `ease-enter` |
+| `PolarityChip`, `EstimateBars` | weight reaches a candidate | ▲ / ▼ chips tick in sequence while bars grow, `dur-deliberate`, `ease-move` |
+| `CorrelationBracket` | members are grouped | cards slide together under the bracket; the cap badge comes last |
+| `EvidenceCard kind="contradiction"` | a contradiction is found | its two sources outline twice (2 × `dur-quick`, no loop) and the affected range visibly widens |
+| `RuledOutRow` | a candidate is ruled out | strikes, then ghosts with its reason; it never leaves the list |
+| `MapView` | the estimate narrows | the camera flies country → region → town, `dur-cinematic`, never tighter than the current uncertainty |
+| `MapView` zones | a question opens | outlines draw A → D (`dur-standard` each, staggered), the hatch fades in after, heat dims |
+| `QuestionCard`, `GainMeter` | a question opens | the card rises; the gain bar fills once |
+| `QuestionCard` | answered | the chosen zone thickens, the others dim, and `MultiplierChip` ticks ×1.00 → ×0.95 in place, `dur-deliberate` |
+| `QuestionCard` | skipped | collapses to a dashed `AnswerReceipt`; nothing else moves |
+| `MatchView` | a reference is compared | the reference slides in from the right (`dur-standard`); matches draw in batches, rejected ones dashed then fading; the inlier count counts up to its known number (`dur-deliberate`) |
+| `UncertaintyRing` | the bound tightens | the ring contracts to the new radius (`dur-deliberate`, `ease-move`) and stops at the remaining offset |
+| `SurveyMark` | the output lands | drops 12 px with `ease-spring`, the only spring; the ring settles and its label fades in |
+| `AnswerSlots` | the output lands | the ten weight bars fill left to right, `dur-stagger` apart |
+| `ScoreReadout size="xl"` | the output lands | counts 0 → the estimate over `dur-cinematic`, labelled "estimate" throughout |
+| Case pill | a case needs an answer | its ? glyph pulses once (scale 1.25) |
+| `Thinking`, scan overlay | a stage is running | ambient loop for as long as the stage runs, beside its real elapsed time |

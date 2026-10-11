@@ -29,6 +29,17 @@ class RunLogTest(unittest.TestCase):
     def new_run(self, **kwargs):
         return Run(PANORAMA, self.dir, clock=self.clock, **kwargs)
 
+    def test_progress_does_not_replace_stage_status_or_create_an_observation(self):
+        seen = []
+        run = self.new_run(on_event=seen.append)
+        with run.stage("describe", model="test-model"):
+            run.progress("describe", "Checking the second view.", model="test-model", completed=1, total=9)
+            document = json.loads(run.export().read_text())
+            self.assertEqual(document["stages"][0]["status"], "started")
+            self.assertEqual(document["stages"][0]["progress"]["completed"], 1)
+        self.assertEqual([e["type"] for e in seen], ["run.started", "stage.started", "stage.progress", "stage.finished"])
+        self.assertFalse([e for e in seen if e["type"] == "evidence.added"])
+
     def test_answers_and_cues_cost_points_but_skips_do_not(self):
         run = self.new_run()
         q1 = run.ask("Which bank of the river is this?", ["North bank", "South bank"])
@@ -142,6 +153,14 @@ class RunLogTest(unittest.TestCase):
         self.assertEqual(doc["final_output"]["output_id"], "o1")
         self.assertEqual((doc["events"][0]["type"], doc["events"][-1]["type"]), ("run.started", "run.finished"))
         self.assertEqual(doc["events"][1]["payload"]["evidence_id"], "e1")
+
+    def test_evidence_payload_cannot_override_its_kind_or_id(self):
+        run = self.new_run()
+        for payload in ({"kind": "church"}, {"evidence_id": "e9"}):
+            with self.assertRaises(ValueError):
+                run.evidence("landmark_hypothesis", payload, stage="describe")
+        run.evidence("landmark_hypothesis", {"place_kind": "church"}, stage="describe")
+        self.assertEqual(run.events[-1]["payload"]["kind"], "landmark_hypothesis")
 
     def test_nothing_is_logged_or_charged_after_finish(self):
         run = self.new_run()

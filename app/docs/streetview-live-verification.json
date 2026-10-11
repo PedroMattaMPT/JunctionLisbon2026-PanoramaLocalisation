@@ -1,0 +1,21 @@
+{
+  "point": {
+    "lat": 48.857345748,
+    "lng": 2.349380642
+  },
+  "source": "https://panoramax.xyz/#pic=cf3a8279-c38a-4ce2-b33e-cc192791c7a6",
+  "original": "Procedural urban fixture rendered locally, not challenge or evaluation imagery",
+  "checks": [
+    "Real public Panoramax JPEG displayed through live same-origin endpoints",
+    "Original panorama displayed locally alongside street view",
+    "Manual alignment and link controls active",
+    "Capture date/distance/heading/source and licence displayed",
+    "No street request before opening Compare",
+    "No JavaScript errors"
+  ],
+  "requests": [
+    "/api/streetview/nearest",
+    "/api/streetview/image/panoramax/cf3a8279-c38a-4ce2-b33e-cc192791c7a6/sd"
+  ],
+  "errors": []
+}

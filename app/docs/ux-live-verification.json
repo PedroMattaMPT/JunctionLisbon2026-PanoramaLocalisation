@@ -1,0 +1,40 @@
+{
+  "run_id": "r-20261011-045058-f108af",
+  "panorama": "IMG_20241213_120841_00_059.jpg",
+  "server": "isolated real pipeline on :8791",
+  "flags": [
+    "--no-retrieval",
+    "--no-landmarks",
+    "--no-warm",
+    "--ask-anyway",
+    "--max-questions 2"
+  ],
+  "answered": {
+    "question_id": "q1",
+    "option_id": "b",
+    "label": "Spain (residual: Madrid area)",
+    "penalty": {
+      "answered_questions": 1,
+      "cues": 0,
+      "conversions": 0,
+      "multiplier": 0.95
+    }
+  },
+  "final_penalty": {
+    "answered_questions": 1,
+    "cues": 0,
+    "conversions": 0,
+    "multiplier": 0.95
+  },
+  "duration_s": 11.362,
+  "checks": [
+    "Original warm-up JPEG, unknown category, actual OCR/VLM/names/fusion",
+    "Interactive question fit the original 1440×900 browser viewport",
+    "Keyboard 2 produced backend option b and multiplier 0.95",
+    "Pipeline finished after the answer without needing a second question",
+    "Original browser automatically showed Answer (captured in the test state)",
+    "Completed backend case reopens on latest Answer",
+    "Paid receipt and exact wording retained in Details"
+  ],
+  "errors": []
+}

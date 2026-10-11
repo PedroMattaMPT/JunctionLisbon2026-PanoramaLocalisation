@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "J/K opens and cycles candidates in Details Compare",
+    "Left/right cycles reference photos in Details",
+    "Escape closes the sheet",
+    "Stage layout stays separate and synchronizes final coordinates",
+    "Stage follows the replay cursor and open question",
+    "Reduced-motion question pill has no animation",
+    "Case switch synchronizes only the active Alentejo case"
+  ],
+  "errors": []
+}

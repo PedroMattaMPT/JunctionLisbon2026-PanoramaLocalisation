@@ -11,7 +11,7 @@ Events follow design_system_prompt.md ("Implementation targets"):
   t is seconds since the run started (monotonic clock); ts is the UTC start time plus t, so a clock
   change mid-run cannot reorder events; actor is agent, model or team.
 Types: run.started, run.finished; stage.started, stage.finished, stage.skipped, stage.failed,
-stage.timed_out; evidence.added; candidates.updated; question.asked, question.answered,
+stage.timed_out, stage.progress; evidence.added; candidates.updated; question.asked, question.answered,
 question.skipped; cue.sent; output.produced; conversion.applied (a teammate turned a place-name
 answer into a coordinate, RULES.md rule 8; our agent should never need it).
 
@@ -209,8 +209,24 @@ class Run:
     def skip_stage(self, name, reason):
         self._emit("stage.skipped", {"reason": reason}, stage=name)
 
+    def progress(self, name, message, *, model=None, completed=None, total=None, view=None, box=None):
+        """Stream a public task summary and measured work counts, separately from observations."""
+        if completed is not None or total is not None:
+            if not (type(completed) is int and type(total) is int and 0 <= completed <= total and total > 0):
+                raise ValueError("progress counts must satisfy 0 <= completed <= total, with total > 0")
+        return self._emit("stage.progress", {"message": str(message)[:500], "completed": completed,
+                                            "total": total, "view": view, "box": box},
+                          stage=name, actor="model" if model else "agent", model=model)
+
     def evidence(self, kind, payload, *, stage, model=None, actor="model"):
-        """Log one observation (OCR text, a VLM answer, a retrieval hit); returns its evidence ID."""
+        """Log one observation (OCR text, a VLM answer, a retrieval hit); returns its evidence ID.
+
+        The evidence ID and kind are set here, so the payload must not carry its own `kind` or
+        `evidence_id` (it would silently replace them); name such fields differently, e.g. place_kind.
+        """
+        clash = sorted({"kind", "evidence_id"} & set(payload))
+        if clash:
+            raise ValueError(f"payload keys {clash} are reserved: the evidence kind is the first argument")
         with self._lock:
             evidence_id = self._next_id("e")
             self._emit("evidence.added", {"evidence_id": evidence_id, "kind": kind, **payload},
@@ -349,6 +365,9 @@ class Run:
             for e in self.events:
                 if e["type"].startswith("stage."):
                     s = stages.setdefault(e["stage"], {"stage": e["stage"], "model": e["model"]})
+                    if e["type"] == "stage.progress":
+                        s["progress"] = e["payload"]
+                        continue
                     s["status"] = e["type"].split(".", 1)[1]
                     for key in ("optional", "elapsed_s", "error", "message", "reason", "over_deadline"):
                         if key in e["payload"]:

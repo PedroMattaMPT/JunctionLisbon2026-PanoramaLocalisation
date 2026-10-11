@@ -1,21 +1,48 @@
-Aqui ("here" in Portuguese) is a local web app that takes one 360° panorama and shows, step by step, how local open-weight models and our own solver code work out where it was taken — then asks the team a question only when an answer is worth its cost, and pins the result on a map. This system covers the operator console (1440×900 and 2560×1600), the projector stage (1920×1080) and the printable case report. Aqui is a working name; the wordmark is one SVG and swaps cleanly.
+# Aqui design system
 
-The product exists to be the opposite of a chatbot that names a new town with full confidence and never says why. Every claim traces back to pixels, uncertainty stays in view, and ruled-out places stay on screen with the reason. Design every screen so a juror could audit it.
+The design options and components of Aqui, the operator console in `app/`. Design options are the choices a page makes through tokens: theme, density, colour role, type style, spacing, shape, line and motion. Components are the React pieces built on them. The system's own components live in the bundle, one folder each under `components/` with its README and preview. The app's compositions are in [App components](02-app-components.md). Screens, flows, the keyboard map and the event wiring belong to the app: see `app/README.md` and `app/CONTRACT.md`. Aqui is a working name; the wordmark is one SVG and swaps cleanly.
 
-## Principles
+The look exists to be the opposite of a chatbot that names a new town with full confidence and never says why. Every claim traces back to pixels, uncertainty stays in view, and ruled-out places stay on screen with the reason.
+
+| File | Contents |
+|---|---|
+| This README | Design rules, copy, colour, type, space, icons, imagery |
+| [Patterns](01-patterns.md) | Rules that span several components (Skip, unknown radius, linked selection, map layers…) |
+| [App components](02-app-components.md) | The app's components built from the system |
+| [Motion](03-motion.md) | Motion tokens and what each component's motion means |
+| [Data visualisation](04-data-visualisation.md) | Chart components and their rules |
+| [Accessibility](05-accessibility.md) | Contrast, colour-blindness, keyboard and screen-reader behaviour per component |
+| [Implementation](06-implementation.md) | Tokens, Tailwind preset, fonts, how to import the components |
+
+## Design options
+
+| Option | Values | Set with |
+|---|---|---|
+| Theme | `dark` (console default), `light` (report, print), `stage` (projector) | `data-theme` on any ancestor, or `Density theme` |
+| Density | `console` (body 13/18), `stage` (body 24/32, nothing under 20 px, doubled spacing and lines) | `data-density`, or `Density value` |
+| Colour role | see Colour below | `color` tokens |
+| Type style | `console-*`, `stage-*`, `narrative-*`, `inference` | classes or `useT()` |
+| Space, shape, line | `space-*`, `radius-*`, `line-*`, `border-rule`, `shadow-*`, `focus-ring` | tokens |
+| Layering | `z-*` | tokens |
+| Motion | `dur-*`, `ease-*` | tokens ([Motion](03-motion.md)) |
+| Emphasis | `opacity-dim`, `opacity-ghost` | tokens |
+
+Every value is in `tokens.json`; nothing outside it is a design option.
+
+## Design rules
 
 1. **Show the work.** Every claim links to its evidence: a region of pixels, a crop, the model and its score. Selecting an `EvidenceCard` outlines its pixels in `PanoramaStrip` and its area on `MapView` in `select`, joined by `LeaderLines`.
 2. **Keep observation, inference and estimate apart.** Observation: a bracketed box on `model-soft` with the reading in `console-data` ("4050-253"). Inference: an `inference` line in Newsreader italic after the ∴ icon ("a Portuguese postcode; area 4050 is central Porto"). Estimate: `console-data` in `solver` after the ≈ icon, with its range ("Porto 0.47"). Never merge two registers in one line.
 3. **Uncertainty comes first.** Show ranges, radii, `not_visible`, unknowns, contradictions and ruled-out places. An unknown radius is drawn as an open dashed ring with "?", never as a dot. Confidence moves both ways: contradicting evidence visibly widens a range.
 4. **Three actors.** Models observe (`model`, eye icon), the solver decides (`solver`, balance icon, "code, not a model"), the team answers (`team`, person icon). Every chip, log row and stage names its actor in words as well as colour.
-5. **Cost before click.** Every action that costs points carries a `CostTag` before it is taken (×0.95 answer, ×0.8 cue). The running multiplier (`MultiplierChip`) is always in the run bar.
-6. **One panorama, one sealed case.** Nothing from another case appears inside a case. The queue shows status only — no images, no dates, no shared evidence.
-7. **Motion is evidence.** Every animation corresponds to a real event in the log. No decorative loops, spinners or fake progress.
-8. **Fast for the operator, readable for the room.** One component set in two densities: wrap a subtree in `Density value="stage"` for the projector.
+5. **Cost before click.** Every action that costs points carries a `CostTag` before it is taken (×0.95 answer, ×0.8 cue), and the running multiplier stays visible (`MultiplierChip`).
+6. **Cases stay sealed.** `CaseCard` and `QueueCard` show status only: no images, no dates, no shared evidence.
+7. **Motion is evidence.** Every animation follows a real state change. No spinners and no fake progress; the one ambient loop is `Thinking`, and only while a stage really runs.
+8. **One component set, two densities.** The same components serve the operator and the room; wrap a subtree in `Density value="stage"` for the projector.
 
-## Content fundamentals
+## Copy
 
-Write like a careful surveyor's field notes: plain, exact, unhurried. Sentence case everywhere; the only capitals in the system are the verdict stamps (`stamp`). No exclamation marks, no "magic", no "AI found". The interface talks about the agent in the third person ("the solver decided", "worded by Qwen3.5-9B") and addresses the team as "you" only in confirmations.
+Write like a careful surveyor's field notes: plain, exact, unhurried. Sentence case everywhere; the only capitals in the system are the verdict stamps (`stamp`). No exclamation marks, no "magic", no "AI found". Components talk about the agent in the third person ("the solver decided", "worded by Qwen3.5-9B") and address the team as "you" only in confirmations.
 
 | Say | Never say |
 |---|---|
@@ -30,7 +57,7 @@ Write like a careful surveyor's field notes: plain, exact, unhurried. Sentence c
 - Numbers: coordinates to 5 decimals with a true minus, latitude first, always with the order stated ("Latitude, longitude · WGS84"); distances in m under 1 km, then km with one decimal; times as mm:ss; estimates to 2 decimals (0.62, never 0.6213); multipliers as ×0.95.
 - Expected scores are always labelled "estimate" and prefixed with ≈. Show the maximum beside them ("≈ 12,500 of 16,050").
 - Languages are lowercase codes: pt, gl, es, ca, eu, fr. Place names keep their own spelling (Évora, Castilla y León, Vila Nova de Gaia).
-- Captions on stage are one plain sentence built from a template per event type: "Reading signs: a postcode in a format only Portugal uses".
+- `CaptionBar` text is one plain sentence: "Reading signs: a postcode in a format only Portugal uses".
 - Errors explain what happened and what ran instead. They never apologise.
 
 ## Colour
@@ -77,7 +104,7 @@ Three faces, three voices. All are open-licence (SIL OFL), self-hosted from `fon
 
 - **Atkinson Hyperlegible Next** (`--font-sans`) — the interface. Built so I, l and 1, and O and 0 never collide; this app reads signs, so that matters.
 - **Atkinson Hyperlegible Mono** (`--font-mono`) — every reading, coordinate, score, time and estimate. Use it for numbers and verbatim OCR text only, not for labels.
-- **Newsreader** (`--font-serif`) — the narrator: stage headlines (`narrative-headline`), screen and report titles (`narrative-title`), the opening card (`narrative-display`) and inference lines (`inference`, italic). It never carries a number.
+- **Newsreader** (`--font-serif`) — the narrator: stage headlines (`narrative-headline`), titles (`narrative-title`), large display lines such as the stage roster (`narrative-display`) and inference lines (`inference`, italic). It never carries a number.
 
 Pick styles by density through the type helper (`useT()` in the bundle): console uses `console-*` (body 13/18), stage uses `stage-*` (body 24/32, nothing under 20 px). Arrows and triangles are drawn as icons, not glyphs.
 
@@ -96,7 +123,7 @@ A custom set drawn for Aqui on a 16 px grid: 1.5 px stroke, square caps, mitred 
 ## Imagery and the map
 
 - The panorama is the hero. Overlays draw a dark halo under every stroke (`photo-halo`) and put labels on dark plates (`on-photo`), so they read on any photo.
-- In the console, label only the selected box and text readings (`labelMode`); the room view labels the one focus.
+- At console density, label only the selected box and text readings (`labelMode`); at stage density, label the one focus.
 - The map base is desaturated; layers stack base < heat < zones < points < rings < pins < labels. When a question is open or an item is selected, heat and points dim to `opacity-dim`.
 - Water names are Newsreader italic, places are sans — classic cartographic convention.
 - The final pin is a surveyor's trig mark (`SurveyMark`), not a teardrop.
@@ -104,4 +131,4 @@ A custom set drawn for Aqui on a 16 px grid: 1.5 px stroke, square caps, mitred 
 
 ## Using the components
 
-Components are React 18 function components on `window.Aqui` (bundle `components/bundle.js`, styles `components/bundle.css`, after `tokens.css`). Every screen is built from a case record that mirrors the event log, so a replay is the same render driven by older log state. `Aqui.Samples` holds Cases A and B; `Aqui.Screens` holds the showcase screens. Read the sections that follow for the hard problems, motion, data visualisation, accessibility and the code mapping.
+Components are React 18 function components. Import them by name from `components/src` (the app aliases it as `@ds`), or load `components/bundle.js` and `components/bundle.css` after `tokens.css` and use `window.Aqui`. Each takes plain props, so the same render works live and in a replay. `Aqui.Samples` holds two sample cases that feed the previews only. Props are in each component's README and in `components/index.d.ts`.
