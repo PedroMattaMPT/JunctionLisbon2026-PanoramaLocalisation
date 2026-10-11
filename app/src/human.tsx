@@ -27,10 +27,16 @@ export function ExternalLinks({ links, onError }: { links: Record<string, string
     {url && <Modal title="Open on another device" onClose={() => setUrl('')} actions={<Button onClick={() => setUrl('')}>Close</Button>}>{qr && <img src={qr} className="app-qr" alt="QR for the displayed map link" />}<p className="console-data app-break">{url}</p></Modal>}
   </div>;
 }
+export function OptionProbability({ option }: { option: Option }) {
+  return <span className="question-probability console-data-sm">Agent probability: {option.probability === undefined ? 'unavailable' : `${Math.round(option.probability * 100)}%`}</span>;
+}
 function InteractiveOption({ onAnswer, disabled, ...props }: ElementProps & { onAnswer(id: string): void; disabled: boolean }) {
   const o = props.o as Option;
-  const tree = QuestionOption({ ...props, showLinks: false });
-  return React.cloneElement(tree, { 'aria-disabled': disabled, 'data-option-id': o.id, onClick: () => { if (!disabled) onAnswer(o.id); }, onKeyDown: (e: React.KeyboardEvent) => { if (!disabled && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onAnswer(o.id); } } });
+  return <>{mapTree(QuestionOption({ ...props, showLinks: false }), node => {
+    if (node.props.className === 'aq-qopt-b') return React.cloneElement(node, {}, node.props.children, <OptionProbability option={o} />);
+    if (node.props.className?.split(' ').includes('aq-qopt')) return React.cloneElement(node, { 'aria-disabled': disabled, 'data-option-id': o.id, onClick: () => { if (!disabled) onAnswer(o.id); }, onKeyDown: (e: React.KeyboardEvent) => { if (!disabled && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onAnswer(o.id); } } });
+    return node;
+  })}</>;
 }
 export function QuestionView({ q, evidence, disabled, onAnswer, onSkip, onError, brief = false, readOnly = false, inspection = false }: { q: Question; evidence: Evidence[]; disabled: boolean; onAnswer(id: string): void; onSkip(): void; onError(message: string): void; brief?: boolean; readOnly?: boolean; inspection?: boolean }) {
   const links = Object.fromEntries(q.options.flatMap(o => Object.entries(optionLinks(o)).map(([label, url]) => [`${o.key} · ${label}`, url])));

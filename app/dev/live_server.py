@@ -111,6 +111,8 @@ class LiveContext:
         self.state, self.finished, self.error, self.run, self.timings = "queued", False, None, None, None
         self.question_timeout = question_timeout or None  # seconds; None waits for the console
         self.skip_rest, self.waiting, self.auto_skipped = False, None, []
+        self.result, self.review_pending, self.review_count = None, False, 0
+        self.review_enabled = False
 
     def on_event(self, event):
         """Run's hook: record the event and wake the streams. Never raises into a pipeline stage."""
@@ -208,6 +210,9 @@ class LiveContext:
     def summary(self, position=None):
         return {"run_id": self.run_id, "status": self.state, "special_one": self.special_one, "panorama": self.filename,
                 "question": self.waiting_info(), "skip_remaining": self.skip_rest,
+                **({"can_review": self.finished and self.state == "finished" and self.result is not None
+                                  and getattr(self.result, "review_state", None) is not None and self.review_count < 3}
+                   if self.review_enabled else {}),
                 **({"position": position} if position else {}), **({"error": self.error} if self.error else {})}
 
     def pending(self, after, wait_s=15):
@@ -297,6 +302,28 @@ class LiveWorker:
             self.condition.notify()
         log(f"queued {ctx.run_id} ({ctx.filename}); {len(self.queue)} waiting")
 
+    def review(self, ctx, output_id):
+        """Queue this run's answer review atomically; stale/double requests never reset penalties."""
+        if not self.models.use.get("vlm"):
+            raise ValueError("Answer review needs the VLM enabled.")
+        with self.condition:
+            with ctx.condition:
+                if not ctx.summary()["can_review"] or ctx.run is None:
+                    raise ValueError("This answer cannot be reviewed now (already active or review limit reached).")
+                if not isinstance(output_id, str) or ctx.run.outputs[-1]["output_id"] != output_id:
+                    raise ValueError("The answer changed; review its latest output instead.")
+                ctx.finished, ctx.state = False, "queued review"
+            try:
+                ctx.run.reopen(output_id)  # Run hook acquires ctx.condition: never call it while holding that lock
+            except BaseException:
+                with ctx.condition:
+                    ctx.finished, ctx.state = True, "finished"
+                raise
+            ctx.skip_rest, ctx.review_pending = False, True
+            ctx.review_count += 1
+            self.queue.append(ctx)
+            self.condition.notify()
+
     def warm(self):
         """Load every model now, so the first panorama isn't slow. A failed load is logged; its stage fails
         softly later (optional) and the run goes on without it."""
@@ -352,6 +379,7 @@ class LiveWorker:
 
     def solve(self, ctx):
         ctx.state = "processing"
+        ctx.review_enabled = bool(self.models.use.get("vlm"))
         log(f"start {ctx.run_id} ({ctx.filename})")
         t0 = time.perf_counter()
         kwargs = dict(runs_dir=ctx.dir, operator=ctx.operator, category=ctx.category, category_source=ctx.source,
@@ -363,7 +391,13 @@ class LiveWorker:
             kwargs["run_id"] = ctx.run_id
         self.factory.next = ctx
         try:
-            result = pipeline.run_panorama(ctx.image, self.models, **kwargs)
+            if ctx.review_pending:
+                from panoloc.answer_review import continue_review
+                ctx.review_pending = False
+                result = continue_review(ctx.result, self.models, ctx.operator)
+            else:
+                result = pipeline.run_panorama(ctx.image, self.models, **kwargs)
+            ctx.result = result
             ctx.timings, ctx.state = result.timings, "finished"
             log(f"finished {ctx.run_id} in {time.perf_counter() - t0:.1f} s: {result.timings}")
         except Exception as exc:  # noqa: BLE001  the server stays up; the run ends with a visible error
@@ -437,6 +471,7 @@ class LiveHandler(server.Handler):
                                   "current_panorama": ctx.filename if ctx else None,
                                   "current_question": ctx.waiting_info() if ctx else None,
                                   "question_timeout_s": getattr(worker.args, "question_timeout", None) or None,
+                                  "answer_review": {"enabled": bool(worker.models.use.get("vlm")), "max_requests": 3},
                                   "limits": {"cues": "not supported in this version (T78)",
                                              "submit": "not wired: copy the coordinates"}})
             if url.path == "/api/runs":
@@ -556,13 +591,16 @@ class LiveHandler(server.Handler):
                 return self.json({"run_id": ctx.run_id}, 201)
             if url.path == "/api/tiles/prefetch":
                 return self.prefetch(json.loads(body))
-            match = re.fullmatch(r"/api/runs/([\w-]+)/(questions/([\w-]+)/(answer|skip)|cues|submit|priority|skip-remaining)", url.path)
+            match = re.fullmatch(r"/api/runs/([\w-]+)/(questions/([\w-]+)/(answer|skip)|cues|submit|priority|skip-remaining|review)", url.path)
             if not match:
                 return self.json({"error": "Route not available."}, 404)
             ctx = self.context(match[1])
             payload = json.loads(body)
             if not isinstance(payload, dict):
                 raise ValueError("The action needs a JSON object.")
+            if match[2] == "review":
+                worker.review(ctx, payload.get("output_id"))
+                return self.json({"accepted": True}, 202)
             if match[4] in ("answer", "skip"):
                 if ctx.finished:
                     raise ValueError("This run has finished; its questions are closed.")

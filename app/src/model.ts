@@ -28,6 +28,7 @@ export interface Option {
   point?: [number, number]; zone?: Fields; region?: string; none: boolean; links: Record<string, string>;
   /** Place options: the camera stood within radius_m of point. Zones: their logged bounding box. */
   radius?: number; extent?: { south: number; west: number; north: number; east: number };
+  probability?: number;
 }
 export interface Question {
   id: string; text: string; kind: string; options: Option[]; scope: string[];

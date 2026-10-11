@@ -40,6 +40,14 @@ It warms one `panoloc.pipeline.Models` at start-up: OCR, Qwen through Ollama (`n
 
 Limits: text cues are refused with a clear error, because the pipeline takes no cue mid-run (T78). Submission isn't wired, so copy the coordinates from the answer screen. One job runs at a time. Run lists reset when the server restarts; the folders in `runs/app/` stay replayable. `.venv/bin/python -m unittest discover -s app/dev -p 'test_*.py'` covers the live server with a stand-in pipeline.
 
+## Review an answer
+
+On a completed live answer, choose **Investigate further** if the result needs another look. The agent reviews the current coordinates, original panorama, candidate evidence and earlier answers. It chooses whether to keep the answer, ask itself a specific photo question, or ask you one of the existing multiple-choice questions. The current coordinates and Google Maps links stay available while it is **Thinking**.
+
+Each request allows up to three decisions, one free photo self-check and two human questions, with a 180-second work budget and 45-second model-request timeouts. Human answers retain the ×0.95 cost; a skip is neutral and ends that review. Earlier human answers constrain subsequent outputs. The same run resumes with its complete history and receipts, and at most three review requests are accepted per run. Model failure keeps the latest answer. Review is available for completed runs created by the current live backend session with the VLM enabled; imported replays stay read-only.
+
+Every multiple-choice option shows **Agent probability**. Review questions use the model's validated distribution over all options; ordinary questions show the logged share of candidate support. These are estimates. Missing probabilities remain unavailable.
+
 ## Exercise a live run without inference
 
 In another terminal, from the repository root:

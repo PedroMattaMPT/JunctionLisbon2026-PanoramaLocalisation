@@ -36,13 +36,14 @@ The pure bridge is `src/reducer.ts`: `reduce(events)` and `reduceEvent(previous,
 | `stage.skipped` | `reason` |
 | `evidence.added` | `evidence_id`, `kind`, kind-specific fields |
 | `candidates.updated` | `candidates`, with `candidate_id`, `lat`, `lng`, `role`, `source`, `label`, `weight`, nullable `accuracy_m` / `extent_m`, `country`, `group`, `evidence`, `details` |
-| `question.asked` | `question_id`, `kind`, `text`, up to four `options: {id, label, detail?}` |
+| `question.asked` | `question_id`, `kind`, `text`, up to four `options: {id, label, detail?, support?}`; optional `agent_probabilities: {option_id: probability}` overrides displayed option support |
 | `question.answered` | `question_id`, `option_id`, `label`, `penalty` |
 | `question.skipped` | `question_id` only |
 | `cue.sent` | `text`, `chars`, `penalty` |
 | `conversion.applied` | `place`, `coordinate`, `note`, `penalty`; rendered in replay, never offered as an action |
 | `output.produced` | `output_id`, `coordinates: {rank, lat, lng}[]`, `output_method`, `sources`, `source_role`, nullable `position_uncertainty_m`, `uncertainty_source`, `category`, `special_one`, `penalty`, `note` |
 | `run.finished` | `duration_s`, `final_output`, `questions`, `penalty` |
+| `run.reopened` | `output_id`, `reason: 'answer_review'`, unchanged `penalty`; clears the finished flag while retaining all outputs and receipts |
 
 `penalty` is the existing snapshot `{answered_questions, cues, conversions, multiplier}`. The displayed multiplier changes only when one arrives from the backend. Each output retains its own snapshot. A skipped question changes no weight, candidate or multiplier, and yields no evidence.
 
@@ -128,12 +129,15 @@ All paths are local, preferably same-origin behind `/api`. Every write must reac
 | `GET /api/files/{path}` | Prepared crops, masks, keypoint JSON and references; local paths constrained by the backend |
 | `GET /api/status` | `{worker, gpu:{used_gb:null|number,total_gb:number}, models:[...], tile_source:null|string, csrf_token:string, mock?:boolean}` |
 | `POST /api/runs/{run_id}/skip-remaining` | `{}`; live server: skips the open question and every later one of that run (free, neutral), each logged as `operator.auto_skip` `{question_id, reason: 'skip_remaining' \| 'timeout', waited_s, timeout_s}` before the pipeline's `question.skipped`; returns `{accepted, open_question}` |
+| `POST /api/runs/{run_id}/review` | `{output_id}`; live server: explicitly reopen the latest finished answer and queue a model-directed review; returns `{accepted:true}` with 202. Stale, active and exhausted requests are rejected. Same local write token and Origin validation as other writes. |
 | `GET /api/tiles/{layer}/{z}/{x}/{y}` | Live server: one cached base-map tile (`streets`, `satellite`); 404/503/504 JSON when unavailable, 403 for other sites' pages |
 | `POST /api/tiles/prefetch` | `{run_id, question_id, layer}`; warms the tile cache behind one open question's options (at most 48 tiles, zoom ≤ 16) |
 | `GET /api/streetview/nearest?lat={lat}&lng={lng}` | Display-only lookup: `{pictures, unavailable}`; at most eight panoramas within 1 km with coordinate, distance, date, heading, credit, licence, source page and a local image-proxy URL. Only coordinates go upstream; no run ID, upload or evidence is accepted |
 | `GET /api/streetview/image/{provider}/{id}/{sd\|hd}` | Cached public JPEG from previously resolved metadata; approved hosts and redirects only. 503 when disabled/unavailable and 403 for other sites' pages; an image-host outage leaves other hosts and the catalog usable |
 
-The live server adds `tile_layers: {id, name, url, max_zoom, attribution, attribution_url}[]`, `current`, `current_panorama`, `queue`, `current_question: {question_id, text, kind, waiting_s, timeout_in_s} | null` and `question_timeout_s`; its `/api/runs` rows add `panorama`, `question`, `skip_remaining` and a queue `position`. Model-roster entries use `{id, name, role, state, gb}`. Unknown GPU residency and memory remain unknown. `tile_source` is a local z/x/y raster URL or PMTiles URL; vector extracts must use the agreed source-layer schema.
+The live server adds `tile_layers: {id, name, url, max_zoom, attribution, attribution_url}[]`, `current`, `current_panorama`, `queue`, `current_question: {question_id, text, kind, waiting_s, timeout_in_s} | null`, `question_timeout_s` and `answer_review: {enabled, max_requests}`; its `/api/runs` rows add `panorama`, `question`, `skip_remaining`, optional `can_review` and a queue `position`. Model-roster entries use `{id, name, role, state, gb}`. Unknown GPU residency and memory remain unknown. `tile_source` is a local z/x/y raster URL or PMTiles URL; vector extracts must use the agreed source-layer schema.
+
+Review keeps one panorama's original Run, monotonically increasing sequence/IDs, question constraints and penalty counters. The controller logs short `answer_review` decisions plus `review_finished` or `review_failed` evidence. It permits one self-check, two human questions and three decisions per request, and three requests per run. Self-checks replace the existing VLM clue group through name-index lookup; repeat reasoning is never independent confirmation. Reopen is explicit, and imported replay cannot call it. SSE must reconnect with the last seen `seq` after a review request because the completed stream has already ended. A new `run.finished` closes each review.
 
 ### Additional proposed endpoints used by this app
 

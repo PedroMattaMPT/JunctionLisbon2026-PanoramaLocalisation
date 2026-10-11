@@ -8,6 +8,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from types import SimpleNamespace
@@ -120,6 +121,61 @@ class LiveTests(unittest.TestCase):
                     on_event(received[-1])
                 if line == "event: end":
                     return received
+
+    def test_answer_review_is_queued_authenticated_and_preserves_penalties(self):
+        from panoloc import answer_review as review
+        from panoloc.candidates import Candidate, Output
+        def ready(path, models=None, **kwargs):
+            run = pipeline.Run(Path(path).name, kwargs["runs_dir"], on_event=kwargs["on_event"])
+            output = Output(38.7, -9.1, "coarse_candidate", "area", ["invented:a"], 1000, "source_estimate")
+            output.log(run)
+            state = {"run": run, "path": path, "category": None, "urban_probability": .5, "base_clues": [],
+                     "hints": [], "ocr": None, "vlm": None, "hypotheses": [
+                         Candidate(38.7, -9.1, "area", "invented:a", label="Invented A", extent_m=1000, weight=.7),
+                         Candidate(41.14, -8.61, "area", "invented:b", label="Invented B", extent_m=1000, weight=.3)]}
+            return pipeline.PanoramaResult(run.run_id, run.dir, run.finish(), output, None, [output], {}, state)
+        pipeline.run_panorama = ready
+        worker = self.http.worker
+        worker.models.use["vlm"] = True
+        worker.models.zones = lambda: None
+        def chat(system, text, schema, *, images=(), num_predict=0, timeout_s=None):
+            raise AssertionError("No model calls in HTTP tests")
+        worker.models.vlm = lambda: SimpleNamespace(model="test:local", chat=chat)
+        worker.models.vlm_name = lambda: "test:local"
+        run_id = self.upload("review.jpg")
+        initial = self.events(run_id)
+        ctx = worker.runs[run_id]
+        output_id = ctx.run.outputs[-1]["output_id"]
+        offered = review._offered(ctx.result.review_state, None)
+        human = {"action": "human", "question_kind": "place", "question": "", "explanation": "Compare these places.",
+                 "probabilities": [{"option_id": o.id, "probability": 1 / len(offered["place"][0].options)}
+                                   for o in offered["place"][0].options]}
+        keep = {"action": "keep", "question_kind": "", "question": "", "explanation": "No further useful check.", "probabilities": []}
+        route = f"/api/runs/{run_id}/review"
+        self.assertEqual(self.request(route, {"output_id": output_id}, token=False)[0], 403)
+        self.assertEqual(self.request(route, {"output_id": "stale"})[0], 400)
+        with patch.object(review.reason, "_images", return_value=(["invented"], ["original"])), patch.object(review, "_chat", side_effect=[human, keep]):
+            self.assertEqual(self.request(route, {"output_id": output_id})[0], 202)
+            self.assertEqual(self.request(route, {"output_id": output_id})[0], 400)
+            def respond(event):
+                if event["type"] == "question.asked":
+                    p = event["payload"]
+                    self.assertAlmostEqual(sum(p["agent_probabilities"].values()), 1)
+                    self.assertEqual(self.request(f"/api/runs/{run_id}/questions/{p['question_id']}/answer",
+                                                  {"option_id": p["options"][0]["id"]})[0], 200)
+            all_events = self.events(run_id, respond)
+        self.assertEqual(all_events[:len(initial)], initial)
+        self.assertEqual(len({e["seq"] for e in all_events}), len(all_events))
+        self.assertAlmostEqual(ctx.run.penalties.multiplier, .95)
+        self.assertEqual(ctx.run.events[-1]["type"], "run.finished")
+        self.assertTrue(ctx.summary()["can_review"])
+        with patch.object(review.reason, "_images", return_value=(["invented"], ["original"])), patch.object(review, "_chat", return_value=keep):
+            for _ in range(2):
+                self.assertEqual(self.request(route, {"output_id": ctx.run.outputs[-1]["output_id"]})[0], 202)
+                self.events(run_id)
+        self.assertFalse(ctx.summary()["can_review"])
+        self.assertEqual(self.request(route, {"output_id": ctx.run.outputs[-1]["output_id"]})[0], 400)
+        self.assertAlmostEqual(ctx.run.penalties.multiplier, .95)
 
     def test_answer_skip_log_and_cue(self):
         run_id = self.upload("IMG_stand_in.jpg")

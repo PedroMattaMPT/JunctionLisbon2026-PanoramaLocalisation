@@ -16,6 +16,7 @@ import { Strip, Viewer, Crop, LoggedCompass } from './panorama';
 import { focusOptions, plainLabel, uncertaintySentence } from './focus-model';
 import { stageActivity } from './analysis-model';
 import { CandidateLocation } from './candidate-location';
+import { OptionProbability } from './human';
 
 export interface CasePill { key: string; label: string; status: string; special: boolean }
 export function FocusBar({ cases, active, atSetup, multiplier, session, connected, connection, menu, onCase, onSetup, candidateCount = 0, onCandidates }: {
@@ -59,7 +60,7 @@ function FocusOption({ option, label, size, disabled, onAnswer, onHighlight, onE
   return <div className="focus-option-wrap" onMouseEnter={() => onHighlight(option.id)} onMouseLeave={e => { if (!e.currentTarget.contains(document.activeElement)) onHighlight(); }} onFocus={() => onHighlight(option.id)} onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) onHighlight(); }}>
     {mapTree(tree, node => {
       if (node.props.className?.split(' ').includes('aq-qopt')) return React.cloneElement(node, { 'aria-disabled': disabled, 'aria-describedby': wording ? id : undefined, 'aria-label': `${option.key}: ${label}${size ? `, ${size}` : ''}`, 'data-option-id': option.id, onClick: () => { if (!disabled) onAnswer(option.id); }, onKeyDown: (e: React.KeyboardEvent) => { if (!disabled && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onAnswer(option.id); } } });
-      if (node.props.className === 'aq-qopt-b') return React.cloneElement(node, {}, <span className="focus-option-label console-heading">{label}</span>, size && <span className="focus-option-size console-data-sm aq-ink2">{size}</span>);
+      if (node.props.className === 'aq-qopt-b') return React.cloneElement(node, {}, <span className="focus-option-label console-heading">{label}</span>, size && <span className="focus-option-size console-data-sm aq-ink2">{size}</span>, <OptionProbability option={option} />);
       if (node.props.className === 'aq-qopt-act') return <span className="focus-option-shortcut"><KeyCap>{String('ABCD'.indexOf(option.key) + 1)}</KeyCap></span>;
       return node;
     })}
@@ -77,6 +78,7 @@ export function FocusQuestion({ c, disabled, readOnly, onAnswer, onSkip, onSkipA
     <h1 id="focus-question-text" className="console-title" aria-live="polite">{q.text}</h1>
     <div role="radiogroup" aria-label="Options" aria-describedby={costId} className="focus-options">{focusOptions(q).map(({ option, label, size }) => <FocusOption key={option.id} option={option} label={label} size={size} disabled={disabled} onAnswer={onAnswer} onHighlight={onHighlight} onError={onError} />)}</div>
     <div className="focus-question-footer"><Button variant="skip" icon="skip" shortcut="S" disabled={disabled} onClick={onSkip}>Skip</Button><p id={costId} className="console-body aq-ink2">An answer costs ×{q.cost.toFixed(2)}. Skip changes nothing.</p></div>
+    <p className="console-micro aq-ink3">Agent probabilities are estimates.</p>
     {readOnly && <p className="console-micro aq-ink3">Replay · read-only</p>}
     {onSkipAll && <Button variant="quiet" disabled={disabled || skippingAll} onClick={onSkipAll}>{skippingAll ? 'Skipping remaining questions' : 'Skip all remaining questions'}</Button>}
   </section>;
@@ -110,7 +112,7 @@ export function FocusWorking({ c, event, image, selected, onDetails, onSelect }:
     <DetectionFeed c={c} selected={selected} onSelect={onSelect} />{evidence?.box && image && <div className="focus-selected-crop"><Crop c={c} image={image} evidence={evidence} /></div>}
   </section>;
 }
-export function FocusAnswer({ a, onCopy, onSubmit, canSubmit, onDetails }: { a: Output; onCopy(): void; onSubmit(): void; canSubmit: boolean; onDetails(): void }) {
+export function FocusAnswer({ a, onCopy, onSubmit, canSubmit, onDetails, review }: { a: Output; onCopy(): void; onSubmit(): void; canSubmit: boolean; onDetails(): void; review?: ReactNode }) {
   const number = (value: number) => Math.round(value * (a.special ? 3 : 1)).toLocaleString('en-US');
   return <section className="focus-answer-content"><h1 className="narrative-title">Best estimate{a.special && <span className="focus-special" aria-label="Special One">★</span>}</h1>
     {mapTree(CoordinateBlock({ a, showCopy: false, size: 'lg' }), node => node.props.className?.split(' ').includes('aq-coord-meta') || node.props.className?.includes('aq-coord-r') ? null : node)}
@@ -119,6 +121,7 @@ export function FocusAnswer({ a, onCopy, onSubmit, canSubmit, onDetails }: { a: 
     {(a.expected !== null || a.split) && <p className="console-body focus-score">Score estimate {a.split ? <>≈ {number(a.split.urban)} (urban) or ≈ {number(a.split.nonUrban)} (non-urban)</> : <>≈ {number(a.expected!)} ({a.category})</>}{a.special && <span className="console-micro aq-ink3"> · ×3</span>}</p>}
     <p className="console-body aq-ink2">×{a.multiplier.toFixed(2)} after {a.penalty.answered_questions} {a.penalty.answered_questions === 1 ? 'answer' : 'answers'}{a.penalty.cues > 0 ? `, ${a.penalty.cues} ${a.penalty.cues === 1 ? 'cue' : 'cues'}` : ''}{a.penalty.conversions > 0 ? `, ${a.penalty.conversions} ${a.penalty.conversions === 1 ? 'conversion' : 'conversions'}` : ''}</p>
     <Button variant="primary" icon="copy" onClick={onCopy}>Copy lat, lng</Button><Button variant="quiet" icon="submit" shortcut="⇧⏎" disabled={!canSubmit} onClick={onSubmit}>Submit answer</Button><DetailsLink onClick={onDetails} />
+    {review}
   </section>;
 }
 export function FocusReplay({ events, t, speed, playing, onSeek, onPlay, onSpeed }: { events: RunEvent[]; t: number; speed: 1 | 2 | 5; playing: boolean; onSeek(t: number): void; onPlay(): void; onSpeed(speed: 1 | 2 | 5): void }) {
