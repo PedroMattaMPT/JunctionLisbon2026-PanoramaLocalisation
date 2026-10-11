@@ -25,14 +25,15 @@ appears there in almost every panorama. Its pixels are not blanked. Each view ca
 means the pixel samples the zone) and masked_fraction, so later stages decide whether to skip, flag
 or read those pixels (PLAN.md 3.1: track what was masked rather than discarding ground clues). At
 fov 90 the horizontal views reach down only to pitch -35.3 in their corners, so only ground is
-masked (29.5% of it at 17.5%).
+masked (about 29% of it at 17.5%). In the warm-up set the zone holds the photographer's body, but in
+about a third of the panoramas the head or shoulders reach up to about 22.5% (pitch -49.5).
 
 Filenames look like IMG_20250125_142313_00_141.jpg: date, time, a raw field ("00" in every warm-up
-file, meaning unknown) and the shot counter. The time is read as UTC. Our own sun-heading checks
-point that way, but the organisers have not confirmed it, so PanoramaName records it as an
-assumption. The camera seems to use interval mode: two warm-up files share a timestamp but have
-different counters. So a timestamp may mark the start of a series, and the shot itself can be
-later. Its resolution is 1 s at best.
+file, meaning unknown) and the shot counter. The time is UTC: the organisers confirmed it on
+2026-10-10 (RULES.md), matching our own sun-heading checks. PanoramaName still names the time zone
+it applied (timezone_assumed). The camera seems to use interval mode: two warm-up files share a
+timestamp but have different counters. So a timestamp may mark the start of a series, and the shot
+itself can be later. Its resolution is 1 s at best.
 
   pano = load_panorama("Data/Panorama Warm-Up/IMG_20250125_142313_00_141.jpg")
   views = cut_views(pano)                             # h000 ... h315, sky, ground: 1024 x 1024, fov 90
@@ -66,7 +67,7 @@ MAX_CROP_SIZE = 2048
 MIN_CROP_SIZE = 16
 JPEG_QUALITY = 92
 TIMEZONE_ASSUMED = "UTC"
-TIMESTAMP_NOTE = ("Read as UTC, which the organisers have not confirmed. The camera seems to use "
+TIMESTAMP_NOTE = ("UTC, as the organisers confirmed. The camera seems to use "
                   "interval mode, so this may be the start of a series and the shot can be later.")
 FILENAME_RE = re.compile(r"IMG_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})_(\d+)_(\d+)(?:\.[a-z0-9]+)?",
                          re.IGNORECASE)
@@ -89,7 +90,7 @@ class PanoramaName:
     name: str
     valid: bool
     timestamp: datetime | None = None    # timezone-aware, in UTC as timezone_assumed says
-    timezone_assumed: str | None = None  # "UTC": our assumption, not confirmed by the organisers
+    timezone_assumed: str | None = None  # "UTC", confirmed by the organisers (RULES.md)
     counter: int | None = None           # the shot counter NNN
     middle: str | None = None            # the raw field between the time and the counter ("00")
 
@@ -130,7 +131,7 @@ class View:
     fov_deg: float     # across and down: views are square
     image: np.ndarray = field(repr=False)  # H x W x 3 uint8 RGB, nothing blanked
     mask: np.ndarray = field(repr=False)   # H x W bool, True = samples the photographer zone
-    masked_fraction: float = 0.0
+    masked_fraction: float                 # mask.mean()
 
     def meta(self):
         """Everything but the pixels, for views.json and the run log."""

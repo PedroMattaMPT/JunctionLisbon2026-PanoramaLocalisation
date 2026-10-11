@@ -210,7 +210,14 @@ class Run:
         self._emit("stage.skipped", {"reason": reason}, stage=name)
 
     def evidence(self, kind, payload, *, stage, model=None, actor="model"):
-        """Log one observation (OCR text, a VLM answer, a retrieval hit); returns its evidence ID."""
+        """Log one observation (OCR text, a VLM answer, a retrieval hit); returns its evidence ID.
+
+        The evidence ID and kind are set here, so the payload must not carry its own `kind` or
+        `evidence_id` (it would silently replace them); name such fields differently, e.g. place_kind.
+        """
+        clash = sorted({"kind", "evidence_id"} & set(payload))
+        if clash:
+            raise ValueError(f"payload keys {clash} are reserved: the evidence kind is the first argument")
         with self._lock:
             evidence_id = self._next_id("e")
             self._emit("evidence.added", {"evidence_id": evidence_id, "kind": kind, **payload},

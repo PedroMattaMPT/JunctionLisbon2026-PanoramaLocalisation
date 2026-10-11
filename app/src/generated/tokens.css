@@ -1,0 +1,364 @@
+/* Generated from design_system/tokens.json. Do not edit. */
+:root, [data-theme="dark"] {
+  --surface-0: #061521;
+  --surface-1: #0d1d2a;
+  --surface-2: #152634;
+  --surface-3: #1d2f3d;
+  --line-1: #2c3b48;
+  --line-2: #667785;
+  --ink-1: #ecf1f5;
+  --ink-2: #bdc9d2;
+  --ink-3: #9dabb6;
+  --ink-disabled: #5f6b74;
+  --model: #5ba0fa;
+  --model-soft: #1c2c41;
+  --on-model: #061521;
+  --solver: #f4d16d;
+  --solver-soft: #342a0e;
+  --on-solver: #061521;
+  --team: #cebafe;
+  --team-soft: #2e263f;
+  --on-team: #061521;
+  --cost: #fc9252;
+  --cost-soft: #3d2416;
+  --on-cost: #061521;
+  --support: #8be1cb;
+  --support-soft: #0d332a;
+  --contra: #d27ba6;
+  --contra-soft: #3c222e;
+  --on-contra: #061521;
+  --neutral: var(--ink-3);
+  --opt-a: #7dd0fa;
+  --opt-a-soft: #102f3e;
+  --on-opt-a: #061521;
+  --opt-b: #7ca760;
+  --opt-b-soft: #223019;
+  --on-opt-b: #061521;
+  --opt-c: #fcba89;
+  --opt-c-soft: #3c2514;
+  --on-opt-c: #061521;
+  --opt-d: #c585bf;
+  --opt-d-soft: #382336;
+  --on-opt-d: #061521;
+  --conf-high: var(--ink-1);
+  --conf-med: var(--ink-2);
+  --conf-low: var(--ink-3);
+  --conf-unknown: #667785;
+  --status-queued: var(--ink-3);
+  --status-running: var(--ink-1);
+  --status-done: var(--ink-2);
+  --status-skipped: var(--ink-3);
+  --status-failed: var(--contra);
+  --status-timeout: var(--contra);
+  --seg-sky: #97d5eb;
+  --seg-building: #a06e3f;
+  --seg-grass: #bdd069;
+  --seg-tree: #2f743d;
+  --seg-road: #9ba6b1;
+  --seg-water: #256bb1;
+  --seg-ground: #c67c63;
+  --seg-masked: #494e52;
+  --heat-0: #2c4d7d00;
+  --heat-1: #2e57944d;
+  --heat-2: #3c71bc80;
+  --heat-3: #5695e0ad;
+  --heat-4: #86c0f8d1;
+  --heat-5: #d1edfeeb;
+  --map-water: #0a1924;
+  --map-land: #1e2931;
+  --map-land-out: #182026;
+  --map-border: #343f47;
+  --map-border-country: #65747f;
+  --map-graticule: #233039;
+  --map-label: var(--ink-3);
+  --focus: #ecf1f5;
+  --select: #f5f5f5;
+  --photo-halo: #000000b3;
+  --on-photo: #ffffff;
+  --mask-hatch: #ffffff59;
+  --scrim: #000610b8;
+}
+[data-theme="light"] {
+  --surface-0: #ecebe6;
+  --surface-1: #f5f3ef;
+  --surface-2: #fcfcf9;
+  --surface-3: #ebeae3;
+  --line-1: #d8d6cf;
+  --line-2: #7a8188;
+  --ink-1: #0f1f2f;
+  --ink-2: #354453;
+  --ink-3: #515e6a;
+  --ink-disabled: #93999f;
+  --model: #114278;
+  --model-soft: #e1eefe;
+  --on-model: #fcfcf9;
+  --solver: #5d4201;
+  --solver-soft: #f7ebd7;
+  --on-solver: #fcfcf9;
+  --team: #7453ae;
+  --team-soft: #efe9ff;
+  --on-team: #fcfcf9;
+  --cost: #aa4d0a;
+  --cost-soft: #ffe7dc;
+  --on-cost: #fcfcf9;
+  --support: #0c736a;
+  --support-soft: #d8f4f0;
+  --contra: #730a48;
+  --contra-soft: #fee5ef;
+  --on-contra: #fcfcf9;
+  --neutral: var(--ink-3);
+  --opt-a: #034a5b;
+  --opt-a-soft: #d8f2fb;
+  --on-opt-a: #fcfcf9;
+  --opt-b: #3b7335;
+  --opt-b-soft: #e2f2e0;
+  --on-opt-b: #fcfcf9;
+  --opt-c: #733e01;
+  --opt-c-soft: #fde9d9;
+  --on-opt-c: #fcfcf9;
+  --opt-d: #98407f;
+  --opt-d-soft: #fce5f3;
+  --on-opt-d: #fcfcf9;
+  --conf-high: var(--ink-1);
+  --conf-med: var(--ink-2);
+  --conf-low: var(--ink-3);
+  --conf-unknown: #7a8188;
+  --status-queued: var(--ink-3);
+  --status-running: var(--ink-1);
+  --status-done: var(--ink-2);
+  --status-skipped: var(--ink-3);
+  --status-failed: var(--contra);
+  --status-timeout: var(--contra);
+  --seg-sky: #81bfd4;
+  --seg-building: #8b592a;
+  --seg-grass: #a7b952;
+  --seg-tree: #205e2e;
+  --seg-road: #86909b;
+  --seg-water: #08569a;
+  --seg-ground: #af684e;
+  --seg-masked: #393e42;
+  --heat-0: #a4c0e400;
+  --heat-1: #a0c0eb4d;
+  --heat-2: #6494d573;
+  --heat-3: #3568b29e;
+  --heat-4: #18448cc7;
+  --heat-5: #0a2559e6;
+  --map-water: #dae5ea;
+  --map-land: #faf9f6;
+  --map-land-out: #efeeeb;
+  --map-border: #d3d1ca;
+  --map-border-country: #717c86;
+  --map-graticule: #d0d9de;
+  --map-label: var(--ink-3);
+  --focus: #124686;
+  --select: #0f1f2f;
+  --photo-halo: #000000b3;
+  --on-photo: #ffffff;
+  --mask-hatch: #ffffff59;
+  --scrim: #11212f73;
+}
+[data-theme="stage"] {
+  --surface-0: #010f1e;
+  --surface-1: #0b2031;
+  --surface-2: #1a3043;
+  --surface-3: #253c4f;
+  --line-1: #405568;
+  --line-2: #8195a7;
+  --ink-1: #f9fcfe;
+  --ink-2: #dbe4eb;
+  --ink-3: #c1ced8;
+  --ink-disabled: #76828b;
+  --model: #71b1ff;
+  --model-soft: #253951;
+  --on-model: #010f1e;
+  --solver: #ffda74;
+  --solver-soft: #423717;
+  --on-solver: #010f1e;
+  --team: #dacbff;
+  --team-soft: #3b324f;
+  --on-team: #010f1e;
+  --cost: #fd974e;
+  --cost-soft: #4c311e;
+  --on-cost: #010f1e;
+  --support: #81f2c1;
+  --support-soft: #1c4031;
+  --contra: #ee82b8;
+  --contra-soft: #4c2d3c;
+  --on-contra: #010f1e;
+  --neutral: var(--ink-3);
+  --opt-a: #92d4ff;
+  --opt-a-soft: #1d3c4f;
+  --on-opt-a: #010f1e;
+  --opt-b: #84bd71;
+  --opt-b-soft: #2b3e24;
+  --on-opt-b: #010f1e;
+  --opt-c: #ffc898;
+  --opt-c-soft: #4b321b;
+  --on-opt-c: #010f1e;
+  --opt-d: #de98db;
+  --opt-d-soft: #462e45;
+  --on-opt-d: #010f1e;
+  --conf-high: var(--ink-1);
+  --conf-med: var(--ink-2);
+  --conf-low: var(--ink-3);
+  --conf-unknown: #8195a7;
+  --status-queued: var(--ink-3);
+  --status-running: var(--ink-1);
+  --status-done: var(--ink-2);
+  --status-skipped: var(--ink-3);
+  --status-failed: var(--contra);
+  --status-timeout: var(--contra);
+  --seg-sky: #a7e6fc;
+  --seg-building: #b47b46;
+  --seg-grass: #cde079;
+  --seg-tree: #388447;
+  --seg-road: #abb6c1;
+  --seg-water: #2e7ac7;
+  --seg-ground: #d78c71;
+  --seg-masked: #575b60;
+  --heat-0: #30558c00;
+  --heat-1: #3463a657;
+  --heat-2: #4580d28c;
+  --heat-3: #68a8f4b8;
+  --heat-4: #a0d0fedb;
+  --heat-5: #e5f5fff2;
+  --map-water: #021322;
+  --map-land: #212f3c;
+  --map-land-out: #18232d;
+  --map-border: #404f5d;
+  --map-border-country: #8494a4;
+  --map-graticule: #263746;
+  --map-label: var(--ink-3);
+  --focus: #f9fcfe;
+  --select: #fcfcfc;
+  --photo-halo: #000000cc;
+  --on-photo: #ffffff;
+  --mask-hatch: #ffffff73;
+  --scrim: #00030fc7;
+}
+:root {
+  --space-half: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-0: 0px;
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --radius-3: 8px;
+  --radius-pill: 999px;
+  --shadow-float: 0 6px 16px #02070ccc, 0 1px 0 #ffffff0d inset;
+  --shadow-dialog: 0 24px 48px #02070ce6;
+  --focus-ring: 0 0 0 2px #0d1d2a, 0 0 0 4px #ecf1f5;
+  --border-hair: 1px;
+  --border-rule: 2px;
+  --border-heavy: 3px;
+  --z-base: 0;
+  --z-overlay: 10;
+  --z-leader: 20;
+  --z-runbar: 30;
+  --z-popover: 40;
+  --z-caption: 50;
+  --z-toast: 60;
+  --z-dialog: 70;
+  --dur-instant: 90ms;
+  --dur-quick: 180ms;
+  --dur-standard: 280ms;
+  --dur-deliberate: 520ms;
+  --dur-cinematic: 1400ms;
+  --dur-stagger: 40ms;
+  --dur-stagger-cap: 480ms;
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: linear(0, 0.22 9%, 0.69 20%, 0.98 32%, 1.05 42%, 1.04 52%, 1.01 64%, 0.995 78%, 1);
+  --opacity-ghost: 0.42;
+  --opacity-dim: 0.64;
+  --opacity-zone: 0.18;
+  --size-control-sm: 24px;
+  --size-control: 32px;
+  --size-control-stage: 56px;
+  --size-runbar: 52px;
+  --size-ruler: 28px;
+  --size-caption: 120px;
+  --size-mark: 28px;
+  --font-sans: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+  --font-serif: "Newsreader", Georgia, serif;
+  --console-title-size: 18px;
+  --console-title-line: 24px;
+  --console-heading-size: 15px;
+  --console-heading-line: 20px;
+  --console-body-size: 13px;
+  --console-body-line: 18px;
+  --console-label-size: 12px;
+  --console-label-line: 16px;
+  --console-micro-size: 11px;
+  --console-micro-line: 14px;
+  --console-data-size: 13px;
+  --console-data-line: 18px;
+  --console-data-sm-size: 11px;
+  --console-data-sm-line: 14px;
+  --console-readout-size: 20px;
+  --console-readout-line: 24px;
+  --stage-title-size: 36px;
+  --stage-title-line: 44px;
+  --stage-body-size: 24px;
+  --stage-body-line: 32px;
+  --stage-label-size: 20px;
+  --stage-label-line: 26px;
+  --stage-caption-size: 30px;
+  --stage-caption-line: 40px;
+  --stage-data-size: 24px;
+  --stage-data-line: 30px;
+  --stage-readout-size: 40px;
+  --stage-readout-line: 44px;
+  --stage-score-size: 88px;
+  --stage-score-line: 88px;
+  --narrative-display-size: 64px;
+  --narrative-display-line: 64px;
+  --narrative-headline-size: 44px;
+  --narrative-headline-line: 48px;
+  --narrative-title-size: 26px;
+  --narrative-title-line: 32px;
+  --inference-size: 14px;
+  --inference-line: 19px;
+  --stage-inference-size: 28px;
+  --stage-inference-line: 36px;
+  --stamp-size: 12px;
+  --stamp-line: 14px;
+  --stage-stamp-size: 24px;
+  --stage-stamp-line: 28px;
+}
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url('../../../design_system/fonts/AtkinsonHyperlegibleNext-VF.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url('../../../design_system/fonts/AtkinsonHyperlegibleNext-Italic-VF.woff2') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible Mono"; src: url('../../../design_system/fonts/AtkinsonHyperlegibleMono-VF.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url('../../../design_system/fonts/Newsreader-VF.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url('../../../design_system/fonts/Newsreader-Italic-VF.woff2') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
+.console-title { font-family: var(--font-sans); font-size: 18px; line-height: 24px; font-weight: 700; }
+.console-heading { font-family: var(--font-sans); font-size: 15px; line-height: 20px; font-weight: 700; }
+.console-body { font-family: var(--font-sans); font-size: 13px; line-height: 18px; font-weight: 400; }
+.console-label { font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 600; }
+.console-micro { font-family: var(--font-sans); font-size: 11px; line-height: 14px; font-weight: 500; }
+.console-data { font-family: var(--font-mono); font-size: 13px; line-height: 18px; font-weight: 450; }
+.console-data-sm { font-family: var(--font-mono); font-size: 11px; line-height: 14px; font-weight: 500; }
+.console-readout { font-family: var(--font-mono); font-size: 20px; line-height: 24px; font-weight: 500; }
+.stage-title { font-family: var(--font-sans); font-size: 36px; line-height: 44px; font-weight: 700; }
+.stage-body { font-family: var(--font-sans); font-size: 24px; line-height: 32px; font-weight: 400; }
+.stage-label { font-family: var(--font-sans); font-size: 20px; line-height: 26px; font-weight: 600; }
+.stage-caption { font-family: var(--font-sans); font-size: 30px; line-height: 40px; font-weight: 500; }
+.stage-data { font-family: var(--font-mono); font-size: 24px; line-height: 30px; font-weight: 500; }
+.stage-readout { font-family: var(--font-mono); font-size: 40px; line-height: 44px; font-weight: 500; }
+.stage-score { font-family: var(--font-mono); font-size: 88px; line-height: 88px; font-weight: 500; letter-spacing: -0.02em; }
+.narrative-display { font-family: var(--font-serif); font-size: 64px; line-height: 64px; font-weight: 500; letter-spacing: -0.01em; font-variation-settings: 'opsz' 72; }
+.narrative-headline { font-family: var(--font-serif); font-size: 44px; line-height: 48px; font-weight: 500; font-variation-settings: 'opsz' 48; }
+.narrative-title { font-family: var(--font-serif); font-size: 26px; line-height: 32px; font-weight: 500; font-variation-settings: 'opsz' 28; }
+.inference { font-family: var(--font-serif); font-size: 14px; line-height: 19px; font-weight: 400; font-style: italic; font-variation-settings: 'opsz' 14; }
+.stage-inference { font-family: var(--font-serif); font-size: 28px; line-height: 36px; font-weight: 400; font-style: italic; font-variation-settings: 'opsz' 28; }
+.stamp { font-family: var(--font-sans); font-size: 12px; line-height: 14px; font-weight: 800; letter-spacing: 0.14em; }
+.stage-stamp { font-family: var(--font-sans); font-size: 24px; line-height: 28px; font-weight: 800; letter-spacing: 0.14em; }

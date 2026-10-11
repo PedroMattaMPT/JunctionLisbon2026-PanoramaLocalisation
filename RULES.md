@@ -4,7 +4,7 @@ Rules for the Albatroz "Panorama Localisation" challenge at JunctionX Lisbon 202
 
 ## The task
 
-- **Input:** a 360° equirectangular panorama, 6080×3040 JPG, daylight, taken no more than 5 m above ground, not edited. The filename carries the capture date and time (`IMG_YYYYMMDD_hhmmss_00_NNN.jpg`). Each panorama is labelled "Urban" or "non-Urban".
+- **Input:** a 360° equirectangular panorama, 6080×3040 JPG, daylight, taken no more than 5 m above ground, not edited. The filename carries the capture date and time (`IMG_YYYYMMDD_hhmmss_00_NNN.jpg`). Each panorama is labelled "Urban" or "non-Urban", but the team only learns the label after submitting (see Organiser answers).
 - **Region:** mainly Portugal, also Spain and France.
 - **Output:** a list of up to 10 locations, each a single `(lat, lng)` pair, sorted by decreasing likelihood.
 - **Ground truth is never revealed.** The team must judge whether a proposed location is plausible.
@@ -59,9 +59,54 @@ What this means for our code:
 | Presentation | One panorama solved live |
 | Final | The Albatroz winner plays the winners of the other challenges on a new panorama, live |
 
+## Organiser answers (2026-10-10, evening)
+
+Answers to the questions in PLAN.md section 8, relayed by the team:
+
+| Question | Answer | What it means for us |
+|---|---|---|
+| Is there a required JSON log schema? | No. What matters is that they can understand ours. | Keep `log.json` self-describing (`panoloc/runlog.py`): summaries first, then every event. |
+| Do panoramas come with Urban/non-Urban labels? | Yes, but we only learn the label after our submission. | While solving, the category is unknown: score both scenarios (PLAN.md 1.3). The revealed label is for evaluating afterwards. |
+| May the agent fetch external data during a run? | Yes. | Runtime OSM, Mapillary and image-search lookups are allowed. Keep timeouts and an offline fallback, because the venue network is unreliable. |
+| What does a submission return? | A distance. | With the label revealed afterwards, a trial run's actual score can be computed. Never use one panorama's distance for another (partner clarification 1). |
+| Are filename timestamps UTC or local time? | UTC. The summer period is UTC+1. | Read filename times as UTC. Portuguese summer time is UTC+1; mainland Spain and France use UTC+2. |
+| Which list counts when outputs come both before and after an answered question? | "Doesn't really matter." | Keep a penalty snapshot with every output anyway. |
+| Are chained zone questions OK, each with an explicit "none of these" or "outside" option? | Yes. | The zone fallback of PLAN.md 3.4 is allowed as designed. |
+| Do the Sunday panoramas arrive together? | Not sure yet. | Build the panorama queue (TASKS.md T49) to work either way. |
+
+## Organiser feedback on our warm-up references (2026-10-11, ~01:10)
+
+The organisers scored the team's estimated warm-up locations (`Data/warmup_locations.json`). The distance is from our reference to the true camera position.
+
+**What it means:**
+- **Reference status:** the 17 checked references can serve as ground truth for evaluation, within the distance given for each.
+- **Unchecked:** 059, 064 and 066 have no feedback yet and stay estimates.
+- **Labels:** three categories were revealed with the feedback. They are for evaluation only.
+- **Unchanged:** the references and this feedback remain evaluation-only, so they never reach the agent's inputs, prompts, photo bank, training, calibration or galleries (partner clarification 1, PLAN.md 4.6).
+
+| Panorama | Distance from our reference | Category revealed | Organiser comment |
+|---|---|---|---|
+| IMG_20250104_082423_00_095 | 18 m | | "Incredible! Congratulations!" |
+| IMG_20250125_142313_00_141 | 14 m | Urban | "Outstanding!" |
+| IMG_20250125_142634_00_170 | < 10 m | | "Right on the spot!" |
+| IMG_20250125_142634_00_209 | < 10 m | | "Right on the spot!" |
+| IMG_20250125_144630_00_319 | < 10 m | | "Right on the spot, though this is an easy one!" |
+| IMG_20250125_151032_00_611 | < 10 m | | "Right on the spot, though this is an easy one!" |
+| IMG_20260510_121401_00_179 | < 10 m | | "a perfect strike" |
+| IMG_20260510_122142_00_194 | < 10 m | | "perfect again" |
+| IMG_20260510_124804_00_218 | < 10 m | | |
+| IMG_20260510_124840_00_220 | < 10 m | | |
+| IMG_20260813_112252_00_681 | 30 m | Urban | "Very Good!" |
+| IMG_20260813_112936_00_683 | < 10 m | | |
+| IMG_20260813_113355_00_685 | < 10 m | | |
+| IMG_20260813_115036_00_695 | < 10 m | | |
+| IMG_20260911_125512_00_749 | 24 m | Non-urban | "Extraordinary!" |
+| IMG_20260911_132916_00_754 | < 10 m | | |
+| IMG_20260922_172452_00_779 | < 10 m | | "Perfect!" |
+| IMG_20241213_120841_00_059, IMG_20260605_092457_00_064, IMG_20260605_092536_00_066 | not reported yet | | |
+
 ## Still unconfirmed (ask on Discord)
 
-- The exact JSON log schema.
-- Whether filename timestamps are local time or UTC.
-- Whether the agent itself may fetch external data during the run (Mapillary, OSM, image search).
-- Where the Urban/non-Urban labels are: the warm-up zip had none.
+- Whether the Sunday panoramas arrive together (the organisers aren't sure yet).
+- Whether one panorama may be submitted more than once, and whether its returned distance may be used to refine that same panorama.
+- Whether a filename timestamp is the exact shot time or the start of an interval series.

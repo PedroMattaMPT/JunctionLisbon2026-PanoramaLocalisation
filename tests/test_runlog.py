@@ -143,6 +143,14 @@ class RunLogTest(unittest.TestCase):
         self.assertEqual((doc["events"][0]["type"], doc["events"][-1]["type"]), ("run.started", "run.finished"))
         self.assertEqual(doc["events"][1]["payload"]["evidence_id"], "e1")
 
+    def test_evidence_payload_cannot_override_its_kind_or_id(self):
+        run = self.new_run()
+        for payload in ({"kind": "church"}, {"evidence_id": "e9"}):
+            with self.assertRaises(ValueError):
+                run.evidence("landmark_hypothesis", payload, stage="describe")
+        run.evidence("landmark_hypothesis", {"place_kind": "church"}, stage="describe")
+        self.assertEqual(run.events[-1]["payload"]["kind"], "landmark_hypothesis")
+
     def test_nothing_is_logged_or_charged_after_finish(self):
         run = self.new_run()
         q = run.ask("Which one?", ["A", "B"])

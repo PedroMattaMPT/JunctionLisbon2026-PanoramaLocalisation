@@ -441,25 +441,25 @@ Checkpoints determine whether we add components. The first complete baseline may
 
 - [x] Start the OSV-5M download, as recorded in the original plan. Verified at 17:10: every file is a complete JPEG with a metadata row (section 4.1). [T01]
 - [x] Re-run `tools/fetch_osv5m.sh` after the Spain/France phase finishes: 4,827 of 51,551 Portugal images failed around 16:00 (DNS and TLS errors, most likely the venue network). Done 16:57–17:00 (`Data/osv5m/fetch_retry.log`): test 5,206, Portugal 51,551, Spain/France 50,000, 0 errors. [T02]
-- [ ] Resolve or assign the organiser questions in section 8, especially log format, feedback availability, category labels and runtime external access. [T08]
+- [x] Resolve or assign the organiser questions in section 8, especially log format, feedback availability, category labels and runtime external access. [T08]
 - [x] Smoke-test the Python 3.12 environment and chosen model loading on sm_120. Use the locally tested software route and working VLM; avoid making an upgrade or power-profile investigation a prerequisite for the baseline. [T09]
 - [x] Implement the score calculator, event/penalty tracker, per-panorama state and JSON logging. [T10, T11]
 - [ ] Send a sample JSON log to Discord before 19:00, so the organisers can confirm the format before the trial. [T12]
 - [x] Start the name index (section 4.4): save the Wikidata and GeoNames extracts now, so the baseline can resolve names. [T03]
-- [ ] Run one panorama end to end: views → OCR/VLM → one working candidate generator/name lookup → simple fusion → question/skip handling → coordinates. [T20]
-- [ ] Start resumable PE-Core embedding preparation as usable training images become available. [T21]
-- [ ] Select a small, diverse external validation set, with an explicit separate final subset. [T22]
-- [ ] Freeze a version/hash of `Data/warmup_locations.json`; configure the evaluator for its 19 precise references, reported radii, estimated categories and diagnostic-only coarse record. Keep baseline annotations outside agent inputs. [T23]
-- [ ] Freeze the accuracy targets and evaluation policy in section 4.8; record a simple baseline for paired comparisons. [T24]
+- [x] Run one panorama end to end: views → OCR/VLM → one working candidate generator/name lookup → simple fusion → question/skip handling → coordinates. [T20]
+- [x] Start resumable PE-Core embedding preparation as usable training images become available. [T21]
+- [x] Select a small, diverse external validation set, with an explicit separate final subset. [T22]
+- [x] Freeze a version/hash of `Data/warmup_locations.json`; configure the evaluator for its 19 precise references, reported radii, estimated categories and diagnostic-only coarse record. Keep baseline annotations outside agent inputs. [T23]
+- [x] Freeze the accuracy targets and evaluation policy in section 4.8; record a simple baseline for paired comparisons. [T24]
 - [x] Implement coordinate-source roles and the output contract in section 3.3, including a usable coarse fallback. [T17]
 
 **Gate A:** a complete coordinate output and reviewable interaction log, including a skipped question and a failed optional stage. Passing this gate does not establish localisation accuracy.
 
 ### Saturday 19:00–21:00 trial
 
-- [ ] Run the working baseline independently on each trial panorama and record total time. [T26]
+- [x] Run the working baseline independently on each trial panorama and record total time. [T26]
 - [ ] Have the team submit a sample JSON log for organiser review. [T27]
-- [ ] Record actual returned feedback, if any. Keep challenge place estimates marked as estimates. [T28]
+- [x] Record actual returned feedback, if any. Keep challenge place estimates marked as estimates. [T28]
 - [ ] Identify concrete failures: missed text, missing candidate areas, false image matches, ambiguous coordinates or slow stages. [T29]
 
 **Gate B:** usable logs, a functioning human loop and a known operational time budget. Fix these before increasing model count.
@@ -468,17 +468,17 @@ Checkpoints determine whether we add components. The first complete baseline may
 
 The name index and landmark gallery do not depend on the photo bank. Their owner works on them from Saturday afternoon, in parallel with the bank (section 7).
 
-- [ ] Build the local name index, zone boundaries and landmark gallery (sections 4.4–4.5). [T31, T32, T33]
-- [ ] Finish and verify the selected photo bank, metadata and embeddings. [T34, T35]
-- [ ] Build kNN and train/calibrate the simple mini-PIGEON head on external training/validation data. [T36, T37]
+- [x] Build the local name index, zone boundaries and landmark gallery (sections 4.4–4.5). [T31, T32, T33]
+- [x] Finish and verify the selected photo bank, metadata and embeddings. [T34, T35]
+- [x] Build kNN and train/calibrate the simple mini-PIGEON head on external training/validation data. [T36, T37]
 - [ ] Compare candidate generation and conservative fusion on external validation cases; test the second geolocation model only if time allows. [T39]
-- [ ] Run paired autonomous and assisted validation against the warm-up JSON baseline, reporting nominal scores, radius sensitivity, place-option recall and answered/skipped question counts. [T40]
-- [ ] Validate MegaLoc and geometric matching on separate-capture examples; enable the working path where coverage exists. [T41]
-- [ ] Implement and check the landmark/cell route: exhaustive options, interior representative points, distance bounds, recovery choices and automatic coordinate generation from clicks. [T42]
+- [x] Run paired autonomous and assisted validation against the warm-up JSON baseline, reporting nominal scores, radius sensitivity, place-option recall and answered/skipped question counts. [T40]
+- [x] Validate MegaLoc and geometric matching on separate-capture examples; enable the working path where coverage exists. [T41]
+- [x] Implement and check the landmark/cell route: exhaustive options, interior representative points, distance bounds, recovery choices and automatic coordinate generation from clicks. [T42]
 - [ ] Run the section 4.8 accuracy gate and record whether each target passes; test each implemented coordinate branch. [T43]
 - [ ] Add targeted detector crops if they fix observed OCR/perception failures. [T44]
 - [ ] Consider SAM 3, segmentation, solar checks, rich grid features and the feature table only after the preceding tasks meet their gates. [T45]
-- [ ] Rehearse the retained configuration, including unavailable network access, module timeouts and unknown category handling. [T46]
+- [x] Rehearse the retained configuration, including unavailable network access, module timeouts and unknown category handling. [T46]
 
 **Gate C:** pass the section 4.8 accuracy targets, coordinate-branch checks and valid logging requirements, alongside measured initial automated processing ≤150 seconds and peak GPU memory ≤14 GB on representative cases. Record complete refinement/human-answer time. Passing the resource limits alone does not pass this gate.
 
@@ -515,6 +515,16 @@ The scoring window is 10:00–13:00, but the team has **60 minutes of solving ti
 Agree on the evidence and candidate JSON formats before integration. Owners can work concurrently on independent tasks; the baseline must remain runnable while additions are developed.
 
 ## 8. Questions for the organisers
+
+**Answered on 2026-10-10 (evening); see the Organiser answers in [RULES.md](RULES.md).**
+- **Answered:** 1, 2, 3, 4, 6 and 8, plus the time zone in 5. In short:
+  - there is no required schema, only an understandable one
+  - the Urban label comes after submission
+  - runtime fetches are allowed
+  - a submission returns a distance
+  - filename times are UTC
+  - chained zone questions are fine
+- **Still open:** 7 (repeated submissions and distance probing), 9 (do the panoramas arrive together?), 10, and whether a timestamp is the shot or the start of a series (the rest of 5).
 
 Resolve these early through the team; do not assume answers from the original plan:
 
